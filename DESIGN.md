@@ -89,7 +89,9 @@ New brand. The accent is **"Volt" lime** in place of the reference orange. It ke
 
 ## 3. Typography
 
-### Recommended pairing: **A, Geist Mono + Geist Sans** (free, OFL; ships with `next/font/google`, and the project already loads both)
+### Font pairing: **Geist Mono + Geist Sans** (locked; free, OFL; ships with `next/font/google`, and the project already loads both)
+
+> Decision (2026-11-06): this is the only pairing. Earlier alternatives (Space Grotesk / IBM Plex, Martian Mono / Inter) were removed. Inter is banned in CLAUDE.md, and one pairing keeps the system consistent.
 
 | Role | Font | Weight | Notes |
 |---|---|---|---|
@@ -98,23 +100,7 @@ New brand. The accent is **"Volt" lime** in place of the reference orange. It ke
 | Body / long-form | **Geist Sans** | 400 (500 for lead) | Sentence case, normal tracking |
 | Code | Geist Mono | 400 | `font-variant-ligatures: none` |
 
-### Alternative pairing: **B, Space Grotesk + IBM Plex Mono + IBM Plex Sans** (all free)
-
-| Role | Font | Weight |
-|---|---|---|
-| Display | **Space Grotesk** | 700 (its quirky terminals add the "tech" character at big sizes) |
-| Labels / indices / code motifs | **IBM Plex Mono** | 500–600 |
-| Body | **IBM Plex Sans** | 400 / 500 |
-
-### Alternative pairing: **C, Martian Mono + Inter** (both free)
-
-| Role | Font | Weight |
-|---|---|---|
-| Display | **Martian Mono** (use the `wdth` axis at ~75–87 for condensed headlines) | 700–800 |
-| Labels / indices | Martian Mono | 500 at 100 width |
-| Body | **Inter** | 400 / 500 (the project already loads Inter) |
-
-> Rule shared by all pairings: **monospace is for the chrome, sans is for paragraphs.** The reference sets 15px body copy in mono, which suits a one-page event site but tires readers on long articles.
+> Rule: **monospace is for the chrome, sans is for paragraphs.** The reference sets 15px body copy in mono, which suits a one-page event site but tires readers on long articles.
 
 ### Type scale (fluid, 1440 → 375)
 
@@ -198,7 +184,7 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 
 ### 5.5 Tag / chip
 
-- Mono 12px, 700, +0.14em, uppercase, padding `7px 12px`, 1px `--line-2` border, `rgba(bg,.6)` with `backdrop-filter: blur(6px)`.
+- Mono 12px, 700, +0.14em, uppercase, padding `7px 12px`, 1px `--line-2` border, solid `--surface-2` background. **No `backdrop-filter` / blur**: it counts as glassmorphism (banned) and is slow on low-end phones.
 - Leading 8×8px **square** in `--accent` that blinks (`steps(1)`, 1.1s) for "live" items; static for everything else.
 
 ### 5.6 Frames & cards
@@ -223,7 +209,7 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 |---|---|---|
 | Nav | Mono label + index | Underline scaleX from the left |
 | Prose | `--fg` + 1px accent underline | Text turns accent, underline 2px |
-| Card / inline CTA | `--fg` with an accent bottom gradient 1px tall | Gradient grows to 100% height (fill), text turns `--ink` |
+| Card / inline CTA | `--fg` with a solid 1px `--accent` underline (a `::after` bar, no gradient) | The bar `scaleY`s from the bottom to full height (fill), text turns `--ink` |
 | External | Trailing `↗` | Arrow moves `(3px,-3px)` |
 | Internal / next | Trailing `→` | Arrow moves `4px` right |
 | Footer | Mono 700, `--fg` | Turns `--accent` |
@@ -334,7 +320,8 @@ With reduced motion: skip the loader entirely, render ASCII canvases as a static
 - ❌ Set paragraphs, long lists or tables in monospace.
 - ❌ Put ASCII art, dot grids or animated canvases behind readable text.
 - ❌ Use ALL-CAPS for sentences or content headings longer than about 4 words.
-- ❌ Use rounded corners, drop shadows or gradients (the only gradient is the 1px link underline).
+- ❌ Use rounded corners, drop shadows or gradients. **No gradients anywhere**: underlines are solid Volt (`text-decoration` or a solid `::after` bar). The only exception is the background dot grid, which uses `radial-gradient()` purely to draw hard-edged dots, never a colour blend.
+- ❌ Use `backdrop-filter` / blur or translucent "glass" surfaces. Use solid `--surface` / `--surface-2` fills.
 - ❌ Use more than one accent per screen, or accent colour for large body text.
 - ❌ Show the loader on every navigation or block content behind it.
 - ❌ Hide the native cursor in forms and text fields.
