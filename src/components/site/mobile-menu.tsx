@@ -9,13 +9,32 @@ import { cn } from "@/lib/utils"
 import { isCurrent, navItems, pad, siteName } from "./nav"
 import { Wordmark } from "./wordmark"
 
-/** Two 2px bars; `open` turns them into an ×. DESIGN.md §5.1. */
+/**
+ * Two 2px bars that morph into an × (DESIGN.md §5.1). Transform only: both bars
+ * sit on the centre line, 3px apart when closed, rotated when open.
+ * The × inside the sheet starts as bars and morphs as the sheet wipes in and out.
+ */
 function BurgerBars({ open }: { open: boolean }) {
-  const bar = "absolute left-1/2 h-0.5 w-5 -translate-x-1/2 bg-current"
+  const bar =
+    "absolute top-1/2 left-1/2 -mt-px h-0.5 w-5 -translate-x-1/2 bg-current transition-[translate,rotate] duration-(--dur) ease-out-expo"
   return (
     <span aria-hidden="true" className="relative block size-5">
-      <span className={cn(bar, open ? "top-1/2 -translate-y-1/2 rotate-45" : "top-[6px]")} />
-      <span className={cn(bar, open ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-[6px]")} />
+      <span
+        className={cn(
+          bar,
+          open
+            ? "rotate-45 delay-150 group-data-starting-style/sheet:-translate-y-[3px] group-data-starting-style/sheet:rotate-0 group-data-ending-style/sheet:-translate-y-[3px] group-data-ending-style/sheet:rotate-0 group-data-ending-style/sheet:delay-0"
+            : "-translate-y-[3px]"
+        )}
+      />
+      <span
+        className={cn(
+          bar,
+          open
+            ? "-rotate-45 delay-150 group-data-starting-style/sheet:translate-y-[3px] group-data-starting-style/sheet:rotate-0 group-data-ending-style/sheet:translate-y-[3px] group-data-ending-style/sheet:rotate-0 group-data-ending-style/sheet:delay-0"
+            : "translate-y-[3px]"
+        )}
+      />
     </span>
   )
 }
@@ -23,7 +42,7 @@ function BurgerBars({ open }: { open: boolean }) {
 /**
  * Below 820px: full-screen Sage sheet with huge uppercase items, bottom-aligned,
  * each with a mono index in ink. Base UI Dialog gives focus trap, Escape and scroll lock.
- * Opens instantly for now; the clip-path wipe comes with the motion pass.
+ * The sheet wipes in and out (see SheetContent side="full").
  */
 export function MobileMenu() {
   const [open, setOpen] = React.useState(false)
@@ -33,7 +52,7 @@ export function MobileMenu() {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger
         aria-label="Open menu"
-        className="-mr-2.5 inline-flex size-11 cursor-pointer items-center justify-center text-fg hover:text-accent active:text-accent-2"
+        className="-mr-2.5 inline-flex size-11 cursor-pointer items-center justify-center text-fg transition-colors duration-(--dur-fast) hover:text-accent active:text-accent-2"
       >
         <BurgerBars open={false} />
       </SheetTrigger>

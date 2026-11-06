@@ -6,8 +6,14 @@ import { cn } from "cn"
 
 /*
  * DESIGN.md restyle: solid fills only (no backdrop blur = no glassmorphism),
- * no shadow, 0 radius. No transitions yet (animations come in a later pass;
- * the §5.1 clip-path wipe will hook into data-starting-style / data-ending-style).
+ * no shadow, 0 radius.
+ * Motion: side="full" is the §5.1 accent sheet wipe. It looks like
+ * clip-path inset(0 0 100%) to inset(0), but uses transforms only: the popup
+ * slides down from above while its content slides the opposite way by the same
+ * amount, so the content stays still and only the edge moves (0.5s --ease-io).
+ * overflow-clip, not overflow-hidden: a hidden box is still a scroll container, and
+ * Base UI's initial focus would scroll it and cancel the counter-slide.
+ * Other sides fade the backdrop and slide in from their edge.
  */
 
 function Sheet({ ...props }: SheetPrimitive.Root.Props) {
@@ -30,7 +36,11 @@ function SheetOverlay({ className, ...props }: SheetPrimitive.Backdrop.Props) {
   return (
     <SheetPrimitive.Backdrop
       data-slot="sheet-overlay"
-      className={cn("fixed inset-0 z-50 bg-bg", className)}
+      className={cn(
+        "fixed inset-0 z-50 bg-bg transition-opacity duration-(--dur) ease-out-expo",
+        "data-starting-style:opacity-0 data-ending-style:opacity-0",
+        className
+      )}
       {...props}
     />
   )
@@ -46,12 +56,21 @@ function SheetContent({
 }) {
   return (
     <SheetPortal>
-      <SheetOverlay />
+      {/* The full sheet covers everything itself; a backdrop would blank the page before the wipe. */}
+      {side === "full" ? null : <SheetOverlay />}
       <SheetPrimitive.Popup
         data-slot="sheet-content"
         data-side={side}
+        data-lenis-prevent=""
         className={cn(
-          "fixed z-50 flex flex-col bg-surface text-fg outline-none",
+          "group/sheet fixed z-50 flex flex-col overflow-clip bg-surface text-fg outline-none",
+          "transition-transform duration-(--dur) ease-out-expo",
+          "data-[side=full]:duration-500 data-[side=full]:ease-(--ease-io)",
+          "data-[side=full]:data-starting-style:-translate-y-full data-[side=full]:data-ending-style:-translate-y-full",
+          "data-[side=top]:data-starting-style:-translate-y-full data-[side=top]:data-ending-style:-translate-y-full",
+          "data-[side=bottom]:data-starting-style:translate-y-full data-[side=bottom]:data-ending-style:translate-y-full",
+          "data-[side=left]:data-starting-style:-translate-x-full data-[side=left]:data-ending-style:-translate-x-full",
+          "data-[side=right]:data-starting-style:translate-x-full data-[side=right]:data-ending-style:translate-x-full",
           "data-[side=full]:inset-0",
           "data-[side=top]:inset-x-0 data-[side=top]:top-0 data-[side=top]:border-b",
           "data-[side=bottom]:inset-x-0 data-[side=bottom]:bottom-0 data-[side=bottom]:border-t",
@@ -61,7 +80,13 @@ function SheetContent({
         )}
         {...props}
       >
-        {children}
+        {side === "full" ? (
+          <div className="flex min-h-0 flex-1 flex-col transition-transform duration-500 ease-(--ease-io) group-data-starting-style/sheet:translate-y-full group-data-ending-style/sheet:translate-y-full">
+            {children}
+          </div>
+        ) : (
+          children
+        )}
       </SheetPrimitive.Popup>
     </SheetPortal>
   )

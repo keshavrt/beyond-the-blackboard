@@ -32,9 +32,9 @@ export function BackToCareers({ label }: { label: string }) {
       <ArrowLeft
         aria-hidden="true"
         strokeWidth={2.25}
-        className="size-4 transition-transform duration-(--dur) ease-out-expo group-hover/back:-translate-x-1"
+        className="size-4 transition-transform duration-(--dur) ease-out-expo group-hover/back:-translate-x-1 group-focus-visible/back:-translate-x-1"
       />
-      {label}
+      <span className="link-line">{label}</span>
     </Link>
   )
 }

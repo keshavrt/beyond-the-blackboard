@@ -164,7 +164,7 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 - Hover/active: a 1px `--accent` underline that `scaleX`s in from the left (and exits to the right), 0.5s `--ease`.
 - Behaviour: hides on scroll down (`translateY(-110%)`) and returns on scroll up. Once scrolled, it becomes solid `--bg` with a `--line` bottom border.
 - Logo hover: `rotate(-6deg) scale(1.06)`.
-- **Mobile (< 820px):** a burger made of two 2px bars that morph into an ×. The menu is a full-screen **accent sheet** revealed with `clip-path: inset(0 0 100%) → inset(0)` (0.8s in-out). Items are huge sentence-case sans display text, bottom-aligned, each with a mono `01`–`04` index in `--ink`.
+- **Mobile (< 820px):** a burger made of two 2px bars that morph into an ×. The menu is a full-screen **accent sheet** revealed with a top-to-bottom wipe that looks like `clip-path: inset(0 0 100%) → inset(0)` (0.5s `--ease-io`, see §7 Sheet / menu). Items are huge sentence-case sans display text, bottom-aligned, each with a mono `01`–`04` index in `--ink`.
 
 ### 5.2 Section header (numbering style)
 
@@ -205,7 +205,7 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 - 1px `--line` border, 0 radius, `--bg` or `--surface` fill.
 - **Corner handles:** 5×5px `--fg` squares on the four corners (like selection handles in a design tool).
 - Art/media area on top, then a `--line` divider, then content with `clamp(20px,2vw,28px)` padding.
-- Hover: the art "lifts" (`translateY(-10px)`, 0.9s) and dashed SVG strokes start marching (`stroke-dashoffset` loop). The title turns `--accent`.
+- Hover: the art "lifts" (`translateY(-10px)`, 0.6s) and dashed SVG strokes start marching (`stroke-dashoffset` loop). The title turns `--accent`.
 - Grid/tile variant (directories, partner lists, quick links): tiles share hairline borders with no gaps. On hover an `--accent` sheet wipes up from the bottom, content flips to `--ink`, and `↗` slides in at the top-right. Each tile carries a mono `type-code` file-tab label in its top-left corner.
 
 ### 5.7 Accordion (FAQ)
@@ -272,23 +272,25 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 
 ## 7. Motion
 
+> Decision (2026-11-06): **0.6s is the longest duration anywhere except the loader.** The mobile menu wipe is 0.5s and the reveal stagger is 60ms. The original 0.8 to 1.2s values felt slow on a site students navigate a lot. Blink loops (1 to 1.1s) are an on/off rhythm, not movement, and are not covered by the cap.
+
 ### Tokens
 ```css
 --ease:    cubic-bezier(.19, 1, .22, 1);   /* expo-out: reveals, hovers */
 --ease-io: cubic-bezier(.77, 0, .175, 1);  /* in-out: sheets, wipes, menu */
---dur-fast: .3s;  --dur: .5s;  --dur-slow: .9s;  --dur-reveal: 1.1s;
+--dur-fast: .3s;  --dur: .5s;  --dur-slow: .6s;  --dur-reveal: .6s;  /* .6s = cap (loader excepted) */
 ```
 
 ### Patterns
 
 | Pattern | Spec |
 |---|---|
-| **Reveal** | `opacity 0 → 1`, `translateY(40px) → 0`, 1s/1.2s `--ease`, triggered by IntersectionObserver (adds `.in`). Siblings stagger by 0.1s. |
-| **Decode headline** | `clip-path: inset(0 0 100%) → inset(0 0 -10%)` plus `translateY(.35em) → 0`, 1.1s. Used on section titles. |
-| **Hero lines** | Each word is masked in its line and slides `translateY(110%) → 0`, 1.2s, 0.08s stagger. The hero footer follows with a 0.3s delay. |
-| **Fill wipe** | `scaleY(0→1)` from `bottom`, 0.6s `--ease`, on buttons and tiles. |
+| **Reveal** | `opacity 0 → 1`, `translateY(40px) → 0`, 0.6s `--ease`, once, triggered by IntersectionObserver. Siblings that enter together stagger by 60ms. Section headers and cards only, never paragraphs. Elements already on screen at load don't animate. |
+| **Decode headline** | `clip-path: inset(0 0 100%) → inset(0 0 -10%)` plus `translateY(.35em) → 0`, 0.6s. Used on section titles. |
+| **Hero lines** | Each word is masked in its line and slides `translateY(110%) → 0`, 0.6s, 0.08s stagger. The hero footer follows with a 0.3s delay. |
+| **Fill wipe** | `scaleY(0→1)` from `bottom`, 0.6s `--ease`, on buttons and tiles. Retreats faster, 0.3s. |
 | **Underline** | `scaleX(0→1)`, origin left on enter and right on exit, 0.5s. |
-| **Sheet / menu** | `clip-path` inset, 0.8s `--ease-io`. |
+| **Sheet / menu** | Wipe, 0.5s `--ease-io`, in and out. Built from transforms only: the sheet slides `translateY(-100%) → 0` while its content slides the opposite way, so it looks like a `clip-path` inset wipe. |
 | **Blink** | `@keyframes blink { 50% { opacity: 0 } }`, `steps(1)` at 1–1.1s. Used for cursors and live dots. |
 | **Dash march** | `stroke-dasharray: 4 5`, offset loop 1.6s linear, runs on hover only. |
 | **ASCII canvas** | Characters re-sample toward the target image. A scroll-pinned section (sticky, about 4 screens tall) can morph through words, e.g. `ASK → LEARN → BUILD`. Pause when off-screen. |
@@ -296,7 +298,7 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 
 ### Loading screen ("boot sequence")
 
-Show it **only on the first visit per session** (store a flag in `sessionStorage`), cap it at about 1.8s, and allow skipping with any key or click.
+Show it **only on the first visit per session** (store a flag in `sessionStorage`), cap it at about 1.5s, and allow skipping with any key or click (a skip fades it out in 0.2s). The loader is the only thing allowed past the 0.6s cap.
 
 1. Full-screen `--bg`, accent text, mono 12px/1.55, padded by `--gx`.
 2. A terminal log types out top-left (max 560px wide):
@@ -313,7 +315,7 @@ Show it **only on the first visit per session** (store a flag in `sessionStorage
 3. A 14px progress bar (1px accent border at 40% opacity, accent fill) with labels `LOAD · READ · GO` spread underneath.
 4. A giant percentage counter (`clamp(64px,14vw,220px)`, weight 800, -0.06em) pinned bottom-right.
 5. At 100%, the log and counter fade (0.25s) and the site name appears centred, first as accent text and then **boxed** (accent bg, ink text).
-6. Exit: an accent sheet wipes up (`scaleY` bottom→top→off, 1.1s `--ease-io`) and the hero lines animate in behind it.
+6. Exit: an accent sheet wipes up (`scaleY` bottom→top→off: covers in 0.22s, clears in 0.3s, `--ease-io`) and the hero lines animate in behind it.
 7. While loading, `body.is-loading { overflow: hidden }`. The loader carries `aria-hidden`, and real content is in the DOM from the start (no SEO or a11y gating).
 
 ### Reduced motion

@@ -9,7 +9,7 @@ import { isCurrent, navItems, pad } from "./nav"
 /**
  * DESIGN.md §5.1: mono labels with a Sage index prefix (`01 HOME`).
  * Current page: aria-current + fg text + Sage underline bar.
- * Hover: underline bar appears. (The scaleX wipe arrives with the motion pass.)
+ * Hover/focus: the bar scaleX-es in from the left and leaves to the right (§7 Underline).
  */
 export function NavLinks() {
   const pathname = usePathname()
@@ -24,7 +24,7 @@ export function NavLinks() {
               aria-current={current ? "page" : undefined}
               className={cn(
                 "group/nav relative inline-flex min-h-11 items-center gap-2 px-3 type-label",
-                "text-mute hover:text-fg active:text-accent-2",
+                "text-mute transition-colors duration-(--dur-fast) ease-out-expo hover:text-fg focus-visible:text-fg active:text-accent-2",
                 "aria-[current=page]:text-fg"
               )}
             >
@@ -33,8 +33,10 @@ export function NavLinks() {
               <span
                 aria-hidden="true"
                 className={cn(
-                  "absolute inset-x-3 bottom-2 h-px bg-accent",
-                  current ? "opacity-100" : "opacity-0 group-hover/nav:opacity-100"
+                  "absolute inset-x-3 bottom-2 h-px bg-accent transition-transform duration-(--dur) ease-out-expo",
+                  current
+                    ? "scale-x-100"
+                    : "origin-right scale-x-0 group-hover/nav:origin-left group-hover/nav:scale-x-100 group-focus-visible/nav:origin-left group-focus-visible/nav:scale-x-100"
                 )}
               />
             </Link>

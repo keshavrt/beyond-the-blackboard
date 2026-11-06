@@ -63,7 +63,8 @@ function PathStrip({ path }: { path: Career["path"] }) {
 
 /**
  * Whole card is one link (stretched ::after), so it is a single 44px+ tap target.
- * Hover: border emphasis + title turns Sage. Focus-visible: Sage ring around the card.
+ * Hover: border emphasis, title turns Sage, Sage fill rises in the arrow box.
+ * Focus-visible: Sage ring around the card and the same fill.
  */
 export function CareerCard({
   career,
@@ -78,7 +79,7 @@ export function CareerCard({
   return (
     <Card
       className={cn(
-        "mt-3 hover:border-line-2 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-4 has-[a:focus-visible]:outline-accent has-[a:active]:bg-surface-2",
+        "fill-host mt-3 hover:border-line-2 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-4 has-[a:focus-visible]:outline-accent has-[a:active]:bg-surface-2",
         className
       )}
     >
@@ -87,7 +88,7 @@ export function CareerCard({
       </CardTab>
       <CardHeader>
         <CardTitle className="group-hover/card:text-accent">
-          <h3>
+          <h3 className="text-inherit">
             <Link
               href={`/careers/${career.slug}`}
               className="outline-none after:absolute after:inset-0 after:content-['']"
@@ -148,9 +149,12 @@ export function CareerCard({
         </dl>
         <span
           aria-hidden="true"
-          className="inline-flex size-11 items-center justify-center border border-line-2 text-fg transition-colors duration-(--dur-fast) ease-out-expo group-hover/card:border-accent group-hover/card:bg-accent group-hover/card:text-ink"
+          className="fill-rise inline-flex size-11 items-center justify-center border border-line-2 text-fg transition-colors duration-(--dur-fast) ease-out-expo [--fill:var(--accent)] group-hover/card:border-accent group-hover/card:text-ink group-has-[a:focus-visible]/card:border-accent group-has-[a:focus-visible]/card:text-ink"
         >
-          <ArrowRight className="size-4" strokeWidth={2.25} />
+          <ArrowRight
+            className="size-4 transition-transform duration-(--dur) ease-out-expo group-hover/card:translate-x-1 group-has-[a:focus-visible]/card:translate-x-1"
+            strokeWidth={2.25}
+          />
         </span>
       </CardFooter>
     </Card>

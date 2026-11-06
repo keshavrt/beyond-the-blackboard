@@ -73,7 +73,7 @@ function CardGrid({ list, labelledBy }: { list: ExplorerItem[]; labelledBy?: str
       className="grid grid-cols-1 gap-x-[clamp(16px,2.4vw,36px)] gap-y-8 sm:grid-cols-2 lg:grid-cols-3"
     >
       {list.map((c) => (
-        <li key={c.slug} className="row-span-4 grid grid-rows-subgrid gap-0">
+        <li key={c.slug} data-reveal="" className="row-span-4 grid grid-rows-subgrid gap-0">
           {c.card}
         </li>
       ))}

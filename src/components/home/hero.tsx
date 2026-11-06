@@ -1,3 +1,4 @@
+import * as React from "react"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
@@ -8,8 +9,9 @@ const copy = homePageCopy.hero
 /**
  * DESIGN.md §5.9 hero: overline motif, display title with one boxed word,
  * then a footer row above a hairline (copy left, CTA right).
- * The cursor is static for now (blink comes with the motion pass) and shows from 640px:
- * on phones the boxed word fills the line.
+ * Motion (DESIGN.md §7 "Hero lines"): every word slides up inside its own mask,
+ * 80ms apart; the footer row follows 0.3s later. The block cursor blinks and shows
+ * from 640px only: on phones the boxed word fills the line.
  */
 export function Hero({
   stats,
@@ -21,13 +23,14 @@ export function Hero({
     [stats.streams, copy.stats.streams],
     [stats.interests, copy.stats.interests],
   ] as const
+  const words = copy.title.split(" ")
 
   return (
     <section
       aria-labelledby="hero-title"
       className="flex min-h-[max(640px,calc(100svh-81px))] flex-col px-gx pt-[clamp(48px,10vh,92px)] pb-10 md:pb-12"
     >
-      <p className="type-label text-mute md:text-[13px]">
+      <p className="hero-fade type-label text-mute md:text-[13px]">
         {copy.overline} <span className="text-accent">{copy.overlineKey}</span>
       </p>
 
@@ -37,17 +40,33 @@ export function Hero({
         id="hero-title"
         className="mt-6 type-display-xl text-fg max-sm:text-[length:min(56px,16vw)] md:mt-10"
       >
-        <span className="block">{copy.title}</span>
-        <span className="mt-[0.06em] inline-block bg-accent px-[0.08em] pt-[0.02em] pb-[0.1em] leading-none text-ink">
-          {copy.titleHighlight}
+        <span className="block">
+          {words.map((word, i) => (
+            <React.Fragment key={i}>
+              {i > 0 ? " " : null}
+              <span className="hero-mask">
+                <span className="hero-word" style={{ "--i": i } as React.CSSProperties}>
+                  {word}
+                </span>
+              </span>
+            </React.Fragment>
+          ))}
+        </span>{" "}
+        <span className="hero-mask">
+          <span
+            className="hero-word mt-[0.06em] inline-block bg-accent px-[0.08em] pt-[0.02em] pb-[0.1em] leading-none text-ink"
+            style={{ "--i": words.length } as React.CSSProperties}
+          >
+            {copy.titleHighlight}
+          </span>
         </span>
         <span
           aria-hidden="true"
-          className="ml-[0.12em] hidden h-[0.72em] w-[0.36em] translate-y-[0.02em] bg-accent sm:inline-block"
+          className="hero-cursor ml-[0.12em] hidden h-[0.72em] w-[0.36em] translate-y-[0.02em] bg-accent sm:inline-block"
         />
       </h1>
 
-      <div className="mt-auto pt-16">
+      <div className="hero-fade mt-auto pt-16 [--d:300ms]">
         <div className="grid gap-8 border-t border-line pt-8 md:grid-cols-[minmax(0,640px)_auto] md:items-end md:justify-between md:gap-12">
           <div>
             <p className="max-w-[640px] type-lead text-fg-body">{copy.purpose}</p>

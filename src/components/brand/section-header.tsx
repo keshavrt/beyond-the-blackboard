@@ -44,7 +44,7 @@ export function SectionHeader({
   const sizeClass =
     size === "xl" ? "type-display-xl" : size === "l" ? "type-display-l" : "type-h2"
   return (
-    <div className={cn("flex items-start gap-4 md:gap-6", className)}>
+    <div data-reveal="" className={cn("flex items-start gap-4 md:gap-6", className)}>
       <SectionIndex index={index} className="mt-[0.35em] shrink-0" />
       <Tag id={id} className={cn(sizeClass, "text-fg")}>
         {title}

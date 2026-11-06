@@ -1,9 +1,20 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "lenis/dist/lenis.css";
 
 /* Dark is the only theme for now (DESIGN.md §2). */
 @custom-variant dark (&:is(.dark *));
+
+/* Hover only for real mouse pointers: touch taps must not leave hover states stuck.
+   Overrides Tailwind's built-in `hover`, so group-hover / peer-hover follow too. */
+@custom-variant hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
+}
 
 /* ------------------------------------------------------------------
    1. DESIGN.md tokens (§2, §6, §7, §9) — the single source of truth
@@ -42,8 +53,8 @@
   --ease-io: cubic-bezier(0.77, 0, 0.175, 1);
   --dur-fast: 0.3s;
   --dur: 0.5s;
-  --dur-slow: 0.9s;
-  --dur-reveal: 1.1s;
+  --dur-slow: 0.6s;
+  --dur-reveal: 0.6s; /* cap: nothing but the loader runs longer than 0.6s */
 
   /* Font roles */
   --font-display: var(--font-geist-sans);
@@ -389,9 +400,11 @@
       color var(--dur-fast) var(--ease),
       text-decoration-thickness var(--dur-fast) var(--ease);
   }
-  .prose a:hover {
-    color: var(--accent);
-    text-decoration-thickness: 2px;
+  @media (hover: hover) and (pointer: fine) {
+    .prose a:hover {
+      color: var(--accent);
+      text-decoration-thickness: 2px;
+    }
   }
   .prose a:active {
     color: var(--accent-2);
@@ -502,5 +515,372 @@
   }
   .prose .callout p {
     margin: 0;
+  }
+}
+
+/* ------------------------------------------------------------------
+   6. Motion (DESIGN.md §7). Transform and opacity only. Hover is gated
+      to fine pointers; reduced motion gets final states with no movement.
+   ------------------------------------------------------------------ */
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Live chip dot (§5.5). */
+[data-live] {
+  animation: blink 1.1s steps(1) infinite;
+}
+
+@layer components {
+  /* Fill wipe (§5.4, §7): a layer rises from the bottom behind the label.
+     Colour via --fill. Trigger: the element itself, or a .fill-host ancestor. */
+  .fill-rise {
+    position: relative;
+    isolation: isolate;
+  }
+  .fill-rise::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--fill, var(--fg));
+    transform: scaleY(0);
+    transform-origin: bottom;
+    /* Leaving snaps back faster (0.3s) than the 0.6s rise. */
+    transition: transform var(--dur-fast) var(--ease);
+    pointer-events: none;
+  }
+  .fill-rise:focus-visible::before,
+  .fill-host:has(:focus-visible) .fill-rise::before {
+    transform: scaleY(1);
+    transition-duration: 0.6s;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .fill-rise:hover::before,
+    .fill-host:hover .fill-rise::before {
+      transform: scaleY(1);
+      transition-duration: 0.6s;
+    }
+  }
+  .fill-rise:disabled::before,
+  .fill-rise[data-disabled]::before,
+  .fill-rise[aria-disabled="true"]::before {
+    display: none;
+  }
+
+  /* Underline (§7): grows from the left, leaves to the right. */
+  .link-line {
+    position: relative;
+  }
+  .link-line::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -3px;
+    height: 1px;
+    background-color: var(--accent);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--dur) var(--ease);
+    pointer-events: none;
+  }
+  :focus-visible > .link-line::after,
+  [aria-current="page"] > .link-line::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    :hover > .link-line::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+  }
+
+  /* Header (§5.1): hides on scroll down, returns on scroll up or keyboard focus. */
+  .site-header {
+    transition: transform var(--dur-fast) var(--ease);
+  }
+  .site-header[data-hidden="true"]:not(:focus-within) {
+    transform: translateY(-110%);
+  }
+
+  /* Hero lines (§7): each word slides up inside its own mask.
+     inline-grid (not inline-block) keeps the text baseline with overflow clipped,
+     so the masked title has the same layout as plain text. The padding plus a
+     matching negative margin gives ascenders and the "y" in "Beyond" room
+     without changing the line box. */
+  .hero-mask {
+    display: inline-grid;
+    overflow: clip;
+    padding-block: 0.1em 0.16em;
+    margin-block: -0.1em -0.16em;
+  }
+  .hero-word {
+    animation: hero-up var(--dur-reveal) var(--ease) both;
+    animation-delay: calc(var(--i, 0) * 80ms);
+  }
+  .hero-fade {
+    animation: hero-fade var(--dur-reveal) var(--ease) both;
+    animation-delay: var(--d, 0ms);
+  }
+  .hero-cursor {
+    animation:
+      hero-show 0.2s linear 0.7s both,
+      blink 1s steps(1) 1.4s infinite;
+  }
+
+  /* Scroll reveals ([data-reveal]) are driven from motion-effects.tsx with the
+     Web Animations API, so they never touch attributes React hydrates. */
+}
+
+/* 110% of the word, plus the mask's extra bottom room, so nothing peeks on frame one. */
+@keyframes hero-up {
+  from {
+    transform: translateY(calc(110% + 0.16em));
+  }
+}
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+@keyframes hero-show {
+  from {
+    opacity: 0;
+  }
+}
+
+/* The loader holds the hero until its sheet starts wiping away. */
+html[data-boot="run"] :is(.hero-word, .hero-fade, .hero-cursor) {
+  animation-play-state: paused;
+}
+
+/* ------------------------------------------------------------------
+   7. Boot loader (DESIGN.md §7 "Loading screen"). Shown or not is decided
+      before first paint by the inline script in layout.tsx. Pure CSS
+      timeline, about 1.5s: log 0 to 0.7s, progress 0 to 0.85s, name 0.86s,
+      boxed 0.94s, sheet covers 0.98 to 1.2s, wipes up and away by 1.5s.
+   ------------------------------------------------------------------ */
+@property --boot-p {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
+}
+
+.boot {
+  display: none;
+}
+html[data-boot] {
+  overflow: hidden;
+  /* Keeps the scrollbar's space while scrolling is locked: no sideways jump. */
+  scrollbar-gutter: stable;
+}
+html[data-boot] .boot {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  cursor: default;
+}
+.boot-bg {
+  position: absolute;
+  inset: 0;
+  background-color: var(--bg);
+}
+.boot-ui {
+  position: absolute;
+  inset: 0;
+  padding: clamp(24px, 6vh, 64px) var(--gx);
+  font-family: var(--font-code);
+  font-size: 12px;
+  line-height: 1.55;
+  font-variant-ligatures: none;
+  color: var(--accent);
+  animation: boot-hide 0.2s linear 0.86s forwards;
+}
+.boot-log {
+  max-width: 560px;
+}
+.boot-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  white-space: pre;
+  animation: boot-show 0.01s steps(1) both;
+  animation-delay: var(--d);
+}
+.boot-ok {
+  color: var(--fg);
+  animation: boot-show 0.01s steps(1) both;
+  animation-delay: calc(var(--d) + 70ms);
+}
+.boot-bar {
+  margin-top: 28px;
+  max-width: 560px;
+  height: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  padding: 2px;
+}
+.boot-bar-fill {
+  display: block;
+  height: 100%;
+  background-color: var(--accent);
+  transform-origin: left;
+  animation: boot-bar 0.85s linear both;
+}
+.boot-labels {
+  display: flex;
+  justify-content: space-between;
+  max-width: 560px;
+  margin-top: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+.boot-pct {
+  position: absolute;
+  right: var(--gx);
+  bottom: clamp(16px, 4vh, 40px);
+  font-family: var(--font-display);
+  font-size: clamp(64px, 14vw, 220px);
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+  counter-reset: boot var(--boot-p);
+  animation: boot-count 0.85s linear both;
+}
+.boot-pct::before {
+  content: counter(boot) "%";
+}
+.boot-name {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding-inline: var(--gx);
+  font-family: var(--font-display);
+  font-size: clamp(24px, 4vw, 48px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  text-align: center;
+}
+.boot-name > span {
+  grid-area: 1 / 1;
+  padding: 0.12em 0.2em 0.18em;
+}
+.boot-name-text {
+  color: var(--accent);
+  animation: boot-show 0.12s linear 0.86s both;
+}
+.boot-name-box {
+  background-color: var(--accent);
+  color: var(--ink);
+  animation: boot-show 0.01s steps(1) 0.94s both;
+}
+.boot-sheet {
+  position: absolute;
+  inset: 0;
+  background-color: var(--accent);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  animation: boot-cover 0.22s var(--ease-io) 0.98s both;
+}
+/* The sheet has covered: drop the loader behind it, then wipe up and away. */
+html[data-boot="out"] :is(.boot-bg, .boot-ui, .boot-name) {
+  visibility: hidden;
+}
+html[data-boot="out"] .boot {
+  pointer-events: none;
+}
+html[data-boot="out"] .boot-sheet {
+  transform-origin: top;
+  animation: boot-uncover 0.3s var(--ease-io) forwards;
+}
+/* Skipped (click or key): a quick fade, no sheet. */
+html[data-boot="skip"] .boot {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s var(--ease);
+}
+
+@keyframes boot-show {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes boot-hide {
+  to {
+    opacity: 0;
+  }
+}
+/* Uneven stops so it reads as real work, not a timer. Bar and counter share them. */
+@keyframes boot-bar {
+  0% {
+    transform: scaleX(0);
+  }
+  25% {
+    transform: scaleX(0.31);
+  }
+  45% {
+    transform: scaleX(0.48);
+  }
+  70% {
+    transform: scaleX(0.79);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+@keyframes boot-count {
+  0% {
+    --boot-p: 0;
+  }
+  25% {
+    --boot-p: 31;
+  }
+  45% {
+    --boot-p: 48;
+  }
+  70% {
+    --boot-p: 79;
+  }
+  100% {
+    --boot-p: 100;
+  }
+}
+@keyframes boot-cover {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes boot-uncover {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(0);
+  }
+}
+
+/* Reduced motion: final states, no movement, no blinking, no reveals, no loader. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-word,
+  .hero-fade,
+  .hero-cursor,
+  [data-live] {
+    animation: none !important;
+  }
+  .boot {
+    display: none !important;
   }
 }

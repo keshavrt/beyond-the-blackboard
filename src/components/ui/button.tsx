@@ -3,12 +3,14 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { ArrowRight, ArrowUpRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-/* DESIGN.md §5.4: sharp, sans label, Sage primary, ≥44px targets. */
+/* DESIGN.md §5.4: sharp, sans label, Sage primary, ≥44px targets.
+   Hover/focus: a fill layer rises from the bottom (.fill-rise, colour via --fill).
+   Press: a subtle scale for feedback on touch, where there is no hover. */
 const buttonVariants = cva(
   [
-    "group/button relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2.5 border border-transparent",
+    "group/button fill-rise inline-flex shrink-0 cursor-pointer items-center justify-center gap-2.5 border border-transparent",
     "font-sans font-semibold tracking-[-0.005em] whitespace-nowrap select-none",
-    "transition-[color,background-color,border-color] duration-(--dur-fast) ease-out-expo",
+    "[transition:color_var(--dur-fast)_var(--ease),background-color_var(--dur-fast)_var(--ease),border-color_var(--dur-fast)_var(--ease),scale_160ms_var(--ease)] active:scale-[0.97]",
     "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent",
     "disabled:pointer-events-none data-disabled:pointer-events-none aria-disabled:pointer-events-none",
     "aria-invalid:border-danger",
@@ -18,28 +20,28 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: [
-          "bg-accent text-ink",
-          "hover:bg-fg active:bg-accent-2",
+          "bg-accent text-ink [--fill:var(--fg)]",
+          "active:bg-accent-2 active:[--fill:var(--accent-2)]",
           "disabled:border-line disabled:bg-surface-2 disabled:text-dim",
           "data-disabled:border-line data-disabled:bg-surface-2 data-disabled:text-dim",
         ],
         outline: [
           "border-line-2 bg-transparent text-fg",
-          "hover:border-accent hover:bg-surface-2 active:bg-surface aria-expanded:border-accent",
+          "[--fill:var(--surface-2)] hover:border-accent focus-visible:border-accent active:[--fill:var(--surface)] aria-expanded:border-accent",
           "disabled:border-line disabled:text-dim data-disabled:border-line data-disabled:text-dim",
         ],
         ghost: [
           "bg-transparent text-fg",
-          "hover:bg-surface-2 active:bg-surface aria-expanded:bg-surface-2",
+          "[--fill:var(--surface-2)] active:[--fill:var(--surface)] aria-expanded:bg-surface-2",
           "disabled:text-dim data-disabled:text-dim",
         ],
         destructive: [
           "border-danger bg-transparent text-danger",
-          "hover:bg-danger hover:text-ink active:opacity-90",
+          "[--fill:var(--danger)] hover:text-ink focus-visible:text-ink active:opacity-90",
           "disabled:border-line disabled:text-dim data-disabled:border-line data-disabled:text-dim",
         ],
         link: [
-          "min-h-11 px-0 text-fg underline decoration-accent decoration-1 underline-offset-[3px]",
+          "min-h-11 px-0 text-fg before:hidden active:scale-100 underline decoration-accent decoration-1 underline-offset-[3px]",
           "hover:text-accent hover:decoration-2 active:text-accent-2",
           "disabled:text-dim disabled:decoration-dim data-disabled:text-dim",
         ],
@@ -97,8 +99,8 @@ function ButtonArrowIcon({ arrow }: { arrow: ButtonArrow }) {
       className={cn(
         "transition-transform duration-(--dur) ease-out-expo",
         arrow === "external"
-          ? "group-hover/button:translate-x-[3px] group-hover/button:-translate-y-[3px]"
-          : "group-hover/button:translate-x-1"
+          ? "group-hover/button:translate-x-[3px] group-hover/button:-translate-y-[3px] group-focus-visible/button:translate-x-[3px] group-focus-visible/button:-translate-y-[3px]"
+          : "group-hover/button:translate-x-1 group-focus-visible/button:translate-x-1"
       )}
     />
   )

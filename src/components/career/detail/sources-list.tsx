@@ -28,7 +28,7 @@ export function SourcesList({ sources, lastVerified }: { sources: Source[]; last
               <ArrowUpRight
                 aria-hidden="true"
                 strokeWidth={2.25}
-                className="size-4 shrink-0 transition-transform duration-(--dur) ease-out-expo group-hover/src:translate-x-[3px] group-hover/src:-translate-y-[3px]"
+                className="size-4 shrink-0 transition-transform duration-(--dur) ease-out-expo group-hover/src:translate-x-[3px] group-hover/src:-translate-y-[3px] group-focus-visible/src:translate-x-[3px] group-focus-visible/src:-translate-y-[3px]"
               />
               <span className="sr-only">{copy.sources.opensNewTab}</span>
             </a>

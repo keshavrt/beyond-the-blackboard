@@ -44,7 +44,7 @@ export function FeaturedCareers({
       {/* Subgrid: path, title, badges and footer line up across each row. */}
       <ul className="mt-12 grid grid-cols-1 gap-x-[clamp(16px,2.4vw,36px)] gap-y-8 md:mt-16 md:grid-cols-2 xl:grid-cols-4">
         {items.map(({ career, listIndex }) => (
-          <li key={career.slug} className="row-span-4 grid grid-rows-subgrid gap-0">
+          <li key={career.slug} data-reveal="" className="row-span-4 grid grid-rows-subgrid gap-0">
             <CareerCard
               career={career}
               index={listIndex}
