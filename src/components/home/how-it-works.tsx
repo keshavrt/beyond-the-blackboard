@@ -19,8 +19,7 @@ export function HowItWorks({ index }: { index: number }) {
       <SectionHeader
         index={index}
         id="how-title"
-        title={copy.title}
-        highlight={copy.titleHighlight}
+        title={`${copy.title} ${copy.titleHighlight}`}
       />
 
       <ol className="mt-12 grid md:mt-20 md:grid-cols-3">

@@ -3,11 +3,11 @@ import { useRender } from "@base-ui/react/use-render"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 
-/* DESIGN.md §5.5 tag/chip: mono 12/700 +0.14em, 7px 12px, line-2 border, solid surface-2. No blur. */
+/* DESIGN.md §5.5 tag/chip: sans 14/500 sentence case, 7px 10px, line-2 border, solid surface-2. No blur. */
 const badgeVariants = cva(
   [
-    "group/badge inline-flex w-fit shrink-0 items-center justify-center gap-2 border px-3 py-[7px] whitespace-nowrap",
-    "text-xs leading-none font-semibold tracking-[0.08em] uppercase",
+    "group/badge inline-flex w-fit shrink-0 items-center justify-center gap-2 border px-2.5 py-[7px] whitespace-nowrap",
+    "text-sm leading-none font-medium",
     "transition-[color,background-color,border-color] duration-(--dur-fast) ease-out-expo",
     "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent",
     "[a]:cursor-pointer [a]:hover:border-accent [a]:active:bg-surface",

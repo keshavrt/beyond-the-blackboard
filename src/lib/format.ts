@@ -11,25 +11,20 @@ export function formatINR(n: number): string {
   return inr.format(n)
 }
 
-/** Short form for tight spaces: 50000 → "50k", 100000 → "1L", 150000 → "1.5L". */
+/** Short form for tight spaces: 50000 → "50k", 56100 → "56k", 100000 → "1L", 150000 → "1.5L". */
 function compact(n: number): string {
   if (n >= 100000) return `${+(n / 100000).toFixed(1)}L`
-  return `${+(n / 1000).toFixed(1)}k`
+  return `${Math.round(n / 1000)}k`
 }
 
-/** "₹50k–1L". */
+/** "₹50k to 1L" (ranges use "to", DESIGN.md §8). */
 export function formatINRRangeShort(min: number, max: number): string {
-  return min === max ? `₹${compact(min)}` : `₹${compact(min)}–${compact(max)}`
+  return min === max ? `₹${compact(min)}` : `₹${compact(min)} to ${compact(max)}`
 }
 
-/** "5.5 yrs" or "2–3 yrs". */
+/** "5.5 years" or "2 to 3 years". Written out: students should not decode "yrs". */
 export function formatYears({ min, max }: Career["durationYears"]): string {
-  return min === max ? `${min} yrs` : `${min}–${max} yrs`
-}
-
-/** Same, written out for sentences: "5.5 years", "2–3 years". */
-export function formatYearsLong({ min, max }: Career["durationYears"]): string {
-  return min === max ? `${min} years` : `${min}–${max} years`
+  return min === max ? `${min} years` : `${min} to ${max} years`
 }
 
 /**

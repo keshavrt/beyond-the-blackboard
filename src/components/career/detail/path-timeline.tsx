@@ -53,9 +53,9 @@ export function PathTimeline({ career }: { career: Career }) {
 
             <div className="min-w-0">
               <div className="flex min-h-8 flex-wrap items-center gap-x-3 gap-y-2">
-                <span className="type-label text-fg">{copy.path.stages[key]}</span>
+                <span className="type-meta font-semibold text-fg">{copy.path.stages[key]}</span>
                 {step.optional ? <Badge variant="outline">{copy.path.optional}</Badge> : null}
-                {isCourse ? <Badge>{`≈ ${formatYears(durationYears)}`}</Badge> : null}
+                {isCourse ? <Badge>{`About ${formatYears(durationYears)}`}</Badge> : null}
               </div>
               <h3 className={cn("mt-3 type-h3", last ? "text-accent" : "text-fg")}>{step.title}</h3>
               <p className="mt-2 max-w-(--measure) type-body text-fg-body">{step.detail}</p>

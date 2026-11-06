@@ -58,8 +58,7 @@ export default function CareersPage() {
           index={1}
           as="h1"
           size="l"
-          title={copy.title}
-          highlight={copy.titleHighlight}
+          title={`${copy.title} ${copy.titleHighlight}`}
         />
         <p className="mt-6 max-w-(--measure) type-lead text-fg-body md:mt-8">
           {copy.intro(careers.length)}

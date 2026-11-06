@@ -67,9 +67,10 @@ export const homePageCopy = {
   featured: {
     title: "Featured",
     titleHighlight: "careers",
-    intro: "Four very different jobs, from a hospital to a forest. Open one to see its full path.",
+    intro: "Very different jobs, from a hospital to a forest. Open one to see its full path.",
     seeAll: "See all careers",
-    slugs: ["doctor", "software-engineer", "electrician", "forest-officer"] satisfies CareerSlug[],
+    // Phones show the first two, so these two carry the "hospital to a forest" promise.
+    slugs: ["doctor", "forest-officer", "software-engineer", "electrician"] satisfies CareerSlug[],
   },
 
   about: {

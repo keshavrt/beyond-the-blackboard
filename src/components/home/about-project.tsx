@@ -13,8 +13,7 @@ export function AboutProject({ index }: { index: number }) {
         <SectionHeader
           index={index}
           id="about-title"
-          title={copy.title}
-          highlight={copy.titleHighlight}
+          title={`${copy.title} ${copy.titleHighlight}`}
         />
         <div className="max-w-(--measure) bg-bg md:pt-2">
           {copy.paragraphs.map((p, i) => (

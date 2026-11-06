@@ -4,11 +4,11 @@ import { Toggle as TogglePrimitive } from "@base-ui/react/toggle"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 
-/* Mono label toggles; pressed = Sage fill + ink text (DESIGN.md §2 accent rules). */
+/* Sans 14px sentence-case toggles (students read these); pressed = Sage fill + ink text (DESIGN.md §2 accent rules). */
 const toggleVariants = cva(
   [
     "group/toggle inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap select-none",
-    "text-xs font-semibold tracking-[0.08em] uppercase text-mute",
+    "text-sm font-medium text-mute",
     "transition-[color,background-color,border-color] duration-(--dur-fast) ease-out-expo",
     "hover:bg-surface-2 hover:text-fg active:bg-surface",
     "aria-pressed:bg-accent aria-pressed:text-ink aria-pressed:hover:bg-accent aria-pressed:active:bg-accent-2",

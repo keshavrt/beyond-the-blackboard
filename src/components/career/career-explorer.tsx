@@ -81,11 +81,11 @@ function CardGrid({ list, labelledBy }: { list: ExplorerItem[]; labelledBy?: str
   )
 }
 
-/** Group title: mono label + count, then a hairline running to the right edge. */
+/** Group title: 14px label + count, then a hairline running to the right edge. */
 function GroupHeading({ id, title, count }: { id: string; title: string; count: number }) {
   return (
     <div className="mb-8 flex items-center gap-4">
-      <h2 id={id} className="shrink-0 type-label text-fg">
+      <h2 id={id} className="shrink-0 type-meta font-semibold text-fg">
         {title} <span className="text-accent">({count})</span>
       </h2>
       <span aria-hidden="true" className="h-px flex-1 bg-line" />
@@ -232,7 +232,7 @@ export function CareerExplorerView({
             role="status"
             aria-live="polite"
             aria-atomic="true"
-            className="flex gap-2 type-label text-balance text-fg"
+            className="flex gap-2 type-meta font-semibold text-balance text-fg"
           >
             <span className="text-accent" aria-hidden="true">
               ▮
@@ -276,9 +276,13 @@ export function CareerExplorerView({
           ) : null}
         </>
       ) : shown.length > 0 ? (
-        <div className="pt-10">
-          <CardGrid list={shown} />
-        </div>
+        <section aria-labelledby="results-title" className="pt-10">
+          {/* Keeps the outline h1 > h2 > h3 for screen-reader heading navigation. */}
+          <h2 id="results-title" className="sr-only">
+            {copy.resultsHeading}
+          </h2>
+          <CardGrid list={shown} labelledBy="results-title" />
+        </section>
       ) : (
         <div className="pt-10">
           <div className="relative border border-line bg-surface px-[clamp(20px,3vw,48px)] py-[clamp(32px,5vw,64px)]">

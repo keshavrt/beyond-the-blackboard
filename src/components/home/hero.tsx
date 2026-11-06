@@ -28,7 +28,7 @@ export function Hero({
   return (
     <section
       aria-labelledby="hero-title"
-      className="flex min-h-[max(640px,calc(100svh-81px))] flex-col px-gx pt-[clamp(48px,10vh,92px)] pb-10 md:pb-12"
+      className="flex flex-col px-gx max-md:min-h-[max(640px,calc(100svh-81px))] pt-[clamp(48px,10vh,92px)] pb-10 md:pb-12"
     >
       <p className="hero-fade type-label text-mute md:text-[13px]">
         {copy.overline} <span className="text-accent">{copy.overlineKey}</span>
@@ -66,7 +66,8 @@ export function Hero({
         />
       </h1>
 
-      <div className="hero-fade mt-auto pt-16 [--d:300ms]">
+      {/* Phones: footer sits at the screen bottom (thumb reach). Wider: a set gap, no dead band. */}
+      <div className="hero-fade mt-auto pt-16 [--d:300ms] md:mt-0 md:pt-[clamp(72px,11vh,120px)]">
         <div className="grid gap-8 border-t border-line pt-8 md:grid-cols-[minmax(0,640px)_auto] md:items-end md:justify-between md:gap-12">
           <div>
             <p className="max-w-[640px] type-lead text-fg-body">{copy.purpose}</p>
@@ -87,7 +88,7 @@ export function Hero({
           </div>
           <Button
             size="lg"
-            arrow="external"
+            arrow="internal"
             nativeButton={false}
             render={<Link href="/careers" />}
             className="w-full md:w-auto"

@@ -7,9 +7,10 @@ import { DetailSection } from "@/components/career/detail/detail-section"
 import { PathTimeline } from "@/components/career/detail/path-timeline"
 import { SalaryBlock } from "@/components/career/detail/salary-block"
 import { SourcesList } from "@/components/career/detail/sources-list"
+import { WordsToKnow } from "@/components/career/detail/words-to-know"
 import { Badge } from "@/components/ui/badge"
 import { careerDetailCopy as copy } from "@/content/career-detail"
-import { durationCountedFrom, formatYearsLong } from "@/lib/format"
+import { durationCountedFrom, formatYears } from "@/lib/format"
 import { getAllCareers, getCareerBySlug, getRelatedCareers } from "@/lib/careers"
 import type { Career } from "@/types/career"
 
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: PageProps<"/careers/[slug]">)
   if (!career) return {}
   const description = copy.meta.description(
     career.oneLiner,
-    formatYearsLong(career.durationYears),
+    formatYears(career.durationYears),
     durationCountedFrom(career),
     career.exams[0]?.name
   )
@@ -40,7 +41,7 @@ export async function generateMetadata({ params }: PageProps<"/careers/[slug]">)
 function NeedsRow({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="grid gap-x-6 gap-y-4 border-t border-line py-8 first:border-t-0 first:pt-0 last:pb-0 sm:grid-cols-[minmax(140px,24%)_1fr]">
-      <h3 className="type-label text-fg sm:pt-1">{label}</h3>
+      <h3 className="type-meta font-semibold text-fg sm:pt-0.5">{label}</h3>
       <div className="min-w-0">{children}</div>
     </div>
   )
@@ -106,7 +107,13 @@ export default async function CareerPage({ params }: PageProps<"/careers/[slug]"
         </div>
       </DetailSection>
 
-      <DetailSection id="path" index={2} title={copy.sections.path} intro={copy.path.intro}>
+      <DetailSection
+        id="path"
+        index={2}
+        title={copy.sections.path}
+        intro={copy.path.intro}
+        aside={<WordsToKnow career={career} />}
+      >
         <PathTimeline career={career} />
       </DetailSection>
 

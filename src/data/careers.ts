@@ -5,7 +5,7 @@ const VERIFIED = "2026-11-06";
 
 /** Official 7th Pay Commission pay matrix (central government). */
 const PAY_MATRIX = {
-  label: "Department of Expenditure – 7th CPC pay matrix",
+  label: "Department of Expenditure: 7th CPC pay matrix",
   url: "https://doe.gov.in/",
 };
 
@@ -258,7 +258,7 @@ export const careers: Career[] = [
     ],
     relatedSlugs: ["nurse", "police-officer", "graphic-designer"],
     sources: [
-      { label: "NCTE – ITEP and NCET information", url: "https://web.ncte.gov.in/misc/ncte_itep/page/ncet---information-2026" },
+      { label: "NCTE: ITEP and NCET information", url: "https://web.ncte.gov.in/misc/ncte_itep/page/ncet---information-2026" },
       { label: "CTET (CBSE)", url: "https://ctet.nic.in/" },
       { label: "Kendriya Vidyalaya Sangathan", url: "https://kvsangathan.nic.in/" },
       PAY_MATRIX,
@@ -390,12 +390,12 @@ export const careers: Career[] = [
       },
       {
         name: "SSC CPO",
-        fullName: "Staff Selection Commission – Central Police Organisation",
+        fullName: "Staff Selection Commission: Central Police Organisation",
         note: "For Sub-Inspector in Delhi Police and central armed police forces.",
       },
       {
         name: "UPSC CSE",
-        fullName: "Union Public Service Commission – Civil Services Examination",
+        fullName: "Union Public Service Commission: Civil Services Examination",
         note: "For IPS officers. Very competitive.",
       },
       {
@@ -425,9 +425,9 @@ export const careers: Career[] = [
     ],
     relatedSlugs: ["forest-officer", "teacher"],
     sources: [
-      { label: "UPSC – Civil Services Exam", url: "https://upsc.gov.in/" },
+      { label: "UPSC: Civil Services Exam", url: "https://upsc.gov.in/" },
       { label: "Staff Selection Commission (SSC CPO)", url: "https://ssc.gov.in/" },
-      { label: "Delhi Police – pay scales (RTI manual)", url: "https://delhipolice.gov.in/RTImanualFiles/Manual-10.pdf" },
+      { label: "Delhi Police: pay scales (RTI manual)", url: "https://delhipolice.gov.in/RTImanualFiles/Manual-10.pdf" },
       PAY_MATRIX,
     ],
     lastVerified: VERIFIED,
@@ -502,7 +502,7 @@ export const careers: Career[] = [
     relatedSlugs: ["software-engineer", "police-officer"],
     sources: [
       { label: "Directorate General of Training (DGT)", url: "https://dgt.gov.in/" },
-      { label: "Bharat Skills – Electrician trade curriculum", url: "https://bharatskills.gov.in/pdf/QP_Curriculum/CTSElectrician2017.pdf" },
+      { label: "Bharat Skills: Electrician trade curriculum", url: "https://bharatskills.gov.in/pdf/QP_Curriculum/CTSElectrician2017.pdf" },
       { label: "Apprenticeship India portal", url: "https://www.apprenticeshipindia.gov.in/" },
     ],
     lastVerified: VERIFIED,
@@ -532,7 +532,7 @@ export const careers: Career[] = [
           "Write exams like UCEED, NID DAT or NIFT. You can also join a BFA or a short design diploma.",
       },
       course: {
-        title: "B.Des or BFA (4 years), or a diploma (1–2 years)",
+        title: "B.Des or BFA (4 years), or a diploma (1 to 2 years)",
         detail:
           "Learn drawing, colour, typography and design software. Build a portfolio of your best work.",
       },
@@ -545,7 +545,7 @@ export const careers: Career[] = [
     durationYears: {
       min: 1,
       max: 4,
-      note: "Diploma: 1–2 years. B.Des or BFA: 4 years.",
+      note: "Diploma: 1 to 2 years. B.Des or BFA: 4 years.",
     },
     exams: [
       {
@@ -555,7 +555,7 @@ export const careers: Career[] = [
       },
       {
         name: "NID DAT",
-        fullName: "National Institute of Design – Design Aptitude Test",
+        fullName: "National Institute of Design: Design Aptitude Test",
         note: "For B.Des at NID campuses.",
       },
       {
@@ -660,7 +660,7 @@ export const careers: Career[] = [
     ],
     relatedSlugs: ["software-engineer", "teacher"],
     sources: [
-      { label: "ICAI – Board of Studies (CA course)", url: "https://www.icai.org/" },
+      { label: "ICAI: Board of Studies (CA course)", url: "https://www.icai.org/" },
       { label: "ICAI Campus Placement", url: "https://www.icai.org/post/campus-placement" },
     ],
     lastVerified: VERIFIED,
@@ -708,7 +708,7 @@ export const careers: Career[] = [
     exams: [
       {
         name: "CUET (ICAR-UG)",
-        fullName: "Common University Entrance Test – for ICAR undergraduate seats",
+        fullName: "Common University Entrance Test: for ICAR undergraduate seats",
         note: "For B.Sc Agriculture at ICAR-linked universities. Held by NTA.",
       },
       {
@@ -772,9 +772,9 @@ export const careers: Career[] = [
           "IFS needs a degree in a subject such as Botany, Zoology, Chemistry, Physics, Maths, Statistics, Geology, Agriculture, Forestry, Veterinary Science or Engineering.",
       },
       course: {
-        title: "Degree (3–4 years) + UPSC IFoS exam",
+        title: "Degree (3 to 4 years) + UPSC IFoS exam",
         detail:
-          "After your degree, write the UPSC Indian Forest Service exam. You must be 21–32 years old (more for some categories).",
+          "After your degree, write the UPSC Indian Forest Service exam. You must be 21 to 32 years old (more for some categories).",
       },
       job: {
         title: "Indian Forest Service Officer",
@@ -785,7 +785,7 @@ export const careers: Career[] = [
     durationYears: {
       min: 3,
       max: 4,
-      note: "Plus time to prepare for UPSC, often 1–2 years or more.",
+      note: "Plus time to prepare for UPSC, often 1 to 2 years or more.",
     },
     exams: [
       {
@@ -820,7 +820,7 @@ export const careers: Career[] = [
     ],
     relatedSlugs: ["agricultural-scientist", "police-officer"],
     sources: [
-      { label: "UPSC – Indian Forest Service Exam", url: "https://upsc.gov.in/" },
+      { label: "UPSC: Indian Forest Service Exam", url: "https://upsc.gov.in/" },
       { label: "Ministry of Environment, Forest and Climate Change", url: "https://moef.gov.in/" },
       PAY_MATRIX,
     ],

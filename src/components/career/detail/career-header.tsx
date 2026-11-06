@@ -22,7 +22,7 @@ import { BackToCareers } from "./back-to-careers"
 function Fact({ label, value, tag }: { label: string; value: string; tag?: string }) {
   return (
     <div className="flex flex-col gap-3 p-5 not-first:border-t sm:not-first:border-t-0 sm:not-first:border-l md:p-7">
-      <dt className="flex flex-wrap items-center gap-x-2 gap-y-1 type-label text-mute">
+      <dt className="flex flex-wrap items-center gap-x-2 gap-y-1 type-meta text-mute">
         {label}
         {tag ? <span className="text-warn">({tag})</span> : null}
       </dt>
@@ -67,10 +67,7 @@ export function CareerHeader({ career }: { career: Career }) {
         )}
       >
         <div>
-          <p className="type-code text-mute">
-            {`/* Last verified ${formatDate(career.lastVerified)} */`}
-          </p>
-          <h1 className="mt-4 type-display-l text-fg">{career.name}</h1>
+          <h1 className="type-display-l text-fg">{career.name}</h1>
           <p className="mt-6 max-w-(--measure) type-lead text-fg-body md:mt-8">{career.oneLiner}</p>
 
           <div className="mt-8 flex flex-wrap gap-2">
@@ -96,6 +93,7 @@ export function CareerHeader({ career }: { career: Career }) {
               ))}
             </ul>
           </div>
+          <p className="mt-6 type-meta text-balance text-mute">{copy.lastChecked(formatDate(career.lastVerified))}</p>
         </div>
         {career.image ? (
           <div className="relative aspect-4/3 overflow-hidden border border-line bg-surface">
@@ -123,9 +121,9 @@ export function CareerHeader({ career }: { career: Career }) {
           <Fact
             label={copy.facts.startPay}
             tag={career.salaryRange.approximate ? copy.facts.approx : undefined}
-            value={`${formatINRRangeShort(career.salaryRange.min, career.salaryRange.max)}/mo`}
+            value={formatINRRangeShort(career.salaryRange.min, career.salaryRange.max)}
           />
-          <Fact label={copy.facts.mainExam} value={exam ?? copy.facts.noExam} />
+          <Fact label={copy.facts.howIn} value={exam ?? copy.facts.noExam} />
         </dl>
       </div>
     </header>

@@ -23,6 +23,7 @@ export function SectionIndex({
 /**
  * `[02]  GUIDES`: index top-aligned to the title's cap height.
  * `highlight` wraps the last word in a Sage box (DESIGN.md §5.2 variant).
+ * Reserved for the hero and the 404 page: one box per site moment, not every heading.
  */
 export function SectionHeader({
   index,

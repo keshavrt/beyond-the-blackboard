@@ -12,11 +12,12 @@ export const careerDetailCopy = {
     label: "Key facts",
     studyAfter12th: "Study after 12th",
     studyAfter10th: "Study after 10th",
-    startPay: "Starting pay",
-    mainExam: "Main exam",
+    startPay: "Starting pay a month",
+    howIn: "How you get in",
     noExam: "No entrance exam",
     approx: "Approx.",
   },
+  lastChecked: (date: string): LocalizedText => `Facts last checked: ${date}`,
   streamsLabel: "Streams",
   interestsLabel: "Interests",
   anyStream: "Any stream",
@@ -53,12 +54,16 @@ export const careerDetailCopy = {
     startLabel: "Typical starting pay",
     approximate: "Approximate",
     perMonth: "per month",
-    officialLabel: "Official pay level (7th CPC)",
+    officialLabel: "Official pay level (7th Pay Commission)",
     officialIntro:
       "Government jobs follow the official pay matrix. This is the starting basic pay. Allowances are added on top.",
     post: "Post",
     level: "Level",
     basicPay: "Basic pay / month",
+  },
+
+  words: {
+    title: "Words to know",
   },
 
   related: {
@@ -69,13 +74,13 @@ export const careerDetailCopy = {
     intro: "Facts on this page come from these official websites.",
     disclaimerLabel: "Please note",
     disclaimer: (lastVerified: string): LocalizedText =>
-      `Information is approximate and for guidance only. Last verified: ${lastVerified}. Always confirm on the official websites listed.`,
+      `Information is approximate and for guidance only. Last checked: ${lastVerified}. Always confirm on the official websites listed.`,
     opensNewTab: "(opens in a new tab)",
   },
 
   meta: {
     description: (oneLiner: string, years: string, after: "10th" | "12th", exam?: string): LocalizedText =>
-      `${oneLiner} About ${years} of study after Class ${after === "10th" ? "10" : "12"}.${exam ? ` Main exam: ${exam}.` : ""} Path, subjects, exams and starting salary.`,
+      `${oneLiner} About ${years} of study after Class ${after === "10th" ? "10" : "12"}.${exam ? ` Entrance: ${exam}.` : ""} Path, subjects, exams and starting salary.`,
   },
 
   notFound: {

@@ -10,6 +10,7 @@ export function DetailSection({
   index,
   title,
   intro,
+  aside,
   children,
   className,
 }: {
@@ -17,6 +18,8 @@ export function DetailSection({
   index: number
   title: string
   intro?: string
+  /** Extra left-column content under the title (e.g. Words to know). */
+  aside?: React.ReactNode
   children: React.ReactNode
   className?: string
 }) {
@@ -35,6 +38,7 @@ export function DetailSection({
         {intro ? (
           <p className="mt-4 max-w-[40ch] type-small text-mute">{intro}</p>
         ) : null}
+        {aside}
       </div>
       <div className="min-w-0">{children}</div>
     </section>

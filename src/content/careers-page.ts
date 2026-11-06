@@ -17,6 +17,7 @@ export const careersPageCopy = {
   anyStream: "Any",
   anyInterest: "All",
   clearFilters: "Clear filters",
+  resultsHeading: "Results",
   count: (shown: number, total: number): LocalizedText => {
     if (shown === 0) return "No careers match"
     if (shown === total) return `${total} ${total === 1 ? "career" : "careers"}`

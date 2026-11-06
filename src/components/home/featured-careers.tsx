@@ -25,8 +25,7 @@ export function FeaturedCareers({
           <SectionHeader
             index={index}
             id="featured-title"
-            title={copy.title}
-            highlight={copy.titleHighlight}
+            title={`${copy.title} ${copy.titleHighlight}`}
           />
           <p className="mt-6 max-w-(--measure) type-lead text-fg-body md:mt-8">{copy.intro}</p>
         </div>
@@ -41,10 +40,11 @@ export function FeaturedCareers({
         </Button>
       </div>
 
-      {/* Subgrid: path, title, badges and footer line up across each row. */}
+      {/* Subgrid: path, title, badges and footer line up across each row.
+          Phones show two cards; "See all careers" sits right after them. */}
       <ul className="mt-12 grid grid-cols-1 gap-x-[clamp(16px,2.4vw,36px)] gap-y-8 md:mt-16 md:grid-cols-2 xl:grid-cols-4">
         {items.map(({ career, listIndex }) => (
-          <li key={career.slug} data-reveal="" className="row-span-4 grid grid-rows-subgrid gap-0">
+          <li key={career.slug} data-reveal="" className="row-span-4 grid grid-rows-subgrid gap-0 max-md:nth-[n+3]:hidden">
             <CareerCard
               career={career}
               index={listIndex}

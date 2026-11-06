@@ -102,15 +102,15 @@ New brand. The accent is **"Sage" lime** in place of the reference orange. It is
 | Display / hero / section titles | **Geist Sans** | 700 | Sentence case, tight negative tracking |
 | Content headings (h3, h4) | **Geist Sans** | 600 | Sentence case |
 | Body / long-form | **Geist Sans** | 400 (500 for lead) | Sentence case, normal tracking |
-| Buttons, chips, form labels, small uppercase labels, numbers and stats | **Geist Sans** | 600 | Labels uppercase with +0.08em; buttons sentence case |
+| Buttons, chips, form labels, small uppercase labels, numbers and stats | **Geist Sans** | 500 to 600 | Buttons, chips and `meta` labels sentence case; only chrome `label` text is uppercase with +0.08em |
 | **Code labels only** (`type-code`) | **Geist Mono** | 700 | See the list below |
 
 > Rule: **Geist Mono is ONLY for small code-style labels** (13px or smaller, never a heading, sentence or number a student must read):
 > - section indices `[01]` and list/step numbers `01`
 > - nav numbers (the `01` in `01 Home`)
-> - file tabs (`01 / DOCTOR.MD`, `01 / HELPING_PEOPLE`)
+> - file tabs (`01 / HELPING PEOPLE`) and tile numbers (`01`)
 > - status tokens (`[ OK ]`, `[ 0 results ]`)
-> - comment motifs (`/* Last verified 06 Nov 2026 */`, `/* Error 404 */`)
+> - comment motifs (`/* Error 404 */`, loader log)
 >
 > Everything else is Geist Sans. In code this is one utility, `type-code` (`--font-code`); `--font-display` and `--font-label` both point at Geist Sans.
 
@@ -126,8 +126,9 @@ New brand. The accent is **"Sage" lime** in place of the reference orange. It is
 | `lead` | Sans 500 | `clamp(18px, 1.4vw, 20px)` | 1.55 | 0 | Sentence | Intro paragraph |
 | `body` | Sans 400 | **17px** (16px under 640px) | **1.65** | 0 | Sentence | All long-form copy |
 | `small` | Sans 400 | 14px | 1.5 | 0 | Sentence | Captions, meta |
-| `label` | Sans 600 | 12px | 1.4 | +0.08em | UPPER | Form labels, table headers, stat labels, nav text |
-| `micro` | Sans 600 | 11px | 1.3 | +0.1em | UPPER | Tiny meta labels (`10TH`, `STUDY`). **Decorative only** |
+| `meta` | Sans 500 (600 for headings) | 14px | 1.4 | 0 | Sentence | **Labels a student must read**: path stages (`10th`, `Study`), stat and fact labels (`Pay a month`, `How you get in`), filter options, result counts |
+| `label` | Sans 600 | 12px | 1.4 | +0.08em | UPPER | Chrome only, 1 to 3 words: nav text, breadcrumb, form labels (`SEARCH`), table headers, callout titles |
+| `micro` | Sans 600 | 11px | 1.3 | +0.1em | UPPER | **Decorative only** (footer column labels, count pills). Never information a student needs |
 | `code` | **Mono 700** | 10 to 13px | 1.4 | +0.1em | UPPER | The mono list above, nothing else |
 
 Tracking guide: Geist Sans display text wants **negative** tracking (-0.03 to -0.055em, tighter as it gets bigger); small uppercase labels go **positive** (+0.08em sans, +0.1em mono). Never use both on the same element. The highlight box behind a display word uses `line-height: 1` with `padding: .02em .1em .1em`, so descenders (p, j, y) stay inside it.
@@ -173,16 +174,16 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 ```
 - The index is mono, 13px, weight 700, `--accent`, tracking +0.1em, in **square brackets**, top-aligned to the cap height of the title.
 - The title is `display-xl` or `display-l`, sans, sentence case, `--fg`.
-- A variant highlights the last word in an accent box: `Frequently asked [questions]`, with the box in `--accent` and text in `--ink`, padding `.02em .1em .1em`, `line-height: 1`.
-- Numbering is zero-padded everywhere: nav `01`, sections `[01]`, list items `01`, cards `01 / FILE.EXT`.
+- A variant highlights the last word in an accent box: `Frequently asked [questions]`, with the box in `--accent` and text in `--ink`, padding `.02em .1em .1em`, `line-height: 1`. **Use it only on the hero and the 404 page.** On every heading it stops meaning anything and reads as a template (decision 2026-11-07).
+- Numbering is zero-padded everywhere: nav `01`, sections `[01]`, list items `01`, cards `01 / HELPING PEOPLE`.
 
 ### 5.3 Code-syntax motifs (use in headings and chrome only)
 
 | Motif | Example | Where |
 |---|---|---|
 | Greeting overline | `<HI, STUDENT>={` / `(NEW, HERE?)={+` with the key word in accent | Above card titles and track/category titles |
-| File-tab label | `01 / ADMISSIONS.MD`, `02 / HOSTEL.CFG`, `03 / EXAMS.LOG` (accent bg, ink text, micro size) | Top-left tab sitting on a card's top border |
-| Comment block | `/* Updated 06 Nov 2026 */` | Meta lines, loader log |
+| File-tab label | `01 / HELPING PEOPLE` (index + the card's main interest; accent bg, ink text, micro size, `aria-hidden`). No file extensions or SNAKE_CASE: students do not read `.MD` | Top-left tab sitting on a card's top border |
+| Comment block | `/* Error 404 */` | Loader log and the 404 page only. Facts a student needs (like the date facts were checked) are plain `meta` text: `Facts last checked: 6 Nov 2026` |
 | Status token | `[ OK ]`, `[ RUN ]`, `[ NEW ]`, `[ CLOSED ]` | Badges, loader, status lists |
 | Unicode / metric labels | `U+007B`, `CAP 730`, `BASE 0` | Decorative specimen art only |
 | Blinking block cursor | `▮` in accent, `steps(1)` blink at 1s | After the last word of an answer, in the footer, and in the hero |
@@ -197,7 +198,7 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 
 ### 5.5 Tag / chip
 
-- Sans 12px, 600, +0.08em, uppercase, padding `7px 12px`, 1px `--line-2` border, solid `--surface-2` background. **No `backdrop-filter` / blur**: it counts as glassmorphism (banned) and is slow on low-end phones.
+- Sans 14px, 500, sentence case, padding `7px 10px`, 1px `--line-2` border, solid `--surface-2` background. Chips carry real information (streams, exams, durations), so they follow Readability rule 1 (14px minimum). **No `backdrop-filter` / blur**: it counts as glassmorphism (banned) and is slow on low-end phones.
 - Leading 8×8px **square** in `--accent` that blinks (`steps(1)`, 1.1s) for "live" items; static for everything else.
 
 ### 5.6 Frames & cards
@@ -206,7 +207,7 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 - **Corner handles:** 5×5px `--fg` squares on the four corners (like selection handles in a design tool).
 - Art/media area on top, then a `--line` divider, then content with `clamp(20px,2vw,28px)` padding.
 - Hover: the art "lifts" (`translateY(-10px)`, 0.6s) and dashed SVG strokes start marching (`stroke-dashoffset` loop). The title turns `--accent`.
-- Grid/tile variant (directories, partner lists, quick links): tiles share hairline borders with no gaps. On hover an `--accent` sheet wipes up from the bottom, content flips to `--ink`, and `↗` slides in at the top-right. Each tile carries a mono `type-code` file-tab label in its top-left corner.
+- Grid/tile variant (directories, partner lists, quick links): tiles share hairline borders with no gaps. On hover an `--accent` sheet wipes up from the bottom, content flips to `--ink`, and the arrow nudges at the top-right: `→` for links inside the site, `↗` only for external links (§5.8). Each tile carries a mono `type-code` number (`01`) in its top-left corner; the tile's own title names it.
 
 ### 5.7 Accordion (FAQ)
 

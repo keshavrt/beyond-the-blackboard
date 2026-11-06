@@ -14,13 +14,10 @@ import {
   CardTab,
   CardTitle,
 } from "@/components/ui/card"
-import { streamLabels } from "@/data/careers"
+import { interestLabels, streamLabels } from "@/data/careers"
+import { formatINRRangeShort, formatYears } from "@/lib/format"
 import { cn } from "@/lib/utils"
 import type { Career } from "@/types/career"
-
-function formatYears({ min, max }: Career["durationYears"]) {
-  return min === max ? `${min} yrs` : `${min}–${max} yrs`
-}
 
 const PATH_STEPS = [
   ["after10th", "10th"],
@@ -41,7 +38,7 @@ function PathStrip({ path }: { path: Career["path"] }) {
       {PATH_STEPS.map(([key, label], i) => {
         const last = i === PATH_STEPS.length - 1
         return (
-          <li key={key} className="relative grid grid-cols-[7px_52px_1fr] items-baseline gap-x-3">
+          <li key={key} className="relative grid grid-cols-[7px_44px_1fr] items-baseline gap-x-3">
             <span
               aria-hidden="true"
               className={
@@ -50,7 +47,7 @@ function PathStrip({ path }: { path: Career["path"] }) {
                   : "size-[7px] translate-y-[-1px] border border-line-2 bg-bg"
               }
             />
-            <span className="type-micro text-mute">{label}</span>
+            <span className="type-meta text-mute">{label}</span>
             <span className={last ? "type-small font-medium text-fg" : "type-small text-fg-body"}>
               {path[key].title}
             </span>
@@ -75,7 +72,8 @@ export function CareerCard({
   index: number
   className?: string
 }) {
-  const file = `${career.slug.replace(/-/g, "_").toUpperCase()}.MD`
+  // Tab names the main interest (not shown elsewhere on the card), so neighbours read differently.
+  const field = interestLabels[career.interests[0]]
   return (
     <Card
       className={cn(
@@ -84,7 +82,7 @@ export function CareerCard({
       )}
     >
       <CardTab>
-        <FileTab index={index} name={file} />
+        <FileTab index={index} name={field} />
       </CardTab>
       <CardHeader>
         <CardTitle className="group-hover/card:text-accent">
@@ -121,7 +119,7 @@ export function CareerCard({
         <ul className="flex flex-wrap gap-2" aria-label="Streams">
           {career.streams.map((s) => (
             <li key={s}>
-              <Badge>{streamLabels[s]}</Badge>
+              <Badge>{s === "any" ? "Any stream" : streamLabels[s]}</Badge>
             </li>
           ))}
           {career.exams[0] ? (
@@ -134,16 +132,15 @@ export function CareerCard({
       <CardFooter className="border-t justify-between gap-4">
         <dl className="flex gap-6">
           <div>
-            <dt className="type-micro text-mute">Study</dt>
-            <dd className="text-[15px] font-semibold text-fg tabular-nums">
+            <dt className="type-meta text-mute">Study</dt>
+            <dd className="text-[15px] font-semibold whitespace-nowrap text-fg tabular-nums">
               {formatYears(career.durationYears)}
             </dd>
           </div>
           <div>
-            <dt className="type-micro text-mute">Start pay</dt>
-            <dd className="text-[15px] font-semibold text-fg tabular-nums">
-              {career.salaryRange.approximate ? "~" : ""}₹
-              {(career.salaryRange.min / 1000).toFixed(0)}k/mo
+            <dt className="type-meta text-mute">Pay a month</dt>
+            <dd className="text-[15px] font-semibold whitespace-nowrap text-fg tabular-nums">
+              {formatINRRangeShort(career.salaryRange.min, career.salaryRange.max)}
             </dd>
           </div>
         </dl>

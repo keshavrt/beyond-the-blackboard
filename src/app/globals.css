@@ -222,6 +222,14 @@
   font-size: 14px;
   line-height: 1.5;
 }
+/* Labels a student must read (path stages, stat and fact labels): 14px, sentence case.
+   DESIGN.md §4 rule 1: never below 14px for anything a student needs. */
+@utility type-meta {
+  font-family: var(--font-label);
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 500;
+}
 /* Small uppercase labels (STREAM, START PAY, table heads): sans, wide tracking. */
 @utility type-label {
   font-family: var(--font-label);

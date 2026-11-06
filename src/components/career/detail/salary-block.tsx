@@ -9,20 +9,20 @@ export function SalaryBlock({ salary }: { salary: SalaryRange }) {
   return (
     <div className="max-w-(--measure)">
       <div className="flex flex-wrap items-center gap-3">
-        <p className="type-label text-mute">{copy.salary.startLabel}</p>
+        <p className="type-meta text-mute">{copy.salary.startLabel}</p>
         {salary.approximate ? <Badge variant="warn">{copy.salary.approximate}</Badge> : null}
       </div>
       <p className="mt-4 text-[clamp(30px,3.6vw,52px)] leading-[1.05] font-bold tracking-[-0.04em] text-fg tabular-nums">
         {formatINR(salary.min)}
-        <span className="text-mute"> – </span>
+        <span className="text-mute"> to </span>
         {formatINR(salary.max)}
       </p>
-      <p className="mt-2 type-label text-mute">{copy.salary.perMonth}</p>
+      <p className="mt-2 type-meta text-mute">{copy.salary.perMonth}</p>
       {salary.note ? <p className="mt-6 type-body text-fg-body">{salary.note}</p> : null}
 
       {official.length > 0 ? (
         <div className="mt-12 border-t border-line pt-10">
-          <h3 className="type-label text-fg">{copy.salary.officialLabel}</h3>
+          <h3 className="type-meta font-semibold text-fg">{copy.salary.officialLabel}</h3>
           <p className="mt-2 type-small text-mute">{copy.salary.officialIntro}</p>
           <div className="mt-5 overflow-x-auto border border-line">
             <table className="w-full border-collapse text-[15px]">
