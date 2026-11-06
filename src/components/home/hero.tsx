@@ -31,7 +31,12 @@ export function Hero({
         {copy.overline} <span className="text-accent">{copy.overlineKey}</span>
       </p>
 
-      <h1 id="hero-title" className="mt-6 type-display-xl text-fg md:mt-10">
+      {/* Hero exception (DESIGN.md §5.9): below 640px the size is min(56px, 16vw), so the
+          boxed "Blackboard" fits a 320px phone. The global display-xl token is unchanged. */}
+      <h1
+        id="hero-title"
+        className="mt-6 type-display-xl text-fg max-sm:text-[length:min(56px,16vw)] md:mt-10"
+      >
         <span className="block">{copy.title}</span>
         <span className="mt-[0.06em] inline-block bg-accent px-[0.08em] pt-[0.02em] pb-[0.1em] leading-none text-ink">
           {copy.titleHighlight}

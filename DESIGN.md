@@ -232,6 +232,7 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 - `100svh` (min 640px). Padding top 92px, gutters `--gx`.
 - Order from top: tag chip (date or status), then generative **ASCII canvas** art (an accent-coloured character field drawn from a logo or mark), then the display title with one word in an accent box, then a footer row above a `--line` rule (copy at max 640px on the left, CTA on the right).
 - Under 820px the footer row stacks and the CTA goes full width.
+- **Hero title size exception:** below 640px the hero title uses `font-size: min(56px, 16vw)` instead of the `display-xl` minimum of 56px. The boxed last word (`Blackboard`) is about 5.2em wide, so at 56px it overruns the content column on 320px phones. This gives the same 56px from about 350px up and scales down to about 51px at 320px. It applies to the hero title only; the global `display-xl` token is unchanged.
 
 ### 5.10 Footer
 
