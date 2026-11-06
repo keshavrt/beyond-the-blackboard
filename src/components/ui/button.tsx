@@ -3,11 +3,11 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { ArrowRight, ArrowUpRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-/* DESIGN.md §5.4 — sharp, mono label, Sage primary, ≥44px targets. */
+/* DESIGN.md §5.4: sharp, sans label, Sage primary, ≥44px targets. */
 const buttonVariants = cva(
   [
     "group/button relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2.5 border border-transparent",
-    "font-mono font-extrabold tracking-[0.04em] uppercase whitespace-nowrap select-none",
+    "font-sans font-semibold tracking-[-0.005em] whitespace-nowrap select-none",
     "transition-[color,background-color,border-color] duration-(--dur-fast) ease-out-expo",
     "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent",
     "disabled:pointer-events-none data-disabled:pointer-events-none aria-disabled:pointer-events-none",
@@ -45,9 +45,9 @@ const buttonVariants = cva(
         ],
       },
       size: {
-        sm: "min-h-11 px-3.5 py-2.5 text-xs",
-        default: "min-h-11 px-5 py-3 text-[13px]",
-        lg: "min-h-15 px-6.5 py-5 text-[clamp(14px,1.2vw,17px)]",
+        sm: "min-h-11 px-3.5 py-2.5 text-[13px]",
+        default: "min-h-11 px-5 py-3 text-[15px]",
+        lg: "min-h-15 px-6.5 py-5 text-[clamp(16px,1.2vw,18px)]",
         icon: "size-11",
         "icon-sm": "size-11 [&_svg:not([class*='size-'])]:size-3.5",
         "icon-lg": "size-15 [&_svg:not([class*='size-'])]:size-5",

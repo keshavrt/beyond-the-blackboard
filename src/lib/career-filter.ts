@@ -58,6 +58,9 @@ export function parseFilters(params: Pick<URLSearchParams, "get">): CareerFilter
   };
 }
 
+/** sessionStorage key: the list's last query string, so "Back to careers" can restore filters. */
+export const LAST_SEARCH_KEY = "careers:last-search"
+
 /** Builds the query string ("" when nothing is active). Leading "?" included. */
 export function filtersToSearch({ query, stream, interest }: CareerFilters): string {
   const p = new URLSearchParams();

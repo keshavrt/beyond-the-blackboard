@@ -41,6 +41,8 @@ export interface Source {
 export interface PathStep {
   title: LocalizedText;
   detail: LocalizedText;
+  /** The step can be skipped (e.g. Class 12 for an ITI electrician). */
+  optional?: boolean;
 }
 
 /** The four steps shown on the career timeline. All are required. */
@@ -65,6 +67,15 @@ export interface Exam {
   note?: LocalizedText;
 }
 
+/** A starting post on the official 7th CPC pay matrix (central government). */
+export interface OfficialPay {
+  post: LocalizedText;
+  /** Pay matrix level, e.g. 6. */
+  level: number;
+  /** Starting basic pay in ₹ per month, before allowances. */
+  basicPay: number;
+}
+
 /** Starting salary in Indian rupees per month. */
 export interface SalaryRange {
   min: number;
@@ -74,6 +85,19 @@ export interface SalaryRange {
   /** Show an "approximate" label in the UI when true. */
   approximate: boolean;
   note?: LocalizedText;
+  /** Only where an official pay level is published. Never estimated. */
+  officialPay?: OfficialPay[];
+}
+
+/**
+ * Optional photo. File lives at public/careers/<slug>.webp, 4:3 crop (DESIGN.md §5.12).
+ * Every layout must look complete without it: no placeholder boxes.
+ */
+export interface CareerImage {
+  /** Path from the site root, e.g. "/careers/doctor.webp". */
+  src: string
+  /** Describe what the photo shows, for screen readers. */
+  alt: LocalizedText
 }
 
 export interface Career {
@@ -93,6 +117,7 @@ export interface Career {
   skills: LocalizedText[];
   /** 2–3 related careers. */
   relatedSlugs: CareerSlug[];
+  image?: CareerImage
   /** Official sources only. */
   sources: Source[];
   /** ISO date (YYYY-MM-DD) when the facts were last checked. */

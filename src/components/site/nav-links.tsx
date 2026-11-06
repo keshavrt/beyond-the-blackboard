@@ -28,7 +28,7 @@ export function NavLinks() {
                 "aria-[current=page]:text-fg"
               )}
             >
-              <span className="text-[10px] text-accent">{pad(i + 1)}</span>
+              <span className="type-code text-[10px] text-accent">{pad(i + 1)}</span>
               <span>{item.label}</span>
               <span
                 aria-hidden="true"

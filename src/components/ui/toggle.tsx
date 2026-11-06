@@ -8,7 +8,7 @@ import { cn } from "cn"
 const toggleVariants = cva(
   [
     "group/toggle inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap select-none",
-    "font-mono text-xs font-bold tracking-[0.12em] uppercase text-mute",
+    "text-xs font-semibold tracking-[0.08em] uppercase text-mute",
     "transition-[color,background-color,border-color] duration-(--dur-fast) ease-out-expo",
     "hover:bg-surface-2 hover:text-fg active:bg-surface",
     "aria-pressed:bg-accent aria-pressed:text-ink aria-pressed:hover:bg-accent aria-pressed:active:bg-accent-2",

@@ -65,10 +65,10 @@ export function MobileMenu() {
                     onClick={() => setOpen(false)}
                     className="flex min-h-11 items-start gap-4 py-4 hover:bg-ink/10 active:bg-ink/20"
                   >
-                    <span className="mt-[0.4em] font-mono text-[13px] font-bold tracking-[0.1em]">
+                    <span className="mt-[0.5em] type-code text-[13px]">
                       {pad(i + 1)}
                     </span>
-                    <span className="font-mono text-[clamp(44px,14vw,88px)] leading-[0.9] font-extrabold tracking-[-0.05em] uppercase">
+                    <span className="text-[clamp(44px,14vw,88px)] leading-[0.95] font-bold tracking-[-0.05em]">
                       {item.label}
                       {current ? (
                         <span aria-hidden="true" className="ml-2 text-[0.5em] align-middle">
@@ -81,7 +81,7 @@ export function MobileMenu() {
               )
             })}
           </ul>
-          <p className="mt-8 font-mono text-xs font-bold tracking-[0.12em] uppercase">
+          <p className="mt-8 type-label">
             {siteName} · IIT Roorkee
           </p>
         </nav>

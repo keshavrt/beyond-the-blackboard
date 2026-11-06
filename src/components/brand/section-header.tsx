@@ -11,7 +11,7 @@ export function SectionIndex({
   return (
     <span
       className={cn(
-        "font-mono text-[13px] leading-none font-bold tracking-[0.1em] text-accent",
+        "type-code text-[13px] leading-none text-accent",
         className
       )}
     >
@@ -21,7 +21,7 @@ export function SectionIndex({
 }
 
 /**
- * `[02]  GUIDES` — index top-aligned to the title's cap height.
+ * `[02]  GUIDES`: index top-aligned to the title's cap height.
  * `highlight` wraps the last word in a Sage box (DESIGN.md §5.2 variant).
  */
 export function SectionHeader({
@@ -51,7 +51,7 @@ export function SectionHeader({
         {highlight ? (
           <>
             {" "}
-            <span className="bg-accent px-[0.08em] text-ink">{highlight}</span>
+            <span className="inline-block bg-accent px-[0.1em] pt-[0.02em] pb-[0.1em] leading-none text-ink">{highlight}</span>
           </>
         ) : null}
       </Tag>

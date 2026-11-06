@@ -19,6 +19,10 @@ Stack: Next.js (App Router), TypeScript, Tailwind v4, shadcn/ui, Motion, Lenis, 
 - Everything center-aligned; 3 identical feature cards in a row; cards inside cards
 - Inter/Roboto fonts
 - Lorem ipsum, grey placeholders, buzzword copy ("seamless", "unlock", "revolutionize")
+- Em dashes (—) in user-facing text (content, data, components). Use a comma, colon,
+  full stop, or "to" for ranges.
+- Geist Mono for headings, body, buttons or numbers. Mono is only for small code labels
+  (`type-code`: [01] indices, nav numbers, file tabs, status tokens). See DESIGN.md §3.
 
 ## Required
 

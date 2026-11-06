@@ -246,7 +246,8 @@ export const careers: Career[] = [
       currency: "INR",
       period: "month",
       approximate: true,
-      note: "Private schools often pay less. In central government schools (KVS), a primary teacher starts at Pay Level 6 (₹35,400 basic pay, plus allowances).",
+      note: "Private schools often pay less than government schools.",
+      officialPay: [{ post: "Primary teacher (KVS)", level: 6, basicPay: 35400 }],
     },
     skills: [
       "Explaining things simply",
@@ -408,7 +409,12 @@ export const careers: Career[] = [
       currency: "INR",
       period: "month",
       approximate: true,
-      note: "Basic pay: Constable ₹21,700 (Level 3), Sub-Inspector ₹35,400 (Level 6), IPS ₹56,100 (Level 10). Allowances are added on top and differ by state.",
+      note: "Allowances are added on top of basic pay and differ by state.",
+      officialPay: [
+        { post: "Constable", level: 3, basicPay: 21700 },
+        { post: "Sub-Inspector", level: 6, basicPay: 35400 },
+        { post: "IPS officer", level: 10, basicPay: 56100 },
+      ],
     },
     skills: [
       "Courage",
@@ -447,9 +453,10 @@ export const careers: Career[] = [
           "Join an ITI (Industrial Training Institute) for the Electrician trade, or a Polytechnic for a Diploma in Electrical Engineering.",
       },
       after12th: {
-        title: "Optional: you can also join after Class 12",
+        title: "You can also join after Class 12",
         detail:
           "Class 12 is not required. Some Polytechnics let Class 12 students join the diploma directly in the 2nd year.",
+        optional: true,
       },
       course: {
         title: "ITI Electrician (2 years) or Diploma (3 years)",
@@ -721,7 +728,8 @@ export const careers: Career[] = [
       currency: "INR",
       period: "month",
       approximate: true,
-      note: "ICAR scientists start at Pay Level 10 (₹56,100 basic pay, plus allowances). Private and junior research jobs pay less.",
+      note: "Private and junior research jobs pay less.",
+      officialPay: [{ post: "Scientist (ICAR)", level: 10, basicPay: 56100 }],
     },
     skills: [
       "Curiosity about nature",
@@ -800,7 +808,8 @@ export const careers: Career[] = [
       currency: "INR",
       period: "month",
       approximate: true,
-      note: "IFS officers start at Pay Level 10 (₹56,100 basic pay). Allowances raise the total. State forest posts start lower.",
+      note: "State forest posts start lower.",
+      officialPay: [{ post: "IFS officer", level: 10, basicPay: 56100 }],
     },
     skills: [
       "Love for nature",

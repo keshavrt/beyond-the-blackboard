@@ -13,7 +13,7 @@ export function FileTab({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 bg-accent px-2 py-1 type-micro text-ink",
+        "inline-flex items-center gap-1.5 bg-accent px-2 py-1 type-code text-[11px] leading-[1.3] text-ink",
         className
       )}
     >

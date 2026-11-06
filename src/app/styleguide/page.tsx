@@ -50,16 +50,17 @@ const typeScale: {
   sample: string
   as?: "h1" | "h2" | "h3" | "h4" | "p"
 }[] = [
-  { token: "display-xl", spec: "Mono 800 · 56→200px · 0.85", className: "type-display-xl text-fg", sample: "Careers" },
-  { token: "display-l", spec: "Mono 800 · 42→96px · 0.9", className: "type-display-l text-fg", sample: "Find your path" },
-  { token: "h2", spec: "Mono 700 · 28→44px · 1.05", className: "type-h2 text-fg", sample: "How it works" },
+  { token: "display-xl", spec: "Sans 700 · 56→184px · 0.92", className: "type-display-xl text-fg", sample: "Careers" },
+  { token: "display-l", spec: "Sans 700 · 40→88px · 0.98", className: "type-display-l text-fg", sample: "Find your path" },
+  { token: "h2", spec: "Sans 600 · 28→44px · 1.08", className: "type-h2 text-fg", sample: "How it works" },
   { token: "h3", spec: "Sans 600 · 20→26px · 1.2", className: "type-h3 text-fg", sample: "What does a nurse do?" },
   { token: "h4", spec: "Sans 600 · 18px · 1.3", className: "type-h4 text-fg", sample: "Subjects you need" },
   { token: "lead", spec: "Sans 500 · 18→20px · 1.55", className: "type-lead text-fg-body", sample: "Open a career to see the subjects, exams and steps that lead to it." },
   { token: "body", spec: "Sans 400 · 16/17px · 1.65", className: "type-body text-fg-body max-w-(--measure)", sample: "After Class 10 you choose a stream. Science, Commerce and Arts each open different doors, and many careers accept more than one." },
   { token: "small", spec: "Sans 400 · 14px · 1.5", className: "type-small text-mute", sample: "Facts last checked on 06 Nov 2026." },
-  { token: "label", spec: "Mono 700 · 12px · +0.12em", className: "type-label text-fg", sample: "Explore careers" },
-  { token: "micro", spec: "Mono 700 · 11px · +0.14em · decorative", className: "type-micro text-mute", sample: "U+007B · CAP 730 · BASE 0" },
+  { token: "label", spec: "Sans 600 · 12px · +0.08em", className: "type-label text-fg", sample: "Explore careers" },
+  { token: "micro", spec: "Sans 600 · 11px · +0.1em · decorative", className: "type-micro text-mute", sample: "10th · 12th · Study · Job" },
+  { token: "code", spec: "Mono 700 · 12px · +0.1em · indices, file tabs, status only", className: "type-code text-accent", sample: "[01] · 01 / DOCTOR.MD · [ OK ]" },
 ]
 
 const streams: Stream[] = ["science", "commerce", "arts", "vocational", "any"]
@@ -157,7 +158,7 @@ export default function StyleguidePage() {
       <Section
         index={2}
         title="Type"
-        note="Geist Mono for the chrome (display, labels, indices). Geist Sans for anything a student reads."
+        note="Geist Sans for every heading, label and paragraph. Geist Mono only for type-code: indices, nav numbers, file tabs, status tokens."
       >
         <dl className="border-t border-line">
           {typeScale.map((t) => (
@@ -179,7 +180,7 @@ export default function StyleguidePage() {
       <Section
         index={3}
         title="Buttons"
-        note="Mono label, 0 radius, every size at least 44px tall. Trailing ↗ for external links, → for internal."
+        note="Sans 600, sentence case, 0 radius, every size at least 44px tall. Trailing ↗ for external links, → for internal."
       >
         <div className="space-y-12">
           <div className="space-y-4">

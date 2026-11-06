@@ -1,30 +1,40 @@
-import { SectionIndex } from "@/components/brand/section-header"
+import type { Metadata } from "next"
+
+import { AboutProject } from "@/components/home/about-project"
+import { FeaturedCareers } from "@/components/home/featured-careers"
+import { Hero } from "@/components/home/hero"
+import { HowItWorks } from "@/components/home/how-it-works"
+import { InterestGrid } from "@/components/home/interest-grid"
+import { homePageCopy as copy } from "@/content/home-page"
+import { getAllCareers } from "@/lib/careers"
+import { getFeaturedCareers, getHomeStats, getInterestCounts } from "@/lib/home-stats"
+
+export const metadata: Metadata = {
+  title: { absolute: copy.meta.title },
+  description: copy.meta.description,
+  openGraph: {
+    title: copy.meta.title,
+    description: copy.meta.description,
+    siteName: copy.meta.siteName,
+    locale: copy.meta.locale,
+    type: "website",
+  },
+}
 
 export default function Home() {
+  const all = getAllCareers()
+  const featured = getFeaturedCareers(copy.featured.slugs).map((career) => ({
+    career,
+    listIndex: all.indexOf(career) + 1,
+  }))
+
   return (
-    <div className="flex flex-1 flex-col px-gx">
-      <div className="flex flex-1 flex-col justify-center py-24">
-        <div className="flex items-start gap-4 md:gap-6">
-          <SectionIndex index={0} className="mt-[0.35em] shrink-0" />
-          <div>
-            <p className="type-label text-mute">Career Explorer</p>
-            <h1 className="mt-4 type-display-l text-fg">
-              Beyond the{" "}
-              <span className="bg-accent px-[0.08em] text-ink">Blackboard</span>
-            </h1>
-            <p className="mt-8 max-w-(--measure) type-lead text-fg-body">
-              What could you become, and how do you get there? A career guide for
-              students in Class 8 to 12.
-            </p>
-            <p className="mt-10 font-mono text-sm font-bold tracking-[0.12em] text-fg uppercase">
-              Coming soon
-              <span aria-hidden="true" className="ml-1 text-accent">
-                ▮
-              </span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    <>
+      <Hero stats={getHomeStats()} />
+      <HowItWorks index={1} />
+      <InterestGrid index={2} items={getInterestCounts()} />
+      <FeaturedCareers index={3} items={featured} />
+      <AboutProject index={4} />
+    </>
+  )
 }

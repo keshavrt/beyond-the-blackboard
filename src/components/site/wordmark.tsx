@@ -24,7 +24,7 @@ export function Wordmark({
       <span
         aria-hidden="true"
         className={cn(
-          "px-1.5 py-0.5 font-extrabold tracking-[0.04em]",
+          "px-1.5 py-0.5 font-bold tracking-[0.04em]",
           ink ? "bg-ink text-accent" : "bg-accent text-ink group-hover/logo:bg-fg"
         )}
       >

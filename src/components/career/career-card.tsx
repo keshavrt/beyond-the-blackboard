@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
@@ -98,8 +99,22 @@ export function CareerCard({
         <CardDescription>{career.oneLiner}</CardDescription>
       </CardHeader>
       {/* Visually on top (order-first), but after the name in reading order. */}
-      <CardMedia className="order-first px-(--card-spacing) pt-9 pb-5">
-        <PathStrip path={career.path} />
+      <CardMedia className="order-first">
+        {/* Photo only when the data has one; without it the path strip is the card's art. */}
+        {career.image ? (
+          <div className="relative aspect-4/3 overflow-hidden border-b border-line">
+            <Image
+              src={career.image.src}
+              alt={career.image.alt}
+              fill
+              sizes="(min-width: 1440px) 25vw, (min-width: 820px) 50vw, 100vw"
+              className="object-cover"
+            />
+          </div>
+        ) : null}
+        <div className={cn("px-(--card-spacing) pb-5", career.image ? "pt-5" : "pt-9")}>
+          <PathStrip path={career.path} />
+        </div>
       </CardMedia>
       <CardContent>
         <ul className="flex flex-wrap gap-2" aria-label="Streams">
@@ -119,13 +134,13 @@ export function CareerCard({
         <dl className="flex gap-6">
           <div>
             <dt className="type-micro text-mute">Study</dt>
-            <dd className="font-mono text-sm font-bold text-fg">
+            <dd className="text-[15px] font-semibold text-fg tabular-nums">
               {formatYears(career.durationYears)}
             </dd>
           </div>
           <div>
             <dt className="type-micro text-mute">Start pay</dt>
-            <dd className="font-mono text-sm font-bold text-fg tabular-nums">
+            <dd className="text-[15px] font-semibold text-fg tabular-nums">
               {career.salaryRange.approximate ? "~" : ""}₹
               {(career.salaryRange.min / 1000).toFixed(0)}k/mo
             </dd>

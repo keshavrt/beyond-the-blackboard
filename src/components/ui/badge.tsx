@@ -7,7 +7,7 @@ import { cn } from "cn"
 const badgeVariants = cva(
   [
     "group/badge inline-flex w-fit shrink-0 items-center justify-center gap-2 border px-3 py-[7px] whitespace-nowrap",
-    "font-mono text-xs leading-none font-bold tracking-[0.14em] uppercase",
+    "text-xs leading-none font-semibold tracking-[0.08em] uppercase",
     "transition-[color,background-color,border-color] duration-(--dur-fast) ease-out-expo",
     "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent",
     "[a]:cursor-pointer [a]:hover:border-accent [a]:active:bg-surface",
@@ -19,7 +19,7 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default: "border-line-2 bg-surface-2 text-fg",
-        /** Sage fill — use once per screen at most. */
+        /** Sage fill: use once per screen at most. */
         accent: "border-accent bg-accent text-ink [a]:hover:bg-fg [a]:hover:border-fg",
         outline: "border-line-2 bg-transparent text-fg",
         ok: "border-line-2 bg-surface-2 text-ok",

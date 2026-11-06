@@ -14,6 +14,7 @@ import {
   countChipFilters,
   filtersToSearch,
   groupByStream,
+  LAST_SEARCH_KEY,
   hasActiveFilters,
   matchesFilters,
   parseFilters,
@@ -53,6 +54,11 @@ export function CareerExplorer(props: ExplorerProps) {
     const next = filtersToSearch(filters)
     if (next !== window.location.search) {
       window.history.replaceState(null, "", `${pathname}${next}`)
+    }
+    try {
+      window.sessionStorage.setItem(LAST_SEARCH_KEY, next)
+    } catch {
+      // Storage blocked (private mode): the back link falls back to /careers.
     }
   }, [filters, pathname])
 
@@ -277,7 +283,7 @@ export function CareerExplorerView({
         <div className="pt-10">
           <div className="relative border border-line bg-surface px-[clamp(20px,3vw,48px)] py-[clamp(32px,5vw,64px)]">
             <CornerHandles />
-            <p className="type-micro text-mute">{copy.emptyLabel}</p>
+            <p className="type-code text-[11px] text-mute">{copy.emptyLabel}</p>
             <h2 className="mt-4 type-h3 text-fg">{copy.emptyTitle(filters.query?.trim())}</h2>
             <p className="mt-3 max-w-(--measure) type-body text-fg-body">{copy.emptyHelp}</p>
             <Button onClick={clear} className="mt-8 w-full sm:w-auto">

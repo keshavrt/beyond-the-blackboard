@@ -21,7 +21,7 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
       className={cn(
         fieldBase,
         "min-h-11 px-3.5 py-2",
-        "file:inline-flex file:h-7 file:border-0 file:bg-transparent file:font-mono file:text-xs file:font-bold file:text-fg file:uppercase",
+        "file:inline-flex file:h-7 file:border-0 file:bg-transparent file:font-sans file:text-xs file:font-semibold file:text-fg file:uppercase",
         className
       )}
       {...props}

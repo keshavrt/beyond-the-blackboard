@@ -33,7 +33,7 @@ What I measured on the reference site, so we know what we are adapting. **Do not
 - **Dark, near-black canvas** with a faint dot grid, like graph paper for code.
 - **One calm accent**, used sparingly and with intent: index numbers, active states, highlight boxes, fills on hover.
 - **Two modes of voice:**
-  - *Chrome* (hero, nav, section headers, labels, numbering): monospace or grotesk, uppercase, tight and huge, full of syntax motifs.
+  - *Chrome* (hero, nav, section headers, labels, numbering): big, tight Geist Sans headings, with small mono code labels (`[01]`, file tabs, status tokens) as the techy accent.
   - *Content* (articles, guides, FAQs, notices): a calm sans-serif body at a comfortable size and line length. The techy feel stays in the frame around the content, never inside the paragraphs.
 - **Hard geometry:** 0 radius, 1px hairlines, square corner handles, grids that show their seams.
 - **Motion that feels like the system "compiling":** content clips in from below, sheets wipe, cursors blink. Every animation is fast and has a reason.
@@ -91,35 +91,46 @@ New brand. The accent is **"Sage" lime** in place of the reference orange. It is
 
 ## 3. Typography
 
-### Font pairing: **Geist Mono + Geist Sans** (locked; free, OFL; ships with `next/font/google`, and the project already loads both)
+### Font pairing: **Geist Sans + Geist Mono** (locked; free, OFL; loaded with `next/font/google`)
 
-> Decision (2026-11-06): this is the only pairing. Earlier alternatives (Space Grotesk / IBM Plex, Martian Mono / Inter) were removed. Inter is banned in CLAUDE.md, and one pairing keeps the system consistent.
+> Decision (2026-11-06): this is the only pairing. Inter is banned in CLAUDE.md, and one pairing keeps the system consistent.
+>
+> Decision (2026-11-06, revised): **Geist Sans for all headings and body text.** Mono-everywhere chrome read as a developer site and slowed reading for students. Mono now appears only in small code-style labels.
 
 | Role | Font | Weight | Notes |
 |---|---|---|---|
-| Display / hero / section titles | **Geist Mono** | 700–800 | Uppercase, tight negative tracking |
-| UI labels, nav, indices, tags, code motifs | **Geist Mono** | 500–700 | Uppercase, wide positive tracking |
+| Display / hero / section titles | **Geist Sans** | 700 | Sentence case, tight negative tracking |
+| Content headings (h3, h4) | **Geist Sans** | 600 | Sentence case |
 | Body / long-form | **Geist Sans** | 400 (500 for lead) | Sentence case, normal tracking |
-| Code | Geist Mono | 400 | `font-variant-ligatures: none` |
+| Buttons, chips, form labels, small uppercase labels, numbers and stats | **Geist Sans** | 600 | Labels uppercase with +0.08em; buttons sentence case |
+| **Code labels only** (`type-code`) | **Geist Mono** | 700 | See the list below |
 
-> Rule: **monospace is for the chrome, sans is for paragraphs.** The reference sets 15px body copy in mono, which suits a one-page event site but tires readers on long articles.
+> Rule: **Geist Mono is ONLY for small code-style labels** (13px or smaller, never a heading, sentence or number a student must read):
+> - section indices `[01]` and list/step numbers `01`
+> - nav numbers (the `01` in `01 Home`)
+> - file tabs (`01 / DOCTOR.MD`, `01 / HELPING_PEOPLE`)
+> - status tokens (`[ OK ]`, `[ 0 results ]`)
+> - comment motifs (`/* Last verified 06 Nov 2026 */`, `/* Error 404 */`)
+>
+> Everything else is Geist Sans. In code this is one utility, `type-code` (`--font-code`); `--font-display` and `--font-label` both point at Geist Sans.
 
 ### Type scale (fluid, 1440 → 375)
 
-| Token | Size | Line-height | Tracking | Case | Use |
-|---|---|---|---|---|---|
-| `display-xl` | `clamp(56px, 12vw, 200px)` | 0.85 | -0.05em | UPPER | Hero title, giant section titles |
-| `display-l` | `clamp(42px, 5.6vw, 96px)` | 0.9 | -0.05em | UPPER | Page titles, FAQ-style headings |
-| `h2` | `clamp(28px, 3vw, 44px)` | 1.05 | -0.03em | UPPER (mono) | In-page section heads |
-| `h3` | `clamp(20px, 1.8vw, 26px)` | 1.2 | -0.02em | Sentence (sans 600) | Content sub-heads |
-| `h4` | 18px | 1.3 | -0.01em | Sentence (sans 600) | Minor heads |
-| `lead` | `clamp(18px, 1.4vw, 20px)` | 1.55 | 0 | Sentence | Intro paragraph |
-| `body` | **17px** (16px under 640px) | **1.65** | 0 | Sentence | All long-form copy |
-| `small` | 14px | 1.5 | 0 | Sentence | Captions, meta |
-| `label` | 12px | 1.4 | **+0.12em** | UPPER (mono 700) | Nav, tags, table headers, buttons |
-| `micro` | 10–11px | 1.3 | +0.14em | UPPER (mono 700) | Index chips, axis/grid labels. **Decorative only** |
+| Token | Font | Size | Line-height | Tracking | Case | Use |
+|---|---|---|---|---|---|---|
+| `display-xl` | Sans 700 | `clamp(56px, 11vw, 184px)` | 0.92 | -0.055em | Sentence | Hero title |
+| `display-l` | Sans 700 | `clamp(40px, 5.4vw, 88px)` | 0.98 | -0.045em | Sentence | Page and section titles |
+| `h2` | Sans 600 | `clamp(28px, 3vw, 44px)` | 1.08 | -0.03em | Sentence | In-page section heads |
+| `h3` | Sans 600 | `clamp(20px, 1.8vw, 26px)` | 1.2 | -0.02em | Sentence | Content sub-heads |
+| `h4` | Sans 600 | 18px | 1.3 | -0.01em | Sentence | Minor heads |
+| `lead` | Sans 500 | `clamp(18px, 1.4vw, 20px)` | 1.55 | 0 | Sentence | Intro paragraph |
+| `body` | Sans 400 | **17px** (16px under 640px) | **1.65** | 0 | Sentence | All long-form copy |
+| `small` | Sans 400 | 14px | 1.5 | 0 | Sentence | Captions, meta |
+| `label` | Sans 600 | 12px | 1.4 | +0.08em | UPPER | Form labels, table headers, stat labels, nav text |
+| `micro` | Sans 600 | 11px | 1.3 | +0.1em | UPPER | Tiny meta labels (`10TH`, `STUDY`). **Decorative only** |
+| `code` | **Mono 700** | 10 to 13px | 1.4 | +0.1em | UPPER | The mono list above, nothing else |
 
-Tracking guide (taken from the reference): big display text goes **negative** (-0.04 to -0.06em); small uppercase labels go **positive** (+0.1 to +0.14em). Never use both on the same element.
+Tracking guide: Geist Sans display text wants **negative** tracking (-0.03 to -0.055em, tighter as it gets bigger); small uppercase labels go **positive** (+0.08em sans, +0.1em mono). Never use both on the same element. The highlight box behind a display word uses `line-height: 1` with `padding: .02em .1em .1em`, so descenders (p, j, y) stay inside it.
 
 ---
 
@@ -131,13 +142,13 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 2. **Line length:** 60–75 characters. `max-width: 68ch` on paragraphs and lists. Tables and media can run wider.
 3. **Line height:** 1.6–1.7 for body copy, 1.2–1.3 for content headings. Display line-heights (0.85–0.9) apply only to hero and section titles.
 4. **Contrast:** body ≥ **7:1** (`--fg-body` 11.5:1). Secondary text ≥ **4.5:1** (`--mute` 6.6:1). `--dim` is never used for text a student has to read.
-5. **Font:** paragraphs, lists, tables and form help text use the **sans** body font. Mono appears in content only for inline code, file names, commands and numbered labels.
-6. **Case:** content headings are sentence case. ALL-CAPS is limited to labels of 1–4 words and to display titles.
+5. **Font:** headings, paragraphs, lists, tables and form help text use **Geist Sans**. Mono appears only in `type-code` labels (see §3).
+6. **Case:** all headings, display titles included, are sentence case. ALL-CAPS is limited to labels of 1–4 words.
 7. **Paragraph rhythm:** `margin-block: 1em` between paragraphs, `2.5em` above an h2, `1.75em` above an h3. Keep paragraphs to about 4 lines or fewer on mobile.
 8. **Links in prose:** `--fg` text with a 1px `--accent` underline (`text-underline-offset: 3px`). On hover the underline thickens to 2px and the text turns `--accent`. Do **not** use the full background-fill hover inside paragraphs; it breaks the reading flow. Keep it for CTAs and cards.
 9. **Lists:** custom markers in mono (`01`, `02`… or `→`) in `--accent`, hanging outside the text column so wrapped lines align.
-10. **Tables:** 15px sans, mono uppercase `label` headers on `--surface-2`, `--line` row dividers, numbers right-aligned with `font-variant-numeric: tabular-nums`. On mobile, scroll the table horizontally rather than shrinking the text.
-11. **Callouts:** `--surface` background, 2px left border in a status color, mono `label` title (`NOTE`, `DEADLINE`, `TIP`), sans body.
+10. **Tables:** 15px sans, uppercase `label` headers on `--surface-2`, `--line` row dividers, numbers right-aligned with `font-variant-numeric: tabular-nums`. On mobile, scroll the table horizontally rather than shrinking the text.
+11. **Callouts:** `--surface` background, 2px left border in a status color, `label` title (`NOTE`, `DEADLINE`, `TIP`), sans body.
 12. **No background noise behind text:** the dot grid, ASCII canvases and scanlines stop at the edge of the content column. Prose sits on a solid `--bg` or `--surface`.
 13. **Motion:** reading pages animate only their headers. Paragraphs never reveal on scroll. Honour `prefers-reduced-motion`.
 14. **Optional light reading mode** (for long guides or printing): `--bg #f6f5f0`, `--fg #121316`, `--fg-body #2b2d31`, accent text switches to `#3f6b00` (Sage fails contrast on light backgrounds) and Sage is used only as a fill.
@@ -149,11 +160,11 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 ### 5.1 Navigation (fixed top bar)
 
 - Grid of `1fr auto 1fr`: logo mark on the left, numbered links in the centre, CTA on the right. Padding `18px var(--gx)`.
-- Links use the mono `label` style with an **index prefix** in `--accent` at 10px: `01 ABOUT`, `02 GUIDES`, `03 EVENTS`, `04 FAQ`.
+- Links use the sans `label` style with a mono `type-code` **index prefix** in `--accent` at 10px: `01 ABOUT`, `02 GUIDES`, `03 EVENTS`, `04 FAQ`.
 - Hover/active: a 1px `--accent` underline that `scaleX`s in from the left (and exits to the right), 0.5s `--ease`.
 - Behaviour: hides on scroll down (`translateY(-110%)`) and returns on scroll up. Once scrolled, it becomes solid `--bg` with a `--line` bottom border.
 - Logo hover: `rotate(-6deg) scale(1.06)`.
-- **Mobile (< 820px):** a burger made of two 2px bars that morph into an ×. The menu is a full-screen **accent sheet** revealed with `clip-path: inset(0 0 100%) → inset(0)` (0.8s in-out). Items are huge uppercase display text, bottom-aligned, each with a mono `01`–`04` index in `--ink`.
+- **Mobile (< 820px):** a burger made of two 2px bars that morph into an ×. The menu is a full-screen **accent sheet** revealed with `clip-path: inset(0 0 100%) → inset(0)` (0.8s in-out). Items are huge sentence-case sans display text, bottom-aligned, each with a mono `01`–`04` index in `--ink`.
 
 ### 5.2 Section header (numbering style)
 
@@ -161,8 +172,8 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 [02]  GUIDES
 ```
 - The index is mono, 13px, weight 700, `--accent`, tracking +0.1em, in **square brackets**, top-aligned to the cap height of the title.
-- The title is `display-xl` or `display-l`, uppercase, `--fg`.
-- A variant highlights the last word in an accent box: `FREQUENTLY / ASKED / [QUESTIONS]`, with the box in `--accent` and text in `--ink`, padding `0 .08em`.
+- The title is `display-xl` or `display-l`, sans, sentence case, `--fg`.
+- A variant highlights the last word in an accent box: `Frequently asked [questions]`, with the box in `--accent` and text in `--ink`, padding `.02em .1em .1em`, `line-height: 1`.
 - Numbering is zero-padded everywhere: nav `01`, sections `[01]`, list items `01`, cards `01 / FILE.EXT`.
 
 ### 5.3 Code-syntax motifs (use in headings and chrome only)
@@ -179,14 +190,14 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 
 ### 5.4 Buttons
 
-- **Primary:** `--accent` fill, `--ink` text, mono `label` style (weight 800, +0.04em), **0 radius**. Sizes: sm `10px 14px` / 12px; lg `20px 26px` / `clamp(14px,1.2vw,17px)`. Trailing `↗` (external) or `→` (internal).
+- **Primary:** `--accent` fill, `--ink` text, Geist Sans 600, sentence case, **0 radius**. Sizes: sm `10px 14px` / 13px; default `12px 20px` / 15px; lg `20px 26px` / `clamp(16px,1.2vw,18px)`. Trailing `↗` (external) or `→` (internal).
 - **Hover:** an inner `--fg` layer scales up from the bottom (`scaleY(0→1)`, 0.6s `--ease`) and the arrow nudges `translate(3px,-3px)` (↗) or `translateX(4px)` (→).
 - **Secondary / ghost:** transparent, 1px `--line-2` border, `--fg` text. On hover the border turns `--accent` and the same fill rises in `--surface-2`.
 - Minimum touch target 44×44px.
 
 ### 5.5 Tag / chip
 
-- Mono 12px, 700, +0.14em, uppercase, padding `7px 12px`, 1px `--line-2` border, solid `--surface-2` background. **No `backdrop-filter` / blur**: it counts as glassmorphism (banned) and is slow on low-end phones.
+- Sans 12px, 600, +0.08em, uppercase, padding `7px 12px`, 1px `--line-2` border, solid `--surface-2` background. **No `backdrop-filter` / blur**: it counts as glassmorphism (banned) and is slow on low-end phones.
 - Leading 8×8px **square** in `--accent` that blinks (`steps(1)`, 1.1s) for "live" items; static for everything else.
 
 ### 5.6 Frames & cards
@@ -195,7 +206,7 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 - **Corner handles:** 5×5px `--fg` squares on the four corners (like selection handles in a design tool).
 - Art/media area on top, then a `--line` divider, then content with `clamp(20px,2vw,28px)` padding.
 - Hover: the art "lifts" (`translateY(-10px)`, 0.9s) and dashed SVG strokes start marching (`stroke-dashoffset` loop). The title turns `--accent`.
-- Grid/tile variant (directories, partner lists, quick links): tiles share hairline borders with no gaps. On hover an `--accent` sheet wipes up from the bottom, content flips to `--ink`, and `↗` slides in at the top-right. Each tile carries a mono micro label in its top-left corner.
+- Grid/tile variant (directories, partner lists, quick links): tiles share hairline borders with no gaps. On hover an `--accent` sheet wipes up from the bottom, content flips to `--ink`, and `↗` slides in at the top-right. Each tile carries a mono `type-code` file-tab label in its top-left corner.
 
 ### 5.7 Accordion (FAQ)
 
@@ -209,12 +220,12 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 
 | Context | Style | Hover |
 |---|---|---|
-| Nav | Mono label + index | Underline scaleX from the left |
+| Nav | Sans label + mono index | Underline scaleX from the left |
 | Prose | `--fg` + 1px accent underline | Text turns accent, underline 2px |
 | Card / inline CTA | `--fg` with a solid 1px `--accent` underline (a `::after` bar, no gradient) | The bar `scaleY`s from the bottom to full height (fill), text turns `--ink` |
 | External | Trailing `↗` | Arrow moves `(3px,-3px)` |
 | Internal / next | Trailing `→` | Arrow moves `4px` right |
-| Footer | Mono 700, `--fg` | Turns `--accent` |
+| Footer | Sans 600, `--fg` | Turns `--accent` |
 
 ### 5.9 Hero
 
@@ -225,13 +236,22 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 ### 5.10 Footer
 
 - Top `--line` border, 4-column grid `1.4fr 1fr 1fr 1fr` (2 columns under 1080px, 1 on mobile).
-- Column labels are mono 11px, +0.14em, `--accent`. Values are mono 700.
-- A large ASCII wordmark band, then a base row: mono 12px uppercase `--mute` tagline with a blinking accent `_`.
+- Column labels are sans `micro`, `--accent`. Values are sans 600.
+- A large ASCII wordmark band, then a base row: sans `label` `--mute` tagline with a blinking accent `_`.
 
 ### 5.11 Custom cursor (desktop, fine pointer only)
 
 - A 10×18px block cursor in `--accent` follows the mouse. Over links it turns `--fg`, and on press it squashes to `scaleY(.7)`.
 - Disabled on `(hover:none), (pointer:coarse)` and under reduced motion. **Never hide the native cursor inside forms or prose.**
+
+### 5.12 Career photos
+
+- Optional per career (`image: { src, alt }` in `src/data/careers.ts`). Files go in **`public/careers/<slug>.webp`** (e.g. `public/careers/doctor.webp`).
+- **4:3 crop**, at least 1200×900, WebP under about 150 KB (cheap phones, slow internet).
+- **Consistent crop and style across all careers:** a real person doing the job in an Indian setting, natural light, the same framing (person at mid-distance, workplace visible), no text, logos or watermarks in the photo, no heavy filters. The licence must allow reuse; credit it in the footer line.
+- `alt` says what the photo shows ("A doctor checking a child's heartbeat in a clinic"), not "photo of a doctor".
+- Rendered with `next/image`, `object-cover`, 0 radius, 1px `--line` border. Lazy-loaded on cards; eager (`loading="eager"`, `fetchPriority="high"`) in the detail page header.
+- **No photo, no box:** without an image the card keeps its path strip as its art and the detail header stays single-column. Never show a grey placeholder.
 
 ---
 
@@ -310,7 +330,7 @@ With reduced motion: skip the loader entirely, render ASCII canvases as a static
 ### Do
 - ✅ Number everything in the chrome (`01`, `[02]`, `03 / FILE.MD`), zero-padded and in the accent color.
 - ✅ Keep radius at 0 and borders at 1px hairlines. Use corner handles to mark frames.
-- ✅ Use mono uppercase with wide tracking for labels and huge tight-tracked uppercase for display.
+- ✅ Use huge, tight-tracked, sentence-case Geist Sans for display, and keep mono to the small `type-code` labels listed in §3.
 - ✅ Put body text in the sans font at 17px, max 68ch, `--fg-body`.
 - ✅ Treat the accent as punctuation: indices, active states, one highlighted word, CTA.
 - ✅ Make every hover do one clear thing (wipe, underline, nudge or colour), using the shared easing.
@@ -319,7 +339,8 @@ With reduced motion: skip the loader entirely, render ASCII canvases as a static
 
 ### Don't
 - ❌ Copy the reference brand: no orange `#ff4a00`, no JetBrains-Mono-everything, no infinity mark, no "SYNTAX ERROR" wordmark, no `<HI,DEVELOPER>` copy verbatim.
-- ❌ Set paragraphs, long lists or tables in monospace.
+- ❌ Set headings, paragraphs, buttons, numbers, lists or tables in monospace.
+- ❌ Use em dashes (—) in user-facing text. Use a comma, colon, full stop, or "to" for ranges.
 - ❌ Put ASCII art, dot grids or animated canvases behind readable text.
 - ❌ Use ALL-CAPS for sentences or content headings longer than about 4 words.
 - ❌ Use rounded corners, drop shadows or gradients. **No gradients anywhere**: underlines are solid Sage (`text-decoration` or a solid `::after` bar). The only exception is the background dot grid, which uses `radial-gradient()` purely to draw hard-edged dots, never a colour blend.
@@ -345,8 +366,9 @@ With reduced motion: skip the loader entirely, render ASCII canvases as a static
   --radius: 0px;
   --ease: cubic-bezier(.19,1,.22,1);
   --ease-io: cubic-bezier(.77,0,.175,1);
-  --font-display: var(--font-geist-mono);
-  --font-label:   var(--font-geist-mono);
+  --font-display: var(--font-geist-sans);
+  --font-label:   var(--font-geist-sans);
+  --font-code:    var(--font-geist-mono); /* type-code only */
   --font-body:    var(--font-geist-sans);
   --measure: 68ch;
 }
