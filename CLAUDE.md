@@ -27,6 +27,8 @@ Stack: Next.js (App Router), TypeScript, Tailwind v4, shadcn/ui, Motion, Lenis, 
 - Mobile-first; respect prefers-reduced-motion
 - Use shadcn MCP to find components before writing custom ones; restyle them to DESIGN.md
 - Use Context7 for any library/API question
+- When using the shadcn MCP, always name the registry explicitly (@shadcn),
+  e.g. search "@shadcn/card". Searching without it returns "no registries".
 
 ## Workflow
 
