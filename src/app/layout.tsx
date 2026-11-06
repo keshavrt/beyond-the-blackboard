@@ -22,7 +22,6 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  // TODO: SITE_URL is a placeholder until the production URL is known (src/lib/site.ts).
   metadataBase: new URL(SITE_URL),
   title: {
     default: "Beyond the Blackboard: Career Explorer",
