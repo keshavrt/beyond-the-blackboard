@@ -661,7 +661,7 @@ export const careers: Career[] = [
     relatedSlugs: ["software-engineer", "teacher"],
     sources: [
       { label: "ICAI: Board of Studies (CA course)", url: "https://www.icai.org/" },
-      { label: "ICAI Campus Placement", url: "https://www.icai.org/post/campus-placement" },
+      { label: "ICAI Placement Directorate (campus placements)", url: "https://ipd.icai.org/" },
     ],
     lastVerified: VERIFIED,
   },

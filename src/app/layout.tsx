@@ -6,6 +6,7 @@ import { BootLoader, bootScript } from "@/components/site/boot-loader";
 import { MotionEffects } from "@/components/site/motion-effects";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
+import { SITE_URL } from "@/lib/site";
 
 /* DESIGN.md §3: Geist Sans for paragraphs, Geist Mono for the chrome. */
 const geistSans = Geist({
@@ -21,12 +22,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  // TODO: SITE_URL is a placeholder until the production URL is known (src/lib/site.ts).
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Beyond the Blackboard: Career Explorer",
     template: "%s · Beyond the Blackboard",
   },
   description:
     "Find out what you could become and how to get there. A career guide for students in Class 8 to 12.",
+  // Share images come from the opengraph-image files; show them large on X too.
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

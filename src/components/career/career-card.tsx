@@ -130,7 +130,8 @@ export function CareerCard({
         </ul>
       </CardContent>
       <CardFooter className="border-t justify-between gap-4">
-        <dl className="flex gap-6">
+        {/* Wraps at 320px so long values ("4.5 to 5 years", "₹60k to 1.2L") never widen the card. */}
+        <dl className="flex min-w-0 flex-wrap gap-x-6 gap-y-3">
           <div>
             <dt className="type-meta text-mute">Study</dt>
             <dd className="text-[15px] font-semibold whitespace-nowrap text-fg tabular-nums">
@@ -146,7 +147,7 @@ export function CareerCard({
         </dl>
         <span
           aria-hidden="true"
-          className="fill-rise inline-flex size-11 items-center justify-center border border-line-2 text-fg transition-colors duration-(--dur-fast) ease-out-expo [--fill:var(--accent)] group-hover/card:border-accent group-hover/card:text-ink group-has-[a:focus-visible]/card:border-accent group-has-[a:focus-visible]/card:text-ink"
+          className="fill-rise inline-flex size-11 shrink-0 items-center justify-center border border-line-2 text-fg transition-colors duration-(--dur-fast) ease-out-expo [--fill:var(--accent)] group-hover/card:border-accent group-hover/card:text-ink group-has-[a:focus-visible]/card:border-accent group-has-[a:focus-visible]/card:text-ink"
         >
           <ArrowRight
             className="size-4 transition-transform duration-(--dur) ease-out-expo group-hover/card:translate-x-1 group-has-[a:focus-visible]/card:translate-x-1"

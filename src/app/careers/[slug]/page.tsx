@@ -53,8 +53,9 @@ function Needs({ career }: { career: Career }) {
       <NeedsRow label={copy.needs.subjects}>
         <ul className="flex flex-wrap gap-2">
           {career.subjects.map((s) => (
-            <li key={s}>
-              <Badge>{s}</Badge>
+            <li key={s} className="max-w-full">
+              {/* Some subjects are a phrase, so let the chip wrap instead of running off a 320px screen. */}
+              <Badge className="max-w-full whitespace-normal text-left">{s}</Badge>
             </li>
           ))}
         </ul>

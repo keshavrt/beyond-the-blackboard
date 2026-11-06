@@ -13,6 +13,18 @@ export const homePageCopy = {
     locale: "en_IN",
   },
 
+  /** Open Graph share image (app/opengraph-image.tsx). */
+  og: {
+    alt: "Beyond the Blackboard: find out what you can become, and how to get there.",
+    token: "[ CAREER GUIDE ]",
+    facts: {
+      careers: "Careers",
+      streams: "Streams",
+      for: "For",
+      forValue: "Class 8 to 12",
+    },
+  },
+
   hero: {
     overline: "From",
     overlineKey: "IIT Roorkee",

@@ -89,6 +89,16 @@ export const careerDetailCopy = {
       `${oneLiner} About ${years} of study after Class ${after === "10th" ? "10" : "12"}.${exam ? ` Entrance: ${exam}.` : ""} Path, subjects, exams and starting salary.`,
   },
 
+  /** Open Graph share image (careers/[slug]/opengraph-image.tsx). */
+  og: {
+    alt: (name: string): LocalizedText => `${name}: career path, exams and starting pay`,
+    token: "[ CAREER ]",
+    study: (after: "10th" | "12th"): LocalizedText => `Study after Class ${after === "10th" ? "10" : "12"}`,
+    exam: "Main exam",
+    noExam: "None needed",
+    pay: "Starting pay a month",
+  },
+
   notFound: {
     metaTitle: "Page not found",
     title: "Page not",
