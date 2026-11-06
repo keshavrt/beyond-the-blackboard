@@ -33,7 +33,7 @@ const PATH_STEPS = [
  */
 function PathStrip({ path }: { path: Career["path"] }) {
   return (
-    <ol aria-label="Path" className="relative grid gap-2.5">
+    <ol aria-label="Path" className="pointer-events-none relative grid gap-2.5">
       <span aria-hidden="true" className="absolute top-2 bottom-2 left-[3px] w-px bg-line-2" />
       {PATH_STEPS.map(([key, label], i) => {
         const last = i === PATH_STEPS.length - 1
@@ -59,7 +59,9 @@ function PathStrip({ path }: { path: Career["path"] }) {
 }
 
 /**
- * Whole card is one link (stretched ::after), so it is a single 44px+ tap target.
+ * Whole card is one link (stretched ::after, -inset-px so the border counts too), so it is a
+ * single 44px+ tap target. Positioned decoration painted after the link (tab, path strip,
+ * arrow box) is pointer-events-none, otherwise it sits above the ::after and eats the click.
  * Hover: border emphasis, title turns Sage, Sage fill rises in the arrow box.
  * Focus-visible: Sage ring around the card and the same fill.
  */
@@ -81,7 +83,7 @@ export function CareerCard({
         className
       )}
     >
-      <CardTab>
+      <CardTab className="pointer-events-none">
         <FileTab index={index} name={field} />
       </CardTab>
       <CardHeader>
@@ -89,7 +91,7 @@ export function CareerCard({
           <h3 className="text-inherit">
             <Link
               href={`/careers/${career.slug}`}
-              className="outline-none after:absolute after:inset-0 after:content-['']"
+              className="outline-none after:absolute after:-inset-px after:content-['']"
             >
               {career.name}
             </Link>
@@ -101,7 +103,7 @@ export function CareerCard({
       <CardMedia className="order-first">
         {/* Photo only when the data has one; without it the path strip is the card's art. */}
         {career.image ? (
-          <div className="relative aspect-4/3 overflow-hidden border-b border-line">
+          <div className="pointer-events-none relative aspect-4/3 overflow-hidden border-b border-line">
             <Image
               src={career.image.src}
               alt={career.image.alt}
@@ -147,7 +149,7 @@ export function CareerCard({
         </dl>
         <span
           aria-hidden="true"
-          className="fill-rise inline-flex size-11 shrink-0 items-center justify-center border border-line-2 text-fg transition-colors duration-(--dur-fast) ease-out-expo [--fill:var(--accent)] group-hover/card:border-accent group-hover/card:text-ink group-has-[a:focus-visible]/card:border-accent group-has-[a:focus-visible]/card:text-ink"
+          className="fill-rise pointer-events-none inline-flex size-11 shrink-0 items-center justify-center border border-line-2 text-fg transition-colors duration-(--dur-fast) ease-out-expo [--fill:var(--accent)] group-hover/card:border-accent group-hover/card:text-ink group-has-[a:focus-visible]/card:border-accent group-has-[a:focus-visible]/card:text-ink"
         >
           <ArrowRight
             className="size-4 transition-transform duration-(--dur) ease-out-expo group-hover/card:translate-x-1 group-has-[a:focus-visible]/card:translate-x-1"
