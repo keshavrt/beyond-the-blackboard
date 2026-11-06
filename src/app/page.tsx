@@ -2,7 +2,7 @@ import { SectionIndex } from "@/components/brand/section-header"
 
 export default function Home() {
   return (
-    <main className="flex flex-1 flex-col px-gx">
+    <div className="flex flex-1 flex-col px-gx">
       <div className="flex flex-1 flex-col justify-center py-24">
         <div className="flex items-start gap-4 md:gap-6">
           <SectionIndex index={0} className="mt-[0.35em] shrink-0" />
@@ -25,12 +25,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <footer className="flex flex-wrap justify-between gap-2 border-t border-line py-5">
-        <p className="font-mono text-xs font-bold tracking-[0.12em] text-mute uppercase">
-          IIT Roorkee · Community Outreach
-        </p>
-        <p className="font-mono text-xs text-mute">/* MIC-399 */</p>
-      </footer>
-    </main>
+    </div>
   );
 }

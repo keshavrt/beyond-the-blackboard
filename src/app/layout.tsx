@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { SiteFooter } from "@/components/site/site-footer";
+import { SiteHeader } from "@/components/site/site-header";
 
 /* DESIGN.md §3: Geist Sans for paragraphs, Geist Mono for the chrome. */
 const geistSans = Geist({
@@ -31,7 +33,19 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={cn("h-full antialiased", geistSans.variable, geistMono.variable)}
     >
-      <body className="flex min-h-full flex-col font-sans">{children}</body>
+      <body className="flex min-h-full flex-col font-sans">
+        <a
+          href="#main"
+          className="sr-only type-label focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-accent focus:px-4 focus:py-3 focus:text-ink"
+        >
+          Skip to content
+        </a>
+        <SiteHeader />
+        <main id="main" className="flex flex-1 flex-col">
+          {children}
+        </main>
+        <SiteFooter />
+      </body>
     </html>
   );
 }

@@ -113,10 +113,10 @@ export default function StyleguidePage() {
   const engineer = getCareerBySlug("software-engineer")
 
   return (
-    <main className="flex-1">
+    <div className="flex-1">
       {/* Header */}
       <header className="px-gx pt-16 pb-16 md:pt-24 md:pb-24">
-        <p className="font-mono text-xs text-mute">/* Design system · v0.1 */</p>
+        <p className="font-mono text-xs text-mute">{"/* Design system · v0.1 */"}</p>
         <SectionHeader
           index={0}
           title="Style"
@@ -495,7 +495,7 @@ export default function StyleguidePage() {
             </p>
           </MotifRow>
           <MotifRow label="Comment">
-            <p className="font-mono text-sm text-mute">/* Updated 06 Nov 2026 */</p>
+            <p className="font-mono text-sm text-mute">{"/* Updated 06 Nov 2026 */"}</p>
           </MotifRow>
           <MotifRow label="Status tokens">
             <p className="font-mono text-sm font-bold text-fg">
@@ -538,7 +538,7 @@ export default function StyleguidePage() {
           </MotifRow>
         </dl>
       </Section>
-    </main>
+    </div>
   )
 }
 

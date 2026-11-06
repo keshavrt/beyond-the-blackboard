@@ -1,13 +1,8 @@
 import { careers } from "@/data/careers";
-import type { Career, Interest, Stream } from "@/types/career";
+import type { Career } from "@/types/career";
+import { matchesFilters, type CareerFilters } from "@/lib/career-filter";
 
-export interface CareerFilters {
-  /** Matched against the career name, case-insensitive. */
-  query?: string;
-  /** "any" or undefined means no stream filter. */
-  stream?: Stream;
-  interest?: Interest;
-}
+export type { CareerFilters } from "@/lib/career-filter";
 
 export function getAllCareers(): Career[] {
   return careers;
@@ -31,16 +26,11 @@ export function getRelatedCareers(slug: string): Career[] {
 /**
  * Filters combine with AND.
  * A career whose streams include "any" matches every stream filter.
+ * Pass `list` to filter a subset (or a slim client-side index).
  */
-export function filterCareers({ query, stream, interest }: CareerFilters = {}): Career[] {
-  const q = query?.trim().toLowerCase() ?? "";
-
-  return careers.filter((c) => {
-    if (q && !c.name.toLowerCase().includes(q)) return false;
-    if (stream && stream !== "any" && !c.streams.includes(stream) && !c.streams.includes("any")) {
-      return false;
-    }
-    if (interest && !c.interests.includes(interest)) return false;
-    return true;
-  });
+export function filterCareers<T extends Pick<Career, "name" | "streams" | "interests"> = Career>(
+  filters: CareerFilters = {},
+  list: readonly T[] = careers as unknown as T[],
+): T[] {
+  return list.filter((c) => matchesFilters(c, filters));
 }

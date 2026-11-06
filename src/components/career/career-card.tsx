@@ -9,32 +9,82 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
+  CardMedia,
   CardTab,
   CardTitle,
 } from "@/components/ui/card"
 import { streamLabels } from "@/data/careers"
+import { cn } from "@/lib/utils"
 import type { Career } from "@/types/career"
 
 function formatYears({ min, max }: Career["durationYears"]) {
   return min === max ? `${min} yrs` : `${min}–${max} yrs`
 }
 
+const PATH_STEPS = [
+  ["after10th", "10th"],
+  ["after12th", "12th"],
+  ["course", "Study"],
+  ["job", "Job"],
+] as const satisfies readonly (readonly [keyof Career["path"], string])[]
+
+/**
+ * Card "art" (DESIGN.md §5.6 media area): the career's own route, 10th → job.
+ * A hairline rail with square Sage nodes; labels mono, step titles sans.
+ * Cards differ by content, so the grid never looks like copies.
+ */
+function PathStrip({ path }: { path: Career["path"] }) {
+  return (
+    <ol aria-label="Path" className="relative grid gap-2.5">
+      <span aria-hidden="true" className="absolute top-2 bottom-2 left-[3px] w-px bg-line-2" />
+      {PATH_STEPS.map(([key, label], i) => {
+        const last = i === PATH_STEPS.length - 1
+        return (
+          <li key={key} className="relative grid grid-cols-[7px_52px_1fr] items-baseline gap-x-3">
+            <span
+              aria-hidden="true"
+              className={
+                last
+                  ? "size-[7px] translate-y-[-1px] bg-accent"
+                  : "size-[7px] translate-y-[-1px] border border-line-2 bg-bg"
+              }
+            />
+            <span className="type-micro text-mute">{label}</span>
+            <span className={last ? "type-small font-medium text-fg" : "type-small text-fg-body"}>
+              {path[key].title}
+            </span>
+          </li>
+        )
+      })}
+    </ol>
+  )
+}
+
 /**
  * Whole card is one link (stretched ::after), so it is a single 44px+ tap target.
  * Hover: border emphasis + title turns Sage. Focus-visible: Sage ring around the card.
  */
-export function CareerCard({ career, index }: { career: Career; index: number }) {
+export function CareerCard({
+  career,
+  index,
+  className,
+}: {
+  career: Career
+  index: number
+  className?: string
+}) {
   const file = `${career.slug.replace(/-/g, "_").toUpperCase()}.MD`
   return (
     <Card
-      className={
-        "mt-3 hover:border-line-2 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-4 has-[a:focus-visible]:outline-accent has-[a:active]:bg-surface-2"
-      }
+      className={cn(
+        "mt-3 hover:border-line-2 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-4 has-[a:focus-visible]:outline-accent has-[a:active]:bg-surface-2",
+        className
+      )}
     >
       <CardTab>
         <FileTab index={index} name={file} />
       </CardTab>
-      <CardHeader className="pt-8">
+      <CardHeader>
         <CardTitle className="group-hover/card:text-accent">
           <h3>
             <Link
@@ -47,6 +97,10 @@ export function CareerCard({ career, index }: { career: Career; index: number })
         </CardTitle>
         <CardDescription>{career.oneLiner}</CardDescription>
       </CardHeader>
+      {/* Visually on top (order-first), but after the name in reading order. */}
+      <CardMedia className="order-first px-(--card-spacing) pt-9 pb-5">
+        <PathStrip path={career.path} />
+      </CardMedia>
       <CardContent>
         <ul className="flex flex-wrap gap-2" aria-label="Streams">
           {career.streams.map((s) => (
