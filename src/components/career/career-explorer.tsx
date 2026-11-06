@@ -151,8 +151,8 @@ export function CareerExplorerView({
           </InputGroup>
         </div>
 
-        {/* Mobile (<768px): stream + interest collapse behind this button. */}
-        <div className="border-t border-line py-5 min-[768px]:hidden">
+        {/* Below md (820px, DESIGN.md §6): stream + interest collapse behind this button. */}
+        <div className="border-t border-line py-5 md:hidden">
           <Button
             variant="outline"
             className="w-full justify-between"
@@ -174,7 +174,7 @@ export function CareerExplorerView({
           </Button>
         </div>
 
-        <div id="filter-panel" className={cn(panelOpen ? "block" : "hidden", "min-[768px]:block")}>
+        <div id="filter-panel" className={cn(panelOpen ? "block" : "hidden", "md:block")}>
         <div className={rowClass}>
           <p id="filter-stream" className={rowLabelClass}>
             {copy.streamLabel}
