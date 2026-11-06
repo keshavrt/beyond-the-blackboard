@@ -6,7 +6,7 @@ Stack: Next.js (App Router), TypeScript, Tailwind v4, shadcn/ui, Motion, Lenis, 
 
 ## Sources of truth
 
-- DESIGN.md = visual rules (dark techy theme, Volt lime accent #c5f82a).
+- DESIGN.md = visual rules (dark techy theme, Sage lime accent #a9cc5a).
 - BRIEF.md (when created) = content & goals.
 - design-system/MASTER.md (if created) overrides tokens.
 - Never invent colors, fonts, radii or shadows outside DESIGN.md. Ask if unsure.

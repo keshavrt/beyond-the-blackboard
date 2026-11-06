@@ -31,7 +31,7 @@ What I measured on the reference site, so we know what we are adapting. **Do not
 **"Readable terminal."** The site looks like a well-lit dev console or a type-specimen sheet, but the reading parts read like a good textbook.
 
 - **Dark, near-black canvas** with a faint dot grid, like graph paper for code.
-- **One loud accent**, used sparingly and with intent: index numbers, active states, highlight boxes, fills on hover.
+- **One calm accent**, used sparingly and with intent: index numbers, active states, highlight boxes, fills on hover.
 - **Two modes of voice:**
   - *Chrome* (hero, nav, section headers, labels, numbering): monospace or grotesk, uppercase, tight and huge, full of syntax motifs.
   - *Content* (articles, guides, FAQs, notices): a calm sans-serif body at a comfortable size and line length. The techy feel stays in the frame around the content, never inside the paragraphs.
@@ -44,7 +44,9 @@ Mood words: precise, nerdy, friendly, confident, legible.
 
 ## 2. Color palette
 
-New brand. The accent is **"Volt" lime** in place of the reference orange. It keeps the high-energy feel on black, gets nowhere near the reference brand, and has very high contrast.
+New brand. The accent is **"Sage" lime** in place of the reference orange. It is a desaturated lime: it still reads as the brand colour on black and passes AAA, but it is calm enough for long sessions of career reading. It gets nowhere near the reference brand.
+
+> Decision (2026-11-06): replaced the original "Volt" `#c5f82a` (94% saturation, glared on dark backgrounds) with Sage `#a9cc5a` (53% saturation). Career guidance needs to feel calm and trustworthy, not loud.
 
 ### Core tokens
 
@@ -59,9 +61,9 @@ New brand. The accent is **"Volt" lime** in place of the reference orange. It ke
 | `--dim` | `#5a5853` | **Decorative only**: ticks, grid labels, disabled state | 2.75 : 1 (never for text you need to read) |
 | `--line` | `rgba(236,235,230,.12)` | Default hairline | — |
 | `--line-2` | `rgba(236,235,230,.22)` | Emphasised hairline, tag borders | — |
-| `--accent` | `#c5f82a` | **Volt**: indices, active states, highlight boxes, CTA fill | **15.7 : 1** |
-| `--accent-2` | `#a3d61a` | Pressed / visited / secondary accent | 11.4 : 1 |
-| `--ink` | `#0b0c0e` | Text on accent fills | 15.7 : 1 on Volt |
+| `--accent` | `#a9cc5a` | **Sage**: indices, active states, highlight boxes, CTA fill | **10.7 : 1** |
+| `--accent-2` | `#93b548` | Pressed / visited / secondary accent | 8.3 : 1 |
+| `--ink` | `#0b0c0e` | Text on accent fills | 10.7 : 1 on Sage |
 | `--grid-dot` | `rgba(236,235,230,.07)` | Background dot grid | — |
 
 ### Status colors (information sites need them; keep them muted)
@@ -76,12 +78,12 @@ New brand. The accent is **"Volt" lime** in place of the reference orange. It ke
 ### Accent usage rules
 
 - The accent should cover **≤ 5% of any screen**. It works as punctuation, not as a fill colour.
-- Text on Volt is always `--ink`, never white.
+- Text on Sage is always `--ink`, never white.
 - Selection: `::selection { background: var(--accent); color: var(--ink); }`.
 - Scrollbar: thin, thumb `--accent`, track `--bg` with a `--line` left border.
 - Focus ring: `outline: 2px solid var(--accent); outline-offset: 4px;` (the reference uses 6px, which looks loose next to body text).
 
-### Alternative accent (if Volt feels too loud)
+### Alternative accent (if Sage needs replacing)
 
 - **Signal Cyan** `#3ee6d6` (also passes AAA on `--bg`). Swap `--accent`/`--accent-2`; nothing else changes.
 
@@ -138,7 +140,7 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 11. **Callouts:** `--surface` background, 2px left border in a status color, mono `label` title (`NOTE`, `DEADLINE`, `TIP`), sans body.
 12. **No background noise behind text:** the dot grid, ASCII canvases and scanlines stop at the edge of the content column. Prose sits on a solid `--bg` or `--surface`.
 13. **Motion:** reading pages animate only their headers. Paragraphs never reveal on scroll. Honour `prefers-reduced-motion`.
-14. **Optional light reading mode** (for long guides or printing): `--bg #f6f5f0`, `--fg #121316`, `--fg-body #2b2d31`, accent text switches to `#3f6b00` (Volt fails contrast on light backgrounds) and Volt is used only as a fill.
+14. **Optional light reading mode** (for long guides or printing): `--bg #f6f5f0`, `--fg #121316`, `--fg-body #2b2d31`, accent text switches to `#3f6b00` (Sage fails contrast on light backgrounds) and Sage is used only as a fill.
 
 ---
 
@@ -320,7 +322,7 @@ With reduced motion: skip the loader entirely, render ASCII canvases as a static
 - ❌ Set paragraphs, long lists or tables in monospace.
 - ❌ Put ASCII art, dot grids or animated canvases behind readable text.
 - ❌ Use ALL-CAPS for sentences or content headings longer than about 4 words.
-- ❌ Use rounded corners, drop shadows or gradients. **No gradients anywhere**: underlines are solid Volt (`text-decoration` or a solid `::after` bar). The only exception is the background dot grid, which uses `radial-gradient()` purely to draw hard-edged dots, never a colour blend.
+- ❌ Use rounded corners, drop shadows or gradients. **No gradients anywhere**: underlines are solid Sage (`text-decoration` or a solid `::after` bar). The only exception is the background dot grid, which uses `radial-gradient()` purely to draw hard-edged dots, never a colour blend.
 - ❌ Use `backdrop-filter` / blur or translucent "glass" surfaces. Use solid `--surface` / `--surface-2` fills.
 - ❌ Use more than one accent per screen, or accent colour for large body text.
 - ❌ Show the loader on every navigation or block content behind it.
@@ -336,7 +338,7 @@ With reduced motion: skip the loader entirely, render ASCII canvases as a static
   --bg: #0b0c0e;  --surface: #131518;  --surface-2: #1a1d21;
   --fg: #ecebe6;  --fg-body: #c9c6be;  --mute: #9a968e;  --dim: #5a5853;
   --line: rgba(236,235,230,.12);  --line-2: rgba(236,235,230,.22);
-  --accent: #c5f82a;  --accent-2: #a3d61a;  --ink: #0b0c0e;
+  --accent: #a9cc5a;  --accent-2: #93b548;  --ink: #0b0c0e;
   --info: #5cc8ff;  --warn: #ffc53d;  --danger: #ff5d5d;
   --grid-dot: rgba(236,235,230,.07);
   --gx: clamp(16px, 3.2vw, 48px);

@@ -2,129 +2,493 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* Dark is the only theme for now (DESIGN.md §2). */
 @custom-variant dark (&:is(.dark *));
 
+/* ------------------------------------------------------------------
+   1. DESIGN.md tokens (§2, §6, §7, §9) — the single source of truth
+   ------------------------------------------------------------------ */
+:root {
+  color-scheme: dark;
+
+  /* Core palette */
+  --bg: #0b0c0e;
+  --surface: #131518;
+  --surface-2: #1a1d21;
+  --fg: #ecebe6;
+  --fg-body: #c9c6be;
+  --mute: #9a968e;
+  --dim: #5a5853; /* decorative only — never readable text */
+  --line: rgba(236, 235, 230, 0.12);
+  --line-2: rgba(236, 235, 230, 0.22);
+  --accent: #a9cc5a; /* Sage */
+  --accent-2: #93b548;
+  --ink: #0b0c0e;
+  --grid-dot: rgba(236, 235, 230, 0.07);
+
+  /* Status */
+  --info: #5cc8ff;
+  --warn: #ffc53d;
+  --danger: #ff5d5d;
+  --ok: var(--accent);
+
+  /* Layout */
+  --gx: clamp(16px, 3.2vw, 48px);
+  --measure: 68ch;
+  --radius: 0px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-io: cubic-bezier(0.77, 0, 0.175, 1);
+  --dur-fast: 0.3s;
+  --dur: 0.5s;
+  --dur-slow: 0.9s;
+  --dur-reveal: 1.1s;
+
+  /* Font roles */
+  --font-display: var(--font-geist-mono);
+  --font-label: var(--font-geist-mono);
+  --font-body: var(--font-geist-sans);
+
+  /* shadcn semantic aliases → DESIGN tokens.
+     Note: DESIGN.md's --accent is Sage; shadcn's "accent" therefore also means Sage. */
+  --background: var(--bg);
+  --foreground: var(--fg);
+  --card: var(--surface);
+  --card-foreground: var(--fg);
+  --popover: var(--surface);
+  --popover-foreground: var(--fg);
+  --primary: var(--accent);
+  --primary-foreground: var(--ink);
+  --secondary: var(--surface-2);
+  --secondary-foreground: var(--fg);
+  --muted: var(--surface-2);
+  --muted-foreground: var(--mute);
+  --accent-foreground: var(--ink);
+  --destructive: var(--danger);
+  --border: var(--line);
+  --input: var(--line-2);
+  --ring: var(--accent);
+}
+
+/* ------------------------------------------------------------------
+   2. Tailwind theme — exposes tokens as utilities
+   ------------------------------------------------------------------ */
 @theme inline {
+  /* DESIGN names */
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-fg-body: var(--fg-body);
+  --color-mute: var(--mute);
+  --color-dim: var(--dim);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-ink: var(--ink);
+  --color-info: var(--info);
+  --color-warn: var(--warn);
+  --color-danger: var(--danger);
+  --color-ok: var(--ok);
+
+  /* shadcn names */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Fonts */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-heading: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Radius: 0 everywhere */
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
+
+  /* No shadows (DESIGN.md §8) */
+  --shadow-2xs: none;
+  --shadow-xs: none;
+  --shadow-sm: none;
+  --shadow: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-xl: none;
+  --shadow-2xl: none;
+
+  /* Motion */
+  --ease-out-expo: var(--ease);
+  --ease-io: var(--ease-io);
+
+  /* Breakpoints (DESIGN.md §6) */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 820px;
+  --breakpoint-lg: 1080px;
+  --breakpoint-xl: 1440px;
 }
 
-:root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+/* ------------------------------------------------------------------
+   3. Type scale (DESIGN.md §3). Named type-* so class merging never
+      confuses them with text-* colours.
+   ------------------------------------------------------------------ */
+@utility type-display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(56px, 12vw, 200px);
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+@utility type-display-l {
+  font-family: var(--font-display);
+  font-size: clamp(42px, 5.6vw, 96px);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+@utility type-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+@utility type-h3 {
+  font-family: var(--font-body);
+  font-size: clamp(20px, 1.8vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+@utility type-h4 {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+@utility type-lead {
+  font-family: var(--font-body);
+  font-size: clamp(18px, 1.4vw, 20px);
+  line-height: 1.55;
+  font-weight: 500;
+}
+@utility type-body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  font-weight: 400;
+  @media (width >= 640px) {
+    font-size: 17px;
+  }
+}
+@utility type-small {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+}
+@utility type-label {
+  font-family: var(--font-label);
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+@utility type-micro {
+  font-family: var(--font-label);
+  font-size: 11px;
+  line-height: 1.3;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+/* Gutter helper */
+@utility px-gx {
+  padding-inline: var(--gx);
 }
 
+/* Solid fill for content columns (Readability rule 12) */
+@utility bg-solid {
+  background-color: var(--bg);
+}
+
+/* ------------------------------------------------------------------
+   4. Base
+   ------------------------------------------------------------------ */
 @layer base {
   * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
+    @apply border-line;
   }
   html {
-    @apply font-sans;
+    background-color: var(--bg);
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) var(--bg);
+  }
+  body {
+    background-color: var(--bg);
+    /* Hard-edged dot grid (the only allowed radial-gradient, DESIGN.md §8) */
+    background-image: radial-gradient(var(--grid-dot) 1px, transparent 1.3px);
+    background-size: 28px 28px;
+    color: var(--fg-body);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  @media (width >= 640px) {
+    body {
+      font-size: 17px;
+    }
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--fg);
+  }
+  code,
+  kbd,
+  pre,
+  samp {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-variant-ligatures: none;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+  }
+
+  /* Scrollbar (WebKit) */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg);
+    border-left: 1px solid var(--line);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--accent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------------------------------------------
+   5. Prose — Readability rules (DESIGN.md §4)
+   ------------------------------------------------------------------ */
+@layer components {
+  .prose {
+    background-color: var(--bg); /* rule 12: no dot grid behind text */
+    color: var(--fg-body);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  @media (width >= 640px) {
+    .prose {
+      font-size: 17px;
+    }
+  }
+  .prose > * {
+    max-width: var(--measure);
+  }
+  .prose p,
+  .prose ul,
+  .prose ol {
+    margin-block: 1em;
+  }
+  .prose > :first-child {
+    margin-top: 0;
+  }
+  .prose > :last-child {
+    margin-bottom: 0;
+  }
+  .prose h2 {
+    margin-top: 2.5em;
+    margin-bottom: 0.6em;
+    font-family: var(--font-body);
+    font-size: clamp(22px, 2vw, 28px);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    color: var(--fg);
+  }
+  .prose h3 {
+    margin-top: 1.75em;
+    margin-bottom: 0.5em;
+    font-family: var(--font-body);
+    font-size: clamp(19px, 1.6vw, 22px);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+    color: var(--fg);
+  }
+  .prose strong {
+    color: var(--fg);
+    font-weight: 600;
+  }
+  .prose a {
+    color: var(--fg);
+    text-decoration-line: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition:
+      color var(--dur-fast) var(--ease),
+      text-decoration-thickness var(--dur-fast) var(--ease);
+  }
+  .prose a:hover {
+    color: var(--accent);
+    text-decoration-thickness: 2px;
+  }
+  .prose a:active {
+    color: var(--accent-2);
+  }
+  .prose code {
+    font-size: 0.9em;
+    color: var(--fg);
+    background: var(--surface-2);
+    padding: 0.1em 0.35em;
+  }
+
+  /* Lists: mono accent markers hanging outside the text column (rule 9) */
+  .prose ol,
+  .prose ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  .prose ol {
+    counter-reset: prose-ol;
+  }
+  .prose li {
+    position: relative;
+    padding-left: 2.5em;
+    margin-block: 0.5em;
+  }
+  .prose ol > li {
+    counter-increment: prose-ol;
+  }
+  .prose ol > li::before {
+    content: counter(prose-ol, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 0.2em;
+    font-family: var(--font-label);
+    font-size: 0.75em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+  }
+  .prose ul > li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    font-family: var(--font-label);
+    color: var(--accent);
+  }
+
+  /* Tables (rule 10) */
+  .prose .table-wrap {
+    max-width: none;
+    overflow-x: auto;
+    margin-block: 1.5em;
+    border: 1px solid var(--line);
+  }
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+  .prose th {
+    background: var(--surface-2);
+    text-align: left;
+    padding: 10px 14px;
+    font-family: var(--font-label);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg);
+    white-space: nowrap;
+  }
+  .prose td {
+    padding: 10px 14px;
+    border-top: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  .prose td.num,
+  .prose th.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Callouts (rule 11) */
+  .prose .callout {
+    margin-block: 1.5em;
+    padding: 16px 20px;
+    background: var(--surface);
+    border-left: 2px solid var(--info);
+  }
+  .prose .callout[data-tone="warn"] {
+    border-left-color: var(--warn);
+  }
+  .prose .callout[data-tone="ok"] {
+    border-left-color: var(--ok);
+  }
+  .prose .callout[data-tone="danger"] {
+    border-left-color: var(--danger);
+  }
+  .prose .callout-title {
+    display: block;
+    margin-bottom: 4px;
+    font-family: var(--font-label);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg);
+  }
+  .prose .callout p {
+    margin: 0;
   }
 }

@@ -1,37 +1,59 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "cn"
+import { ArrowRight, ArrowUpRight } from "lucide-react"
+import { cn } from "@/lib/utils"
 
+/* DESIGN.md §5.4 — sharp, mono label, Sage primary, ≥44px targets. */
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-md border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  [
+    "group/button relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2.5 border border-transparent",
+    "font-mono font-extrabold tracking-[0.04em] uppercase whitespace-nowrap select-none",
+    "transition-[color,background-color,border-color] duration-(--dur-fast) ease-out-expo",
+    "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent",
+    "disabled:pointer-events-none data-disabled:pointer-events-none aria-disabled:pointer-events-none",
+    "aria-invalid:border-danger",
+    "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  ],
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/80",
-        outline:
-          "border-border bg-background shadow-xs hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
-        ghost:
-          "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
-        destructive:
-          "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
-        link: "text-primary underline-offset-4 hover:underline",
+        default: [
+          "bg-accent text-ink",
+          "hover:bg-fg active:bg-accent-2",
+          "disabled:border-line disabled:bg-surface-2 disabled:text-dim",
+          "data-disabled:border-line data-disabled:bg-surface-2 data-disabled:text-dim",
+        ],
+        outline: [
+          "border-line-2 bg-transparent text-fg",
+          "hover:border-accent hover:bg-surface-2 active:bg-surface aria-expanded:border-accent",
+          "disabled:border-line disabled:text-dim data-disabled:border-line data-disabled:text-dim",
+        ],
+        ghost: [
+          "bg-transparent text-fg",
+          "hover:bg-surface-2 active:bg-surface aria-expanded:bg-surface-2",
+          "disabled:text-dim data-disabled:text-dim",
+        ],
+        destructive: [
+          "border-danger bg-transparent text-danger",
+          "hover:bg-danger hover:text-ink active:opacity-90",
+          "disabled:border-line disabled:text-dim data-disabled:border-line data-disabled:text-dim",
+        ],
+        link: [
+          "min-h-11 px-0 text-fg underline decoration-accent decoration-1 underline-offset-[3px]",
+          "hover:text-accent hover:decoration-2 active:text-accent-2",
+          "disabled:text-dim disabled:decoration-dim data-disabled:text-dim",
+        ],
       },
       size: {
-        default:
-          "h-9 gap-1.5 px-2.5 in-data-[slot=button-group]:rounded-md has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        xs: "h-6 gap-1 rounded-[min(var(--radius-md),8px)] px-2 text-xs in-data-[slot=button-group]:rounded-md has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-8 gap-1 rounded-[min(var(--radius-md),10px)] px-2.5 in-data-[slot=button-group]:rounded-md has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5",
-        lg: "h-10 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        icon: "size-9",
-        "icon-xs":
-          "size-6 rounded-[min(var(--radius-md),8px)] in-data-[slot=button-group]:rounded-md [&_svg:not([class*='size-'])]:size-3",
-        "icon-sm":
-          "size-8 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-md",
-        "icon-lg": "size-10",
+        sm: "min-h-11 px-3.5 py-2.5 text-xs",
+        default: "min-h-11 px-5 py-3 text-[13px]",
+        lg: "min-h-15 px-6.5 py-5 text-[clamp(14px,1.2vw,17px)]",
+        icon: "size-11",
+        "icon-sm": "size-11 [&_svg:not([class*='size-'])]:size-3.5",
+        "icon-lg": "size-15 [&_svg:not([class*='size-'])]:size-5",
       },
     },
+    compoundVariants: [{ variant: "link", className: "px-0" }],
     defaultVariants: {
       variant: "default",
       size: "default",
@@ -39,19 +61,47 @@ const buttonVariants = cva(
   }
 )
 
+type ButtonArrow = "external" | "internal"
+
 function Button({
   className,
   variant = "default",
   size = "default",
+  arrow,
+  children,
   ...props
-}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+}: ButtonPrimitive.Props &
+  VariantProps<typeof buttonVariants> & {
+    /** Trailing ↗ (external) or → (internal), nudging on hover. */
+    arrow?: ButtonArrow
+  }) {
   return (
     <ButtonPrimitive
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
+    >
+      {children}
+      {arrow ? <ButtonArrowIcon arrow={arrow} /> : null}
+    </ButtonPrimitive>
+  )
+}
+
+function ButtonArrowIcon({ arrow }: { arrow: ButtonArrow }) {
+  const Icon = arrow === "external" ? ArrowUpRight : ArrowRight
+  return (
+    <Icon
+      aria-hidden="true"
+      data-icon="inline-end"
+      strokeWidth={2.25}
+      className={cn(
+        "transition-transform duration-(--dur) ease-out-expo",
+        arrow === "external"
+          ? "group-hover/button:translate-x-[3px] group-hover/button:-translate-y-[3px]"
+          : "group-hover/button:translate-x-1"
+      )}
     />
   )
 }
 
-export { Button, buttonVariants }
+export { Button, buttonVariants, ButtonArrowIcon }
