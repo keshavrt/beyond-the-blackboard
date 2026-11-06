@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: PageProps<"/careers/[slug]">)
 /** Mono label column + content column, divided by hairlines. DESIGN.md §6 labelled rows. */
 function NeedsRow({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="grid gap-x-6 gap-y-4 border-t border-line py-8 first:border-t-0 first:pt-0 last:pb-0 sm:grid-cols-[minmax(140px,24%)_1fr]">
+    <div className="grid gap-x-6 gap-y-4 border-t border-line py-8 first:border-t-0 first:pt-0 last:pb-0 sm:grid-cols-[160px_minmax(0,1fr)]">
       <h3 className="type-meta font-semibold text-fg sm:pt-0.5">{label}</h3>
       <div className="min-w-0">{children}</div>
     </div>
@@ -97,7 +97,7 @@ export default async function CareerPage({ params }: PageProps<"/careers/[slug]"
     <article className="bg-bg px-gx pt-[clamp(24px,4vh,48px)] pb-[clamp(64px,10vh,120px)]">
       <CareerHeader career={career} />
 
-      <DetailSection id="what-they-do" index={1} title={copy.sections.whatTheyDo}>
+      <DetailSection id="what-they-do" index={1} title={copy.sections.whatTheyDo} intro={copy.whatTheyDo.intro}>
         <div className="prose bg-transparent">
           <ol>
             {career.whatTheyDo.map((item) => (
@@ -117,11 +117,11 @@ export default async function CareerPage({ params }: PageProps<"/careers/[slug]"
         <PathTimeline career={career} />
       </DetailSection>
 
-      <DetailSection id="needs" index={3} title={copy.sections.needs}>
+      <DetailSection id="needs" index={3} title={copy.sections.needs} intro={copy.needs.intro}>
         <Needs career={career} />
       </DetailSection>
 
-      <DetailSection id="salary" index={4} title={copy.sections.salary}>
+      <DetailSection id="salary" index={4} title={copy.sections.salary} intro={copy.salary.intro}>
         <SalaryBlock salary={career.salaryRange} />
       </DetailSection>
 

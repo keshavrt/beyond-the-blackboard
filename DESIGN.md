@@ -71,17 +71,19 @@ New brand. The accent is **"Sage" lime** in place of the reference orange. It is
 | Token | Hex | Use |
 |---|---|---|
 | `--info` | `#5cc8ff` | Notices, "Good to know" callouts |
-| `--warn` | `#ffc53d` | Deadlines, "Action needed" |
+| `--warn` | `#ffc53d` | Deadlines, "Action needed". Not for "approximate" (that is a muted chip) |
 | `--danger` | `#ff5d5d` | Errors, closed or expired |
 | `--ok` | = `--accent` | Success, "Open", confirmations |
 
 ### Accent usage rules
 
 - The accent should cover **≤ 5% of any screen**. It works as punctuation, not as a fill colour.
+  > Exception (decision 2026-11-07): the hero's boxed word (§5.9) and the 404 page's boxed word do **not** count toward the 5%. They are the site's one signature moment each. Everything else on those screens (buttons, chips, cursor, marks) still counts, and the limit stands everywhere else.
 - Text on Sage is always `--ink`, never white.
 - Selection: `::selection { background: var(--accent); color: var(--ink); }`.
 - Scrollbar: thin, thumb `--accent`, track `--bg` with a `--line` left border.
-- Focus ring: `outline: 2px solid var(--accent); outline-offset: 4px;` (the reference uses 6px, which looks loose next to body text).
+- Focus ring: `outline: 2px solid var(--accent); outline-offset: 4px;` (the reference uses 6px, which looks loose next to body text). **Always Sage**, on every control including the logo and tiles. Interactive elements also carry `outline-color: var(--accent)` at rest, so colour transitions never fade the ring in from the text colour. The only exception is content on a Sage surface (the mobile menu sheet), which uses an `--ink` ring because Sage on Sage is invisible.
+- One accent per screen: status colours (`--warn` etc.) are for real status (deadlines, errors), never for "approximate" markers. Those use the muted outline chip (`--line-2` border, `--mute` text).
 
 ### Alternative accent (if Sage needs replacing)
 
@@ -153,6 +155,7 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 12. **No background noise behind text:** the dot grid, ASCII canvases and scanlines stop at the edge of the content column. Prose sits on a solid `--bg` or `--surface`.
 13. **Motion:** reading pages animate only their headers. Paragraphs never reveal on scroll. Honour `prefers-reduced-motion`.
 14. **Optional light reading mode** (for long guides or printing): `--bg #f6f5f0`, `--fg #121316`, `--fg-body #2b2d31`, accent text switches to `#3f6b00` (Sage fails contrast on light backgrounds) and Sage is used only as a fill.
+15. **Line breaks:** headings use `text-wrap: balance`; paragraphs, list items and definitions use `text-wrap: pretty`, so lines rarely end on a single orphan word (set site-wide in the base layer).
 
 ---
 
@@ -263,7 +266,7 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 - **Max widths:** chrome is full-bleed with gutters. Content column `68ch` (about 720px). Content plus sidebar `minmax(260px, 32%) 1fr`.
 - **Grids:**
   - 12-column fluid grid with `clamp(16px, 2.4vw, 36px)` gaps.
-  - Common splits: `1fr auto 1fr` (nav, paired cards with an accent `+` between them), `repeat(3,1fr)` (pillars or feature cards), `minmax(180px,22%) 1fr` (labelled rows such as tiers or categories), `minmax(280px,38%) 1fr` (sticky title + list).
+  - Common splits: `1fr auto 1fr` (nav, paired cards with an accent `+` between them), `repeat(3,1fr)` (pillars or feature cards), `minmax(180px,22%) 1fr` (labelled rows such as tiers or categories), `minmax(280px,38%) 1fr` (sticky title + list on marketing pages), `minmax(260px,30%) 1fr` on career detail pages, where every section's left column holds the title **plus a one-line intro** (and "Words to know" in The path), so it never reads as an empty gutter.
 - **Vertical rhythm:** section padding `clamp(100px, 16vh, 180px)` for marketing-style sections and `clamp(64px, 10vh, 120px)` on content pages. The base spacing unit is **4px**; common steps are 4 · 8 · 12 · 14 · 18 · 24 · 28 · 36 · 48 · 64.
 - **Seams visible:** sections and rows are divided by full-width 1px `--line` rules rather than whitespace alone.
 - **Background:** dot grid `radial-gradient(var(--grid-dot) 1px, transparent 1.3px) 0 0 / 28px 28px` on `body`. Content columns sit on solid fills (see Readability rule 12).

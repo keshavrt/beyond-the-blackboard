@@ -2,8 +2,9 @@ import { SectionHeader } from "@/components/brand/section-header"
 import { cn } from "@/lib/utils"
 
 /**
- * One content section: hairline seam on top, `[0n] TITLE` on the left
+ * One content section: hairline seam on top, `[0n] Title` + one-line intro on the left
  * (sticky from 1080px), content on the right. DESIGN.md §6 "sticky title + list".
+ * Every section has an intro, so the left column always reads as a label, never a gap.
  */
 export function DetailSection({
   id,
@@ -29,7 +30,7 @@ export function DetailSection({
       id={id}
       aria-labelledby={headingId}
       className={cn(
-        "grid scroll-mt-24 gap-x-[clamp(16px,2.4vw,36px)] gap-y-8 border-t border-line py-[clamp(48px,8vh,96px)] lg:grid-cols-[minmax(280px,38%)_1fr]",
+        "grid scroll-mt-24 gap-x-[clamp(16px,2.4vw,36px)] gap-y-8 border-t border-line py-[clamp(48px,8vh,96px)] lg:grid-cols-[minmax(260px,30%)_minmax(0,1fr)]",
         className
       )}
     >

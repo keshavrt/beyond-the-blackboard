@@ -58,7 +58,7 @@ export function MobileMenu() {
       </SheetTrigger>
       <SheetContent
         side="full"
-        className="bg-accent text-ink [&_:focus-visible]:outline-ink"
+        className="bg-accent text-ink [&_*]:outline-ink"
       >
         <div className="flex items-center justify-between border-b border-ink/20 px-gx py-[18px]">
           <SheetTitle render={<p />} className="sr-only">

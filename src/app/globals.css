@@ -303,6 +303,25 @@
   h4 {
     color: var(--fg);
   }
+  /* No one-word last lines (critique 2026-11-07). Headings balance their lines;
+     running text avoids orphans. Utilities (text-balance etc.) still override. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-wrap: balance;
+  }
+  p,
+  li,
+  dd,
+  dt,
+  blockquote,
+  figcaption,
+  td {
+    text-wrap: pretty;
+  }
   code,
   kbd,
   pre,
@@ -313,6 +332,17 @@
   ::selection {
     background: var(--accent);
     color: var(--ink);
+  }
+  /* Lime from the first frame: transition-colors also animates outline-color,
+     so without a resting lime value the ring would fade in from the text colour. */
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  summary,
+  [tabindex] {
+    outline-color: var(--accent);
   }
   :focus-visible {
     outline: 2px solid var(--accent);

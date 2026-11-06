@@ -24,7 +24,7 @@ function Fact({ label, value, tag }: { label: string; value: string; tag?: strin
     <div className="flex flex-col gap-3 p-5 not-first:border-t sm:not-first:border-t-0 sm:not-first:border-l md:p-7">
       <dt className="flex flex-wrap items-center gap-x-2 gap-y-1 type-meta text-mute">
         {label}
-        {tag ? <span className="text-warn">({tag})</span> : null}
+        {tag ? <span className="text-mute">({tag})</span> : null}
       </dt>
       <dd className="text-[clamp(26px,2.8vw,40px)] leading-none font-semibold tracking-[-0.035em] text-fg tabular-nums">
         {value}

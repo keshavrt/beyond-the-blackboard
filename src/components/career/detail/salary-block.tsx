@@ -10,7 +10,7 @@ export function SalaryBlock({ salary }: { salary: SalaryRange }) {
     <div className="max-w-(--measure)">
       <div className="flex flex-wrap items-center gap-3">
         <p className="type-meta text-mute">{copy.salary.startLabel}</p>
-        {salary.approximate ? <Badge variant="warn">{copy.salary.approximate}</Badge> : null}
+        {salary.approximate ? <Badge variant="outline" className="text-mute">{copy.salary.approximate}</Badge> : null}
       </div>
       <p className="mt-4 text-[clamp(30px,3.6vw,52px)] leading-[1.05] font-bold tracking-[-0.04em] text-fg tabular-nums">
         {formatINR(salary.min)}

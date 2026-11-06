@@ -40,7 +40,7 @@ export function InterestGrid({
           <li key={interest} data-reveal="" className="border-r border-b border-line">
             <Link
               href={`/careers${filtersToSearch({ interest })}`}
-              className="group/tile fill-rise flex h-full flex-col p-[clamp(20px,2vw,28px)] sm:min-h-[200px] outline-none [--fill:var(--accent)] active:[--fill:var(--accent-2)] focus-visible:z-10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-fg md:min-h-[240px]"
+              className="group/tile fill-rise flex h-full flex-col p-[clamp(20px,2vw,28px)] sm:min-h-[200px] [--fill:var(--accent)] active:[--fill:var(--accent-2)] focus-visible:z-10 md:min-h-[240px]"
             >
               {/* Fill wipe (DESIGN.md §7) comes from .fill-rise: solid Sage, no gradient. */}
               <span className="relative flex items-start justify-between gap-4">

@@ -15,7 +15,7 @@ export const careerDetailCopy = {
     startPay: "Starting pay a month",
     howIn: "How you get in",
     noExam: "No entrance exam",
-    approx: "Approx.",
+    approx: "approx.",
   },
   lastChecked: (date: string): LocalizedText => `Facts last checked: ${date}`,
   streamsLabel: "Streams",
@@ -31,6 +31,10 @@ export const careerDetailCopy = {
     sources: "Sources",
   },
 
+  whatTheyDo: {
+    intro: "A normal working day, in a few points.",
+  },
+
   path: {
     intro: "Step by step, from Class 10 to your first job.",
     stages: {
@@ -44,6 +48,7 @@ export const careerDetailCopy = {
   },
 
   needs: {
+    intro: "The subjects, entrance exams and skills this career asks for.",
     subjects: "Subjects",
     exams: "Entrance exams",
     noExams: "No entrance exam is needed.",
@@ -51,6 +56,7 @@ export const careerDetailCopy = {
   },
 
   salary: {
+    intro: "What you can expect to earn in your first job.",
     startLabel: "Typical starting pay",
     approximate: "Approximate",
     perMonth: "per month",
