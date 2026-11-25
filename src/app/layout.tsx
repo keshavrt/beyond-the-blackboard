@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { BootLoader, bootScript } from "@/components/site/boot-loader";
+import { betterLifeLangScript } from "@/components/better-life/lang-script";
 import { MotionEffects } from "@/components/site/motion-effects";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
@@ -43,6 +44,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: bootScript }} />
+        {/* My Better Life EN/HI: sets data-bl-lang on <html> before first paint. Own tag + try/catch. */}
+        <script dangerouslySetInnerHTML={{ __html: betterLifeLangScript }} />
       </head>
       <body className="flex min-h-full flex-col font-sans">
         <BootLoader />

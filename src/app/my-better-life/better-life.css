@@ -1,0 +1,96 @@
+/* ------------------------------------------------------------------
+   My Better Life (/my-better-life): scoped EN/HI + Devanagari rules.
+   Imported only by src/app/my-better-life/layout.tsx. Everything is scoped
+   to .better-life, so nothing here can affect the rest of the site.
+   Unlayered on purpose: beats Tailwind's layered utilities, inside the scope only.
+   No animation here (reduced motion: nothing to switch off).
+   ------------------------------------------------------------------ */
+
+/* 1. Fonts: Geist first (Latin), Noto Sans Devanagari as the fallback for Hindi
+      glyphs. --font-noto-devanagari is set by next/font on the wrapper. */
+.better-life {
+  --font-display: var(--font-geist-sans), var(--font-noto-devanagari), sans-serif;
+  --font-label: var(--font-geist-sans), var(--font-noto-devanagari), sans-serif;
+  --font-body: var(--font-geist-sans), var(--font-noto-devanagari), sans-serif;
+  --font-code: var(--font-geist-mono), var(--font-noto-devanagari), monospace;
+  /* body resolved its font-family above this wrapper, so set it again here */
+  font-family: var(--font-body);
+}
+
+/* @theme inline bakes Geist into these utilities (Button uses font-sans). */
+.better-life .font-sans {
+  font-family: var(--font-body);
+}
+.better-life .font-mono {
+  font-family: var(--font-code);
+}
+
+/* 2. Language switch. <html data-bl-lang> is set by the head script before first
+      paint. Targets [data-bl] only, never [lang]: text that is merely written in
+      Hindi (the workshop quote) always shows. Missing attribute = English. */
+html:not([data-bl-lang="hi"]) .better-life [data-bl="hi"],
+html[data-bl-lang="hi"] .better-life [data-bl="en"] {
+  display: none;
+}
+
+/* 3. Hindi type rules, by language (:lang), not by toggle state.
+      Devanagari has a headline bar and marks above and below the letters:
+      it needs more line height, no tracking and no uppercase. */
+.better-life :lang(hi) {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Long-form text */
+.better-life:lang(hi),
+.better-life .type-body:lang(hi),
+.better-life .type-body :lang(hi),
+.better-life p:lang(hi),
+.better-life li:lang(hi) {
+  line-height: 1.8;
+}
+.better-life .type-small:lang(hi),
+.better-life .type-small :lang(hi) {
+  line-height: 1.65;
+}
+.better-life .type-lead:lang(hi),
+.better-life .type-lead :lang(hi) {
+  line-height: 1.75;
+}
+
+/* Labels */
+.better-life :is(.type-meta, .type-label, .type-micro):lang(hi),
+.better-life :is(.type-meta, .type-label, .type-micro) :lang(hi) {
+  line-height: 1.5;
+}
+/* Uppercase Latin labels read larger than their 11 to 12px; Devanagari has no capitals,
+   so it would read too small. Raise to the 14px readability floor (DESIGN.md §4.1). */
+.better-life :is(.type-label, .type-micro):lang(hi),
+.better-life :is(.type-label, .type-micro) :lang(hi) {
+  font-size: 14px;
+}
+
+/* Headings */
+.better-life :is(.type-h3, .type-h4):lang(hi),
+.better-life :is(.type-h3, .type-h4) :lang(hi) {
+  line-height: 1.4;
+}
+.better-life .type-h2:lang(hi),
+.better-life .type-h2 :lang(hi) {
+  line-height: 1.3;
+}
+/* Noto Sans Devanagari at 700 reads too heavy at display sizes. */
+.better-life :is(.type-display-xl, .type-display-l, .type-h2):lang(hi),
+.better-life :is(.type-display-xl, .type-display-l, .type-h2) :lang(hi) {
+  font-weight: 600;
+}
+.better-life .type-display-l:lang(hi),
+.better-life .type-display-l :lang(hi) {
+  font-size: clamp(32px, 4.4vw, 72px);
+  line-height: 1.2;
+}
+.better-life .type-display-xl:lang(hi),
+.better-life .type-display-xl :lang(hi) {
+  font-size: clamp(44px, 8.5vw, 140px);
+  line-height: 1.15;
+}

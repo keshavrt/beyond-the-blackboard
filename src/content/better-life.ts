@@ -350,7 +350,7 @@ export const betterLifeLabels = {
   navLessons: { en: "Lessons", hi: "पाठ" },
   navNotebook: { en: "My notebook", hi: "मेरी कॉपी" },
   /** Text of the toggle button: the language you can switch TO. */
-  langSwitchTo: { en: "हिंदी", hi: "EN" },
+  langSwitchTo: { en: "हिंदी", hi: "English" },
   langSwitchLabel: { en: "Switch language", hi: "भाषा बदलें" },
   credit: {
     en: "Inspired by the My Better Life workshop by Professor Navneet Arora",
