@@ -504,6 +504,8 @@ export const betterLifeLabels = {
     hi: "आपकी कॉपी इसी डिवाइस के ब्राउज़र में सुरक्षित रहती है। यह क्लाउड अकाउंट या पासवर्ड नहीं है। इस ब्राउज़र का उपयोग करने वाला व्यक्ति इसे खोल सकता है, इसलिए संवेदनशील निजी जानकारी न लिखें।",
   },
   reset: { en: "Clear my saved work", hi: "मेरा सहेजा काम मिटाएँ" },
+  /** Announced after a reset (the prototype's reset message). */
+  cleared: { en: "All saved data cleared.", hi: "सारा सहेजा गया डेटा मिटा दिया गया।" },
   confirmReset: {
     en: "Clear your notebook, lesson reflections and progress?",
     hi: "क्या अपनी कॉपी, पाठों के विचार और प्रगति मिटा दें?",

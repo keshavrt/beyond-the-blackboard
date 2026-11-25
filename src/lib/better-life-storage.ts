@@ -12,6 +12,9 @@ export const BL_STORE_KEY = "btb:better-life:v1"
 /** Fired on window after this tab writes the store. Other tabs get the "storage" event. */
 export const BL_STORE_EVENT = "bl-store"
 
+/** Fired on window after clearAll() in this tab, so open fields drop their local drafts. */
+export const BL_STORE_CLEARED_EVENT = "bl-store-cleared"
+
 export interface BetterLifeStore {
   version: 1
   explored: BetterLifeSlug[]
@@ -117,6 +120,24 @@ export function clearAll(): boolean {
     return false
   } finally {
     window.dispatchEvent(new Event(BL_STORE_EVENT))
+    window.dispatchEvent(new Event(BL_STORE_CLEARED_EVENT))
+  }
+}
+
+/**
+ * Calls `onCleared` when the store is cleared: by clearAll() in this tab, or in another
+ * tab (storage event with our key removed, or localStorage.clear()).
+ * Fields use it to drop local drafts so no old text stays on screen.
+ */
+export function subscribeCleared(onCleared: () => void) {
+  const onStorage = (e: StorageEvent) => {
+    if (e.key === null || (e.key === BL_STORE_KEY && e.newValue === null)) onCleared()
+  }
+  window.addEventListener(BL_STORE_CLEARED_EVENT, onCleared)
+  window.addEventListener("storage", onStorage)
+  return () => {
+    window.removeEventListener(BL_STORE_CLEARED_EVENT, onCleared)
+    window.removeEventListener("storage", onStorage)
   }
 }
 
