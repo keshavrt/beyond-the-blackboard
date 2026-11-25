@@ -454,6 +454,7 @@ export const betterLifeLabels = {
     en: "Move on whenever you feel ready.",
     hi: "जब आप तैयार हों, अगले पाठ पर जाएँ।",
   },
+  prevLesson: { en: "Previous", hi: "पिछला पाठ" },
   nextLesson: { en: "Next lesson", hi: "अगला पाठ" },
   toNotebook: { en: "Continue in my notebook", hi: "मेरी कॉपी में आगे बढ़ें" },
   keepThought: { en: "Keep a thought", hi: "सोच को लिखें" },

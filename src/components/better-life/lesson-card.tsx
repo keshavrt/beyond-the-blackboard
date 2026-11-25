@@ -31,6 +31,7 @@ export function LessonCard({
   subtitle,
   description,
   explored,
+  footerLabel,
   className,
 }: {
   href: string
@@ -42,6 +43,8 @@ export function LessonCard({
   description: Bilingual
   /** Show the "explored" chip for this lesson (client island). */
   explored?: { slug: BetterLifeSlug; label: Bilingual; openLabel: Bilingual }
+  /** Static text for the footer's left slot (cards without an explored state). */
+  footerLabel?: Bilingual
   className?: string
 }) {
   return (
@@ -78,6 +81,10 @@ export function LessonCard({
         <div className="min-w-0">
           {explored ? (
             <ExploredBadge slug={explored.slug} label={explored.label} openLabel={explored.openLabel} />
+          ) : footerLabel ? (
+            <span className="type-meta text-mute">
+              <Bi text={footerLabel} />
+            </span>
           ) : null}
         </div>
         <span

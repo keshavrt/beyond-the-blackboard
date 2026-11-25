@@ -17,8 +17,9 @@ export function DetailSection({
 }: {
   id: string
   index: number
-  title: string
-  intro?: string
+  /** A string, or bilingual text (<Bi>) in the My Better Life section. */
+  title: React.ReactNode
+  intro?: React.ReactNode
   /** Extra left-column content under the title (e.g. Words to know). */
   aside?: React.ReactNode
   children: React.ReactNode
