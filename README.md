@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Beyond the Blackboard
 
-## Getting Started
+A career guide for Indian school students in Class 8 to 12. It shows what you could
+become and how to get there, step by step from Class 10 to your first job.
 
-First, run the development server:
+Built by IIT Roorkee students for the Community Outreach course (MIC-399).
+
+**Live site:** https://beyond-the-blackboard-iitr.vercel.app
+
+## What's inside
+
+- **Career Explorer:** 10 careers with search and filters (stream, interest), and a
+  detail page for each: the path, what you need, starting pay and official sources.
+- **My Better Life:** 7 short lessons on habits, attention and goals, plus a private
+  notebook saved in your browser. In English and Hindi. Inspired by the My Better Life
+  workshop by Professor Navneet Arora.
+
+The site is fully static: no backend, no database, no login.
+
+## Stack
+
+Next.js 16 (App Router, TypeScript), Tailwind CSS v4, shadcn/ui on Base UI,
+Motion, Lenis and Lucide icons. Hosted on Vercel.
+
+## Run it
+
+You need Node.js 20 or newer.
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Other commands:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npx tsc --noEmit   # type check
+npm run lint       # lint
+npm run build      # production build
+```
 
-## Learn More
+## Main folders
 
-To learn more about Next.js, take a look at the following resources:
+| Folder | What |
+| --- | --- |
+| `src/app/` | Pages and routes (`/`, `/careers`, `/my-better-life`, sitemap, 404) |
+| `src/components/` | UI: `ui/` (shadcn), `brand/`, `site/` (header, footer), `home/`, `career/`, `better-life/` |
+| `src/data/` | Career data with official sources |
+| `src/content/` | All page text, kept out of components (My Better Life text is in English and Hindi) |
+| `src/lib/` | Helpers: filters, formatting, site URL, My Better Life storage |
+| `src/types/` | TypeScript types |
+| `public/` | Static files (QR code, career photos later) |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Read next
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [HANDOFF.md](HANDOFF.md): current state, decisions, workflow and open items. Start here.
+- [DESIGN.md](DESIGN.md): the design system (colours, type, components, motion).
+- [BRIEF.md](BRIEF.md): what we are building and for whom.

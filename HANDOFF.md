@@ -8,7 +8,8 @@ decisions and workflow for this project.
 ## 1. Project
 
 - **What:** A career guidance website for Indian school students (Class 8 to 12).
-  Version 1 is the Career Explorer only.
+  Two parts are live: the Career Explorer and **My Better Life** (a bilingual
+  reflection course with a private notebook).
 - **Why:** Tangible outcome for the IIT Roorkee Community Outreach course
   (MIC-399), project "Beyond the Blackboard", Group 07.
 - **Real audience:** the evaluating professor. The site must look polished,
@@ -17,9 +18,32 @@ decisions and workflow for this project.
   learners, cheap Android phones, slow internet. Simple English.
 - **Live URL:** https://beyond-the-blackboard-iitr.vercel.app (set in `src/lib/site.ts`)
 - **GitHub:** https://github.com/keshavrt/beyond-the-blackboard
-- **Hosting:** Vercel (Hobby). Every `git push` to `main` redeploys.
-  Every other branch gets its own preview URL.
+- **Hosting:** Vercel (Hobby), ONE project: **`beyond-the-blackboard-yk2i`**, serving the
+  live URL. (The duplicate project `beyond-the-blackboard` was deleted.) Every `git push`
+  to `main` redeploys. Every other branch gets its own preview URL; previews need a
+  Vercel login (deployment protection is on).
 - **Deadline:** [DEADLINE]
+
+### Current state
+
+- `main` is at the merge of My Better Life (`db2f7e5`) or later. All features are live.
+- Working tree clean. No open feature branches (local or on GitHub).
+
+### Git bookmarks (tags)
+
+| Tag | Commit | Meaning |
+| --- | --- | --- |
+| `v1-stable` | `8151cb0` | Career Explorer only, before My Better Life |
+| `v2-better-life` | `db2f7e5` | After the My Better Life merge |
+
+### How to roll back
+
+- **Before a merge:** just delete the feature branch (`git branch -D feature-x`,
+  and `git push origin --delete feature-x` if it was pushed). `main` is untouched.
+- **After a merge:** `git revert -m 1 <merge-hash>`, then push. This adds a new commit
+  that undoes the merge (history stays intact).
+- **Instant rollback of the live site:** Vercel dashboard → Deployments → pick an older
+  production deployment → "Promote to Production". No git changes needed.
 
 ---
 
@@ -31,7 +55,8 @@ decisions and workflow for this project.
 
 ### Session loop
 
-1. Start a chat (inside the Claude Project), say what was done last and what's next.
+1. Start a new chat by sharing HANDOFF.md (inside the Claude Project), then say what was
+   done last and what's next.
 2. Get a prompt, run it in Claude Code (Plan Mode for anything new), paste the result back.
 3. Repeat, one step at a time.
 4. End: Claude Code updates this HANDOFF.md, commits, pushes. Re-upload it to the Project.
@@ -43,8 +68,9 @@ decisions and workflow for this project.
 - Screenshot ONLY changed parts, at 375px and 1440px (saves tokens).
 - Never report something fixed without measuring it.
 - After each step: `npx tsc --noEmit`, lint, `npm run build`, then commit.
-- New features go on a branch (`git checkout -b feature-x`), tested on the
-  Vercel preview URL, then merged to `main`.
+- Each feature: tag `main` before merging (a rollback point), branch
+  (`git checkout -b feature-x`), Plan Mode, one step at a time, test on the Vercel
+  preview URL, then merge to `main` with `--no-ff`.
 - Use `/clear` between tasks. Use Sonnet for small fixes, Opus for big design work.
 
 ---
@@ -142,7 +168,9 @@ decisions and workflow for this project.
 
 - `/` Home: hero, [01] How it works, [02] Browse by interest (6 tiles),
   [03] Featured careers (Doctor, Forest Officer, Software Engineer, Electrician;
-  2 shown on mobile), [04] My Better Life (link), [05] About the project.
+  2 shown on mobile), [04] My Better Life (short link section), [05] About the project.
+- Header nav: `01 Home`, `02 Careers`, `03 My Better Life` (underlined on every
+  `/my-better-life/*` page). Same three items in the mobile menu sheet.
 - `/careers`: search by name, stream filter, interest filter, synced to the URL
   (`?q=&stream=&interest=`). Result count is aria-live. Empty state + Clear filters.
   - Stream selected: two groups, "[Stream] careers (n)" then "Also open to all
@@ -264,10 +292,6 @@ decisions and workflow for this project.
 
 ## 9. Open issues / to-do
 
-- [x] Card arrow "go" button click: fixed and committed (`51db2ac` "Fix card arrow
-      click"). Arrow, path strip, file tab and photo wrapper are pointer-events-none;
-      the link's stretched area covers the border. Tested at 375/1440 on / and /careers.
-      Leftover: the top half of the file tab (above the card border) is not clickable.
 - [ ] Photos for all 10 careers.
 - [ ] Team spot-check of uncertain facts (salary ranges without cited sources,
       D.El.Ed for primary, state-specific police/electrician rules, nursing
@@ -279,14 +303,15 @@ decisions and workflow for this project.
 - [ ] **Team: check Hindi text in `src/content/better-life.ts`.** Em dashes and arrows were
       replaced (e.g. "पहली सीढ़ी है:", "क्रम: सुनना, ..."), the privacy/reset text was
       rewritten for one student, and two labels are new Hindi ("भाषा बदलें", "कॉपी के पन्ने").
-- [ ] My Better Life Lighthouse (mobile, local prod build): Accessibility, Best
-      Practices, SEO 100. Performance 86 to 91 (lesson page lowest). Cause: the 118 KiB
+- [ ] My Better Life Lighthouse Performance (mobile, local prod build): 86 to 91 on the
+      section pages (lesson page lowest); Accessibility, Best Practices, SEO are 100. Cause: the 118 KiB
       Noto Devanagari file is fetched on every section page, even in English (the section
       bar and toggle show Hindi). Loading it only in Hindi mode gave 93 to 95 but caused
-      CLS 0.21 in Hindi, so it was rejected. Next option: self-host a subsetted Noto
-      (`next/font/local`, only the glyphs used) to cut the file size.
+      CLS 0.21 in Hindi, so it was rejected. **Fix:** self-host a subset of Noto
+      Devanagari (`next/font/local`, only the glyphs used) to cut the file size.
 - Minor: `--font-heading` in `globals.css` points to Geist Mono (shadcn leftover,
   currently unused). Don't use it for headings; point it at Geist Sans if needed.
+- Minor: the top half of a card's file tab (above the card border) is not clickable.
 - Minor: two remaining one-word last lines ("(MIC-399)." on home,
   "specialist" on Doctor at 1440). Acceptable.
 
@@ -296,15 +321,16 @@ decisions and workflow for this project.
 
 1. Career Interest Quiz (picture-based, RIASEC model, suggests 3 careers). Best live demo.
 2. "My Future Self" roadmap card (name + dream career, printable card).
-3. Hindi / English toggle site-wide (My Better Life already has its own scoped toggle).
+3. Site-wide Hindi / English toggle. Still in the backlog: today the toggle exists only
+   on the My Better Life pages (scoped, its own `Bilingual` type).
 4. Scholarship and Exam Finder (filters by class, category, Uttarakhand).
 5. Zero-Rupee Skills Hub (free learning resources).
 6. Project Journey / Impact page (visits, photos with faces blurred, stats).
 7. Mentor Connect (volunteer profiles + question form).
 8. PWA (installable, works on slow connections).
 
-For each new feature: add it to BRIEF.md first, branch, Plan Mode, build in
-steps, test on the Vercel preview, merge, update this file.
+For each new feature: add it to BRIEF.md first, tag `main`, branch, Plan Mode, build
+in steps, test on the Vercel preview, merge, update this file.
 
 ---
 
@@ -314,6 +340,9 @@ Setup, data model + 10 careers with sources, base theme + styleguide,
 careers list with filters, detail pages + 404, home page, clean typography +
 no em dashes + image-ready, motion pass, critique fixes, polish
 (chip, focus ring, text wrap, gutters), final QA (icons, sitemap, OG image),
-live URL + QR code, card arrow fix. Branch `feature-my-better-life`: content data +
+live URL + QR code, card arrow fix, HANDOFF.md (tag `v1-stable`).
+My Better Life (branch `feature-my-better-life`, now deleted): content data +
 docs, Devanagari font + scoped EN/HI toggle, intro page + progress + lesson cards,
 7 lesson pages, notebook, section lang before first paint, nav + home link + sitemap.
+Merged to `main` as `db2f7e5` "Merge My Better Life section" (tag `v2-better-life`).
+Docs: end-of-session update.

@@ -7,7 +7,7 @@ Stack: Next.js (App Router), TypeScript, Tailwind v4, shadcn/ui, Motion, Lenis, 
 ## Sources of truth
 
 - DESIGN.md = visual rules (dark techy theme, Sage lime accent #a9cc5a).
-- BRIEF.md (when created) = content & goals.
+- BRIEF.md = content & goals.
 - design-system/MASTER.md (if created) overrides tokens.
 - Never invent colors, fonts, radii or shadows outside DESIGN.md. Ask if unsure.
 
@@ -33,6 +33,17 @@ Stack: Next.js (App Router), TypeScript, Tailwind v4, shadcn/ui, Motion, Lenis, 
 - Use Context7 for any library/API question
 - When using the shadcn MCP, always name the registry explicitly (@shadcn),
   e.g. search "@shadcn/card". Searching without it returns "no registries".
+
+## My Better Life section (`/my-better-life`)
+
+- All its text lives in `src/content/better-life.ts` as `{ en, hi }` (`Bilingual`).
+  Never hard-code either language in components.
+- Render text with `<Bi text={...} />`. For things CSS can't switch (placeholder,
+  aria-label, confirm() text), use `useBetterLifeLang()`.
+- The Noto Sans Devanagari font is loaded only in `src/app/my-better-life/layout.tsx`.
+  Never load it anywhere else (careers and home must not download it).
+- Storage goes only through `src/lib/better-life-storage.ts` (one key, `btb:better-life:v1`).
+- The rest of the site stays English; `LocalizedText` in `src/types/career.ts` is unchanged.
 
 ## Workflow
 

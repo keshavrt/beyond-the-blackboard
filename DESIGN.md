@@ -52,19 +52,19 @@ New brand. The accent is **"Sage" lime** in place of the reference orange. It is
 
 | Token | Hex | Role | Contrast on `--bg` |
 |---|---|---|---|
-| `--bg` | `#0b0c0e` | Page background (slightly cool near-black) | — |
-| `--surface` | `#131518` | Cards, open accordion, code blocks, sticky nav | — |
-| `--surface-2` | `#1a1d21` | Hover surface, table header rows | — |
+| `--bg` | `#0b0c0e` | Page background (slightly cool near-black) | n/a |
+| `--surface` | `#131518` | Cards, open accordion, code blocks, sticky nav | n/a |
+| `--surface-2` | `#1a1d21` | Hover surface, table header rows | n/a |
 | `--fg` | `#ecebe6` | Headings, primary text | **16.4 : 1** |
 | `--fg-body` | `#c9c6be` | Long-form body copy (a little softer than headings) | **11.5 : 1** |
 | `--mute` | `#9a968e` | Secondary text, captions, metadata | **6.6 : 1** (AA) |
 | `--dim` | `#5a5853` | **Decorative only**: ticks, grid labels, disabled state | 2.75 : 1 (never for text you need to read) |
-| `--line` | `rgba(236,235,230,.12)` | Default hairline | — |
-| `--line-2` | `rgba(236,235,230,.22)` | Emphasised hairline, tag borders | — |
+| `--line` | `rgba(236,235,230,.12)` | Default hairline | n/a |
+| `--line-2` | `rgba(236,235,230,.22)` | Emphasised hairline, tag borders | n/a |
 | `--accent` | `#a9cc5a` | **Sage**: indices, active states, highlight boxes, CTA fill | **10.7 : 1** |
 | `--accent-2` | `#93b548` | Pressed / visited / secondary accent | 8.3 : 1 |
 | `--ink` | `#0b0c0e` | Text on accent fills | 10.7 : 1 on Sage |
-| `--grid-dot` | `rgba(236,235,230,.07)` | Background dot grid | — |
+| `--grid-dot` | `rgba(236,235,230,.07)` | Background dot grid | n/a |
 
 ### Status colors (information sites need them; keep them muted)
 
@@ -116,7 +116,13 @@ New brand. The accent is **"Sage" lime** in place of the reference orange. It is
 >
 > Everything else is Geist Sans. In code this is one utility, `type-code` (`--font-code`); `--font-display` and `--font-label` both point at Geist Sans.
 
-> Note (2026-11-25): the **My Better Life** section (`/my-better-life`) has a scoped **EN/HI toggle** (those pages only; the rest of the site is English) and needs a **Devanagari font** for Hindi text. Font choice, pairing with Geist and the toggle's design are decided in that feature's step 2. All other rules in this file apply to the section unchanged.
+> Note: the **My Better Life** section (`/my-better-life`) has a scoped **EN/HI toggle** (those pages only; the rest of the site is English). All other rules in this file apply to the section unchanged.
+>
+> - **Toggle:** a section bar under the site header (name on the left, an outline button on the right labelled with the other language: "हिंदी" / "English", 44px). `<html data-bl-lang>` is set before first paint, so there is no flash.
+> - **Devanagari font:** Noto Sans Devanagari (400 to 700), loaded only in the section's layout. Geist stays first; Noto is the fallback for Hindi glyphs. Mono labels use Geist Mono first, then Noto.
+> - **Hindi type rules** (`src/app/my-better-life/better-life.css`, applied by `:lang(hi)` and by `html[data-bl-lang="hi"]`): letter-spacing 0 and no uppercase; line height 1.8 body, 1.75 lead, 1.65 small, 1.5 meta/label/micro, 1.4 h3/h4, 1.3 h2; display-l `clamp(32px, 4.4vw, 72px)` / 1.2 and display-xl `clamp(44px, 8.5vw, 140px)` / 1.15; display and h2 at weight 600 (Noto at 700 is too heavy).
+> - **Hindi labels at 14px:** `type-label` and `type-micro` in Hindi are 14px (Devanagari has no capitals, so 11 to 12px reads too small). **Hindi `type-code` is 13px** (file tabs).
+> - **Workshop quotes:** the Hindi original always shows; English mode adds the translation under it.
 
 ### Type scale (fluid, 1440 → 375)
 
@@ -169,6 +175,7 @@ These rules **override** any techy styling inside a content area (`.prose`, arti
 - Links use the sans `label` style with a mono `type-code` **index prefix** in `--accent` at 10px: `01 ABOUT`, `02 GUIDES`, `03 EVENTS`, `04 FAQ`.
 - Hover/active: a 1px `--accent` underline that `scaleX`s in from the left (and exits to the right), 0.5s `--ease`.
 - Behaviour: hides on scroll down (`translateY(-110%)`) and returns on scroll up. Once scrolled, it becomes solid `--bg` with a `--line` bottom border.
+- **820 to 1079px:** with three nav items the grid is `auto 1fr auto` (the nav centres in the space after the wordmark), so the wordmark stays on one line. From 1080px it is the `1fr auto 1fr` above.
 - Logo hover: `rotate(-6deg) scale(1.06)`.
 - **Mobile (< 820px):** a burger made of two 2px bars that morph into an ×. The menu is a full-screen **accent sheet** revealed with a top-to-bottom wipe that looks like `clip-path: inset(0 0 100%) → inset(0)` (0.5s `--ease-io`, see §7 Sheet / menu). Items are huge sentence-case sans display text, bottom-aligned, each with a mono `01`–`04` index in `--ink`.
 

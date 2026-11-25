@@ -1,10 +1,11 @@
-# BRIEF — Beyond the Blackboard: Career Explorer (MVP)
+# BRIEF: Beyond the Blackboard: Career Explorer (MVP)
 
 ## What it is
 
-A career-guidance website for Indian school students. Version 1 contains ONLY
-the Career Explorer. Other features (quiz, roadmap card, scholarships, Hindi)
-come later — but structure the code so they can be added without rewrites.
+A career-guidance website for Indian school students. Version 1 was the Career
+Explorer only; the My Better Life section was added next (see below). Other
+features (quiz, roadmap card, scholarships, site-wide Hindi) come later, but
+structure the code so they can be added without rewrites.
 
 ## Context
 
@@ -60,7 +61,7 @@ Help a student understand: "What could I become, and how do I get there?"
 - Fast: minimal JS on content pages, optimized fonts and images.
 - Accessible: keyboard navigation, good contrast (see DESIGN.md).
 
-## My Better Life (new section, on branch `feature-my-better-life`)
+## My Better Life (live, merged to `main`)
 
 A short, bilingual reflection course for students, inspired by the My Better Life
 workshop by Professor Navneet Arora. Students read 7 lessons and write in a personal
@@ -75,7 +76,9 @@ notebook. Content and structure come from a standalone prototype (kept locally i
 
 ### Scope
 - Lessons + a simple notebook for ONE student, saved in `localStorage` under one
-  namespaced key (`btb:better-life:v1`). No account, no backend.
+  namespaced key (`btb:better-life:v1`). The language choice is a separate key
+  (`btb:better-life:lang`). No account, no backend.
+- Linked from the header nav ("03 My Better Life") and a short home page section.
 - Dropped from the prototype: multi-student profiles, the welcome/profile screen,
   toasts and the background image.
 - EN/HI toggle on the My Better Life pages only. The rest of the site stays English.
