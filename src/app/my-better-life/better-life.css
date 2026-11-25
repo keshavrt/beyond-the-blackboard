@@ -33,72 +33,104 @@ html[data-bl-lang="hi"] .better-life [data-bl="en"] {
   display: none;
 }
 
-/* 3. Hindi type rules, by language (:lang), not by toggle state.
+/* 3. Hindi type rules. Two triggers, same result:
+      - :lang(hi): text that is Hindi by nature (Bi spans, the always-shown quote).
+      - html[data-bl-lang="hi"] (the Hindi MODE, set by the head script before first
+        paint): elements that only inherit the mode (headings, paragraphs, breadcrumb
+        items, counters) get the rules from first paint, not only after hydration sets
+        the wrapper's lang (that caused a small layout shift). [lang="en"] is excluded.
+      Each rule covers the element (.x) and its descendants (.x *).
       Devanagari has a headline bar and marks above and below the letters:
       it needs more line height, no tracking and no uppercase. */
-.better-life :lang(hi) {
+.better-life :lang(hi),
+html[data-bl-lang="hi"] .better-life :not([lang="en"]) {
   letter-spacing: 0;
   text-transform: none;
 }
 
 /* Long-form text */
 .better-life:lang(hi),
+html[data-bl-lang="hi"] .better-life,
 .better-life .type-body:lang(hi),
 .better-life .type-body :lang(hi),
+html[data-bl-lang="hi"] .better-life .type-body:not([lang="en"]),
+html[data-bl-lang="hi"] .better-life .type-body :not([lang="en"]),
 .better-life p:lang(hi),
-.better-life li:lang(hi) {
+html[data-bl-lang="hi"] .better-life p:not([lang="en"]),
+.better-life li:lang(hi),
+html[data-bl-lang="hi"] .better-life li:not([lang="en"]) {
   line-height: 1.8;
 }
 .better-life .type-small:lang(hi),
-.better-life .type-small :lang(hi) {
+.better-life .type-small :lang(hi),
+html[data-bl-lang="hi"] .better-life .type-small:not([lang="en"]),
+html[data-bl-lang="hi"] .better-life .type-small :not([lang="en"]) {
   line-height: 1.65;
 }
 .better-life .type-lead:lang(hi),
-.better-life .type-lead :lang(hi) {
+.better-life .type-lead :lang(hi),
+html[data-bl-lang="hi"] .better-life .type-lead:not([lang="en"]),
+html[data-bl-lang="hi"] .better-life .type-lead :not([lang="en"]) {
   line-height: 1.75;
 }
 
 /* Labels */
 .better-life :is(.type-meta, .type-label, .type-micro):lang(hi),
-.better-life :is(.type-meta, .type-label, .type-micro) :lang(hi) {
+.better-life :is(.type-meta, .type-label, .type-micro) :lang(hi),
+html[data-bl-lang="hi"] .better-life :is(.type-meta, .type-label, .type-micro):not([lang="en"]),
+html[data-bl-lang="hi"] .better-life :is(.type-meta, .type-label, .type-micro) :not([lang="en"]) {
   line-height: 1.5;
 }
 /* Uppercase Latin labels read larger than their 11 to 12px; Devanagari has no capitals,
    so it would read too small. Raise to the 14px readability floor (DESIGN.md §4.1). */
 .better-life :is(.type-label, .type-micro):lang(hi),
-.better-life :is(.type-label, .type-micro) :lang(hi) {
+.better-life :is(.type-label, .type-micro) :lang(hi),
+html[data-bl-lang="hi"] .better-life :is(.type-label, .type-micro):not([lang="en"]),
+html[data-bl-lang="hi"] .better-life :is(.type-label, .type-micro) :not([lang="en"]) {
   font-size: 14px;
 }
 
 /* Code labels (file tabs): 11px mono reads fine in Latin caps, but Devanagari at 11px
    is unreadable. 13px is the largest type-code size (DESIGN.md §3). */
 .better-life .type-code:lang(hi),
-.better-life .type-code :lang(hi) {
+.better-life .type-code :lang(hi),
+html[data-bl-lang="hi"] .better-life .type-code:not([lang="en"]),
+html[data-bl-lang="hi"] .better-life .type-code :not([lang="en"]) {
   font-size: 13px;
   line-height: 1.4;
 }
 
 /* Headings */
 .better-life :is(.type-h3, .type-h4):lang(hi),
-.better-life :is(.type-h3, .type-h4) :lang(hi) {
+.better-life :is(.type-h3, .type-h4) :lang(hi),
+html[data-bl-lang="hi"] .better-life :is(.type-h3, .type-h4):not([lang="en"]),
+html[data-bl-lang="hi"] .better-life :is(.type-h3, .type-h4) :not([lang="en"]) {
   line-height: 1.4;
 }
 .better-life .type-h2:lang(hi),
-.better-life .type-h2 :lang(hi) {
+.better-life .type-h2 :lang(hi),
+html[data-bl-lang="hi"] .better-life .type-h2:not([lang="en"]),
+html[data-bl-lang="hi"] .better-life .type-h2 :not([lang="en"]) {
   line-height: 1.3;
 }
 /* Noto Sans Devanagari at 700 reads too heavy at display sizes. */
 .better-life :is(.type-display-xl, .type-display-l, .type-h2):lang(hi),
-.better-life :is(.type-display-xl, .type-display-l, .type-h2) :lang(hi) {
+.better-life :is(.type-display-xl, .type-display-l, .type-h2) :lang(hi),
+html[data-bl-lang="hi"] .better-life :is(.type-display-xl, .type-display-l, .type-h2):not([lang="en"]),
+html[data-bl-lang="hi"] .better-life :is(.type-display-xl, .type-display-l, .type-h2) :not([lang="en"]) {
   font-weight: 600;
 }
 .better-life .type-display-l:lang(hi),
-.better-life .type-display-l :lang(hi) {
+.better-life .type-display-l :lang(hi),
+html[data-bl-lang="hi"] .better-life .type-display-l:not([lang="en"]),
+html[data-bl-lang="hi"] .better-life .type-display-l :not([lang="en"]) {
   font-size: clamp(32px, 4.4vw, 72px);
   line-height: 1.2;
 }
 .better-life .type-display-xl:lang(hi),
-.better-life .type-display-xl :lang(hi) {
+.better-life .type-display-xl :lang(hi),
+html[data-bl-lang="hi"] .better-life .type-display-xl:not([lang="en"]),
+html[data-bl-lang="hi"] .better-life .type-display-xl :not([lang="en"]) {
   font-size: clamp(44px, 8.5vw, 140px);
   line-height: 1.15;
 }
