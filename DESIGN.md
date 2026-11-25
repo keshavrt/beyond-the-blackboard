@@ -116,6 +116,8 @@ New brand. The accent is **"Sage" lime** in place of the reference orange. It is
 >
 > Everything else is Geist Sans. In code this is one utility, `type-code` (`--font-code`); `--font-display` and `--font-label` both point at Geist Sans.
 
+> Note (2026-11-25): the **My Better Life** section (`/my-better-life`) has a scoped **EN/HI toggle** (those pages only; the rest of the site is English) and needs a **Devanagari font** for Hindi text. Font choice, pairing with Geist and the toggle's design are decided in that feature's step 2. All other rules in this file apply to the section unchanged.
+
 ### Type scale (fluid, 1440 → 375)
 
 | Token | Font | Size | Line-height | Tracking | Case | Use |

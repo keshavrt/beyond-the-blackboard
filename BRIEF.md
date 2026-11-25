@@ -60,7 +60,40 @@ Help a student understand: "What could I become, and how do I get there?"
 - Fast: minimal JS on content pages, optimized fonts and images.
 - Accessible: keyboard navigation, good contrast (see DESIGN.md).
 
+## My Better Life (new section, on branch `feature-my-better-life`)
+
+A short, bilingual reflection course for students, inspired by the My Better Life
+workshop by Professor Navneet Arora. Students read 7 lessons and write in a personal
+notebook. Content and structure come from a standalone prototype (kept locally in
+`reference/`, gitignored); it is rebuilt in our design system, not copied.
+
+### Routes
+- `/my-better-life`: intro + 7 lesson cards.
+- `/my-better-life/[slug]`: 7 static lesson pages (slugs from the English titles,
+  e.g. `choose-what-you-learn`).
+- `/my-better-life/notebook`: the notebook (cover + pages 1 to 7), client-side.
+
+### Scope
+- Lessons + a simple notebook for ONE student, saved in `localStorage` under one
+  namespaced key (`btb:better-life:v1`). No account, no backend.
+- Dropped from the prototype: multi-student profiles, the welcome/profile screen,
+  toasts and the background image.
+- EN/HI toggle on the My Better Life pages only. The rest of the site stays English.
+- This section uses its own `Bilingual` type (`src/types/better-life.ts`);
+  `LocalizedText` in `src/types/career.ts` is unchanged.
+- Workshop quotes: the Hindi original always shows; in English mode the English
+  translation shows under it.
+- Page metadata (title, description) is English only.
+- Credit on every page of the section: "Inspired by the My Better Life workshop by
+  Professor Navneet Arora".
+
+### Data
+- Types: `src/types/better-life.ts`. Content (lessons, UI labels, notebook pages,
+  metadata): `src/content/better-life.ts`.
+- Same text rules as the rest of the site, in both languages: no em dashes, no
+  arrows inside text (links and buttons add their own), simple English.
+
 ## Out of scope for now
 
-Quiz, roadmap generator, scholarships, Hindi toggle, mentor form,
+Quiz, roadmap generator, scholarships, site-wide Hindi, mentor form,
 journey page, PWA.
