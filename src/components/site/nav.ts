@@ -9,6 +9,7 @@ export interface NavItem {
 export const navItems: NavItem[] = [
   { href: "/", label: "Home" },
   { href: "/careers", label: "Careers" },
+  { href: "/my-better-life", label: "My Better Life" },
 ]
 
 export const siteName: LocalizedText = "Beyond the Blackboard"

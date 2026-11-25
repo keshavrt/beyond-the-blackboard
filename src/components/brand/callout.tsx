@@ -14,7 +14,8 @@ export function Callout({
   children,
   className,
 }: {
-  title: string
+  /** A string, or bilingual text (<Bi>). */
+  title: React.ReactNode
   tone?: keyof typeof tones
   children: React.ReactNode
   className?: string
