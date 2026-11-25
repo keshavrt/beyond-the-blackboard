@@ -128,6 +128,13 @@ decisions and workflow for this project.
 | `public/qr.png`                                     | QR code of the live URL                                           |
 | `.impeccable/critique/`                             | Saved design critiques                                            |
 | `.playwright-mcp/`                                  | Screenshots (gitignored)                                          |
+| `src/types/better-life.ts`                          | My Better Life types: `Bilingual`, `Lesson`, `NotebookPage`       |
+| `src/content/better-life.ts`                        | All My Better Life text (EN + HI): 7 lessons, labels, notebook    |
+| `src/app/my-better-life/`                           | Section layout (Noto font, scope), CSS, intro, `[slug]`, notebook |
+| `src/components/better-life/`                       | `Bi`, lang toggle + hooks, cards, notes, notebook, reset          |
+| `src/lib/better-life-storage.ts`                    | The section's one localStorage store (read/write/clear)           |
+| `src/components/home/better-life-teaser.tsx`        | Home section [04] linking to My Better Life                       |
+| `reference/`                                        | Original My Better Life prototype (local only, gitignored)        |
 
 ---
 
@@ -135,7 +142,7 @@ decisions and workflow for this project.
 
 - `/` Home: hero, [01] How it works, [02] Browse by interest (6 tiles),
   [03] Featured careers (Doctor, Forest Officer, Software Engineer, Electrician;
-  2 shown on mobile), [04] About the project.
+  2 shown on mobile), [04] My Better Life (link), [05] About the project.
 - `/careers`: search by name, stream filter, interest filter, synced to the URL
   (`?q=&stream=&interest=`). Result count is aria-live. Empty state + Clear filters.
   - Stream selected: two groups, "[Stream] careers (n)" then "Also open to all
@@ -147,6 +154,14 @@ decisions and workflow for this project.
   element), what you need, Words to know, salary (+ official pay table where it
   exists), related careers, sources, disclaimer, "Facts last checked" date.
   "Back to careers" restores previous filters.
+- `/my-better-life`: intro, progress (n / 07), 7 lesson cards + notebook card, closing quote.
+- `/my-better-life/[slug]`: 7 pre-rendered lessons, unknown slugs 404. Big idea, try it
+  today (saved note), explore more (points, example, workshop quote, saved reflection),
+  "Keep a thought" card to the notebook page, mark as explored, prev/next.
+- `/my-better-life/notebook`: cover + 7 pages, `?page=0..7` (soft links, back button
+  works; bad values show the cover). Saved as you type. Privacy note + "Clear my saved work".
+- Every My Better Life page: section bar (name + EN/HI toggle) and the credit line
+  "Inspired by the My Better Life workshop by Professor Navneet Arora".
 - `/styleguide`: tokens and components (not indexed).
 - 404 page.
 
@@ -195,6 +210,30 @@ decisions and workflow for this project.
 - Loader: about 1.5s, once per session, skippable by click or key.
 - `prefers-reduced-motion`: no loader, no reveals, no blinking, no Lenis.
 
+### My Better Life (section decisions)
+
+- **Scoped Hindi:** EN/HI toggle on `/my-better-life/*` only; the rest of the site stays
+  English and `LocalizedText` is unchanged. Text type is `Bilingual` (`{ en, hi }`).
+- **How the toggle works:** a head script (next to bootScript) sets
+  `<html data-bl-lang>` from localStorage before first paint. `<Bi>` renders both
+  languages; CSS hides the inactive one via `[data-bl]`. A hook (`useBetterLifeLang`)
+  covers placeholders, aria-labels and confirm() text. No flash, no reload.
+- **Hindi type rules** (`better-life.css`): no tracking, no uppercase, taller line
+  heights, smaller display sizes, headings at 600, labels at 14px, file tabs at 13px.
+  They key off both `:lang(hi)` and `html[data-bl-lang="hi"]`, so they apply from first paint.
+- **Font:** Noto Sans Devanagari, loaded only in `src/app/my-better-life/layout.tsx`
+  (careers and home never download it). Geist first, Noto as the Hindi fallback.
+- **Workshop quotes:** the Hindi original always shows; English mode adds the translation.
+- **Storage (one student, this browser only):** `btb:better-life:v1` =
+  `{ version: 1, explored: slug[], fields }` (lesson notes `lesson:<slug>:practice|reflect`,
+  notebook `notebook:<field>`), and `btb:better-life:lang`. Reset clears the first one
+  (all tabs update); the language choice stays.
+- **No layout shift:** client islands (progress, badges, explored toggle, text fields)
+  reserve their space and render a neutral state until hydration. Notebook pages fit
+  their content (a hard reload of `?page=N` may shift slightly; accepted).
+- **Header at 820 to 1079:** with 3 nav items the grid is `auto 1fr auto` so the
+  wordmark stays on one line; `1fr auto 1fr` (centred nav) from 1080.
+
 ---
 
 ## 8. Data rules
@@ -237,6 +276,15 @@ decisions and workflow for this project.
       (timed out for automated checks).
 - [ ] Test on Safari / iPhone (only Chrome tested).
 - [ ] Lighthouse on the live site (target 90+ in all four).
+- [ ] **Team: check Hindi text in `src/content/better-life.ts`.** Em dashes and arrows were
+      replaced (e.g. "पहली सीढ़ी है:", "क्रम: सुनना, ..."), the privacy/reset text was
+      rewritten for one student, and two labels are new Hindi ("भाषा बदलें", "कॉपी के पन्ने").
+- [ ] My Better Life Lighthouse (mobile, local prod build): Accessibility, Best
+      Practices, SEO 100. Performance 86 to 91 (lesson page lowest). Cause: the 118 KiB
+      Noto Devanagari file is fetched on every section page, even in English (the section
+      bar and toggle show Hindi). Loading it only in Hindi mode gave 93 to 95 but caused
+      CLS 0.21 in Hindi, so it was rejected. Next option: self-host a subsetted Noto
+      (`next/font/local`, only the glyphs used) to cut the file size.
 - Minor: `--font-heading` in `globals.css` points to Geist Mono (shadcn leftover,
   currently unused). Don't use it for headings; point it at Geist Sans if needed.
 - Minor: two remaining one-word last lines ("(MIC-399)." on home,
@@ -248,7 +296,7 @@ decisions and workflow for this project.
 
 1. Career Interest Quiz (picture-based, RIASEC model, suggests 3 careers). Best live demo.
 2. "My Future Self" roadmap card (name + dream career, printable card).
-3. Hindi / English toggle (data already structured for it).
+3. Hindi / English toggle site-wide (My Better Life already has its own scoped toggle).
 4. Scholarship and Exam Finder (filters by class, category, Uttarakhand).
 5. Zero-Rupee Skills Hub (free learning resources).
 6. Project Journey / Impact page (visits, photos with faces blurred, stats).
@@ -266,4 +314,6 @@ Setup, data model + 10 careers with sources, base theme + styleguide,
 careers list with filters, detail pages + 404, home page, clean typography +
 no em dashes + image-ready, motion pass, critique fixes, polish
 (chip, focus ring, text wrap, gutters), final QA (icons, sitemap, OG image),
-live URL + QR code, card arrow fix.
+live URL + QR code, card arrow fix. Branch `feature-my-better-life`: content data +
+docs, Devanagari font + scoped EN/HI toggle, intro page + progress + lesson cards,
+7 lesson pages, notebook, section lang before first paint, nav + home link + sitemap.

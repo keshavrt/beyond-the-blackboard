@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 
 import { AboutProject } from "@/components/home/about-project"
+import { BetterLifeTeaser } from "@/components/home/better-life-teaser"
 import { FeaturedCareers } from "@/components/home/featured-careers"
 import { Hero } from "@/components/home/hero"
 import { HowItWorks } from "@/components/home/how-it-works"
@@ -34,7 +35,8 @@ export default function Home() {
       <HowItWorks index={1} />
       <InterestGrid index={2} items={getInterestCounts()} />
       <FeaturedCareers index={3} items={featured} />
-      <AboutProject index={4} />
+      <BetterLifeTeaser index={4} />
+      <AboutProject index={5} />
     </>
   )
 }

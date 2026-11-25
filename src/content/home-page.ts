@@ -85,6 +85,12 @@ export const homePageCopy = {
     slugs: ["doctor", "forest-officer", "software-engineer", "electrician"] satisfies CareerSlug[],
   },
 
+  betterLife: {
+    title: "My Better Life",
+    body: "Seven short lessons on habits, attention and goals, with a private notebook to write in. In English and Hindi, inspired by Professor Navneet Arora's My Better Life workshop." satisfies LocalizedText,
+    cta: "Open My Better Life" satisfies LocalizedText,
+  },
+
   about: {
     title: "About the",
     titleHighlight: "project",
