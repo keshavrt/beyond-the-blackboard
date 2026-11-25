@@ -35,7 +35,8 @@ export function SectionHeader({
   className,
 }: {
   index: number
-  title: string
+  /** A string, or bilingual text (<Bi>) in the My Better Life section. */
+  title: React.ReactNode
   highlight?: string
   size?: "xl" | "l" | "h2"
   as?: "h1" | "h2" | "h3"

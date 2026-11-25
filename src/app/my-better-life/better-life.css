@@ -70,6 +70,14 @@ html[data-bl-lang="hi"] .better-life [data-bl="en"] {
   font-size: 14px;
 }
 
+/* Code labels (file tabs): 11px mono reads fine in Latin caps, but Devanagari at 11px
+   is unreadable. 13px is the largest type-code size (DESIGN.md §3). */
+.better-life .type-code:lang(hi),
+.better-life .type-code :lang(hi) {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
 /* Headings */
 .better-life :is(.type-h3, .type-h4):lang(hi),
 .better-life :is(.type-h3, .type-h4) :lang(hi) {

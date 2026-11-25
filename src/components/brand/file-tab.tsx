@@ -9,8 +9,10 @@ export function FileTab({
   name,
   className,
 }: {
-  index: number
-  name: string
+  /** Omit for a tab without a number (e.g. the My Better Life notebook card). */
+  index?: number
+  /** A string, or bilingual text (<Bi>). */
+  name: React.ReactNode
   className?: string
 }) {
   return (
@@ -21,8 +23,12 @@ export function FileTab({
         className
       )}
     >
-      <span>{String(index).padStart(2, "0")}</span>
-      <span aria-hidden="true">/</span>
+      {index !== undefined ? (
+        <>
+          <span>{String(index).padStart(2, "0")}</span>
+          <span aria-hidden="true">/</span>
+        </>
+      ) : null}
       <span>{name}</span>
     </span>
   )
